@@ -2,6 +2,8 @@ package com.park.web.file.controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.park.web.file.service.FileService;
+import com.park.web.fileUtil.S3Utils;
 import com.park.web.fileUtil.UploadFileUtils;
 
 @RestController
@@ -28,6 +31,10 @@ public class FileController {
 	
 	@Inject
 	private FileService fileservice;
+	
+	S3Utils s3 = new S3Utils();
+	String bucketName = "chparklandbucket";
+	
 	
 	
 	//업로드
@@ -54,13 +61,29 @@ public class FileController {
 	@RequestMapping(value="/displayFile", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws Exception {
 		ResponseEntity<byte[]> entity = null;
+		InputStream in = null;
 		
 		HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); //http 헤더 설정 가져오기
 		String rootPath = UploadFileUtils.getRootPath(fileName, request); //업로드 기본 경로
 		
 		//데이터, HttpHeader 전송 
 		try(InputStream is = new FileInputStream(rootPath + fileName)) {
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), httpHeaders, HttpStatus.CREATED);
+			
+			URL url;
+			
+			try {
+				url = new URL(s3.getFileURL(bucketName, fileName));
+				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+				in = urlConnection.getInputStream(); // 이미지를 불러옴
+			} 
+			catch (Exception e) {
+				url = new URL(s3.getFileURL(bucketName, "default.jpg"));
+				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+				in = urlConnection.getInputStream();
+			}
+
+			//entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), httpHeaders, HttpStatus.CREATED);
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), httpHeaders, HttpStatus.CREATED);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -96,6 +119,7 @@ public class FileController {
 		
 		try {
 			UploadFileUtils.deleteFile(fileName, request);
+			s3.fileDelete(bucketName, fileName);
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);
 		}
 		catch(Exception e) {
@@ -113,6 +137,7 @@ public class FileController {
 		
 		try {
 			UploadFileUtils.deleteFile(fileName, request);
+			s3.fileDelete(bucketName, fileName);
 			fileservice.deleteFile(bid, fileName);
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);
 			
@@ -136,6 +161,7 @@ public class FileController {
 		
 		try {
 			for(String fileName : files) {
+				s3.fileDelete(bucketName, fileName);
 				UploadFileUtils.deleteFile(fileName, request);
 			}
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);

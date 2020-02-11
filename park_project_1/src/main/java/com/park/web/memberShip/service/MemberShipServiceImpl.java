@@ -135,7 +135,7 @@ public class MemberShipServiceImpl implements MemberShipService {
 				.append(memberShipVO.getId() + "님 회원가입을 환영합니다.</h3>") 
 				.append("<div style='font-size: 120%'>") 
 				.append("인증 버튼을 클릭 하시면 회원가입이 완료됩니다.</div><br/>") 
-				.append("<form action='http://localhost:8090/web/memberShip/approvalStatus'>") 
+				.append("<form action='http://chparkland.com/park_project_1/memberShip/approvalStatus'>") 
 				.append("<input type='hidden' name='email' value='" + memberShipVO.getEmail() + "'>") 
 				.append("<input type='hidden' name='approval_key' value='" + memberShipVO.getApproval_key() + "'>") 
 				.append("<input type='hidden' name='id' value='" + memberShipVO.getId() + "'>") 				
@@ -151,7 +151,7 @@ public class MemberShipServiceImpl implements MemberShipService {
 					.append("<div style='font-size: 120%'>") 
 					.append("<p>임시 비밀번호 : ")
 					.append(memberShipVO.getPassword() + "</p>")
-					.append("<form action='http://localhost:8090/web'>") 
+					.append("<form action='http://chparkland.com/park_project_1'>") 
 					.append("<input type='submit' value='로그인'></form><br/></div>") 
 					.toString());
 		}

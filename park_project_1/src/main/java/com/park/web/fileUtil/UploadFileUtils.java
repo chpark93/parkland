@@ -25,6 +25,9 @@ public class UploadFileUtils {
 	//파일 업로드 
     public static String uploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
 
+    	S3Utils s3 = new S3Utils();
+		String bucketName = "chparklandbucket";
+    	
         String ori_fileName = file.getOriginalFilename(); //파일명
         byte[] fileData = file.getBytes();  //파일 데이터
 
@@ -44,6 +47,8 @@ public class UploadFileUtils {
             uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
         }
         
+        s3.fileUpload(bucketName, uuidFileName, fileData);
+
         //파일 저장 경로 치환
         return replaceFilePath(datePath, uuidFileName);
     }
