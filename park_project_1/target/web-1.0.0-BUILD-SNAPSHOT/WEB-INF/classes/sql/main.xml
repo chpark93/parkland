@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main">
+	
+	<!-- 추천 게시글 -->
+	<select id="getRecommendBoard" resultType="board">
+		SELECT	
+			bid, 
+			title, 
+			content, 
+			view_cnt, 
+			reg_id,
+			reg_nickname,
+			<![CDATA[ 
+			IF	(
+	                DATE_FORMAT(reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(reg_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(reg_dt, '%H:%i')
+                ) as reg_dt,
+            ]]> 
+			edit_dt, 
+			bg_no, 
+			reply_view_cnt,
+			recommend_cnt
+		FROM
+			tbl_board		
+		WHERE
+			recommend_cnt > 10 AND reg_dt > DATE_SUB( now(), INTERVAL 7 DAY)
+		ORDER BY recommend_cnt DESC
+		LIMIT 6	 
+	</select>
+	
+	<!-- 인기 게시글 -->
+	<select id="getViewBestBoard" resultType="board">
+		SELECT	
+			bid, 
+			title, 
+			content, 
+			view_cnt, 
+			reg_id, 
+			reg_nickname,
+			<![CDATA[ 
+			IF	(
+	                DATE_FORMAT(reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(reg_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(reg_dt, '%H:%i')
+                ) as reg_dt,
+            ]]> 
+			edit_dt, 
+			bg_no, 
+			reply_view_cnt,
+			recommend_cnt
+		FROM
+			tbl_board		
+		WHERE
+			view_cnt > 200 AND reg_dt > DATE_SUB( now(), INTERVAL 7 DAY)
+		ORDER BY view_cnt DESC
+		LIMIT 6
+	</select>
+	
+	
+	<!-- 게시판 -->
+	<select id="getCommonBoard" resultType="board" parameterType="board">
+		SELECT	
+			bid, 
+			title, 
+			content, 
+			view_cnt, 
+			reg_id,
+			reg_nickname,
+			<![CDATA[ 
+			IF	(
+	                DATE_FORMAT(reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(reg_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(reg_dt, '%H:%i')
+                ) as reg_dt,
+            ]]> 
+			edit_dt, 
+			bg_no, 
+			reply_view_cnt,
+			recommend_cnt
+		FROM
+			tbl_board		
+		WHERE
+			bg_no = #{bg_no}
+		ORDER BY bid DESC
+		LIMIT 8
+	</select>
+	
+	
+	
+</mapper>    

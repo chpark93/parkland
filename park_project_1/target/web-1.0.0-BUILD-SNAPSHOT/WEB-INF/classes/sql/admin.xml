@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+	
+
+	<select id="selectUserById" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user, tbl_approval
+		WHERE
+			tbl_user.id = tbl_approval.id
+		AND	
+			tbl_user.id = #{id}
+	</select>
+	
+	<select id="selectUserByNickname" resultType="user">
+		SELECT
+			id,
+			nickname,
+			email
+		FROM
+			tbl_user
+		WHERE
+			nickname = #{nickname}
+	</select>
+	
+	<select id="selectUserList" resultType="user">
+		SELECT DISTINCT
+			u.id,
+			u.name,	
+			u.nickname,
+			u.email,
+			u.reg_dt,
+			d.member_section
+		FROM
+			tbl_user u, tbl_user_detail d
+		WHERE 
+			u.id = d.id
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'id' ">
+				AND	u.id like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'name' ">
+				AND	u.name like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'email' ">
+				AND	u.email like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'member_section' ">
+				AND	d.member_section like CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>					
+		LIMIT #{pageStart}, #{listSize}					
+	</select>
+	
+	
+	<select id="selectUserListCnt" resultType="int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			tbl_user u, tbl_user_detail d
+		WHERE 
+			u.id = d.id	
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'id' ">
+				AND	u.id like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'name' ">
+				AND	u.name like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'email' ">
+				AND	u.email like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'member_section' ">
+				AND	d.member_section like CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>					
+	</select>
+	
+	
+	<!-- 회원 정보 관리 -->
+	<select id="getUserInfo" resultType="user">
+		SELECT
+			u.id,
+			u.email,
+			u.name,
+			u.nickname,
+			d.mobile,
+			d.birth,
+			d.sex,
+			d.member_section
+		FROM
+			tbl_user u, tbl_user_detail d
+		WHERE
+			u.id = #{id} AND u.id = d.id		
+	</select>
+	
+	<!-- 정지 회원 확인 -->
+	<select id="getSuspendUserInfo" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user_suspend
+		WHERE
+			id = #{id}
+	</select>
+	
+	
+	<!-- 회원 정지 -->
+	<insert id="userSuspend" parameterType="user">
+		INSERT INTO tbl_user_suspend
+				(
+					id,
+					name,
+					email,
+					nickname,
+					suspend_term,
+					is_lock,
+					lock_dt
+				)
+		VALUES
+				(
+					#{id},
+					#{name},
+					#{email},
+					#{nickname},
+					#{suspend_term},
+					'Y',
+					now()
+				)	
+	</insert> 
+	
+	<select id="isAccountSuspend" resultType="String">
+		SELECT
+			is_lock
+		FROM
+			tbl_user_suspend
+		WHERE
+			id = #{id}
+	</select>
+	
+	<!-- 정지 해제 -->
+	<delete id="userSuspendClear" parameterType="user">
+		DELETE FROM
+			tbl_user_suspend
+		WHERE
+			id = #{id}
+		AND
+			DATE_SUB( now(), INTERVAL #{suspend_term} DAY) > lock_dt	
+	</delete>
+	
+	<delete id="userSuspendClearAdmin" parameterType="user">
+		DELETE FROM
+			tbl_user_suspend			
+		WHERE
+			id = #{id}
+	</delete>
+	
+	<!-- 회원 강제 탈퇴 -->
+	<delete id="ejectUserAdmin" parameterType="user">
+		DELETE
+			u, d, a 
+		FROM 
+			tbl_user u
+		INNER JOIN tbl_user_detail d ON u.id = d.id
+		INNER JOIN tbl_approval a ON u.id = a.id
+		WHERE
+			u.id = #{id}
+	</delete>
+	
+</mapper>    

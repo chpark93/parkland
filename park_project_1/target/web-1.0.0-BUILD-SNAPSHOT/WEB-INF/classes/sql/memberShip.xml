@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberShip">
+	
+	<!-- id 중복체크 -->
+	<select id="checkId" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_user
+		WHERE
+			id = #{id}	
+	</select>
+	
+	<!-- email 중복 체크 -->
+	<select id="checkEmail" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_user
+		WHERE
+			email = #{email}
+	</select>
+	
+	<select id="checkNickName" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_user
+		WHERE
+			nickname = #{nickname}
+	</select>
+	
+	<select id="getUserInfo" resultType="user">
+		SELECT
+			u.id,
+			u.email,
+			u.name,
+			u.nickname,
+			d.mobile,
+			d.birth,
+			d.sex,
+			d.member_section
+		FROM
+			tbl_user u, tbl_user_detail d
+		WHERE
+			u.id = #{id} AND u.id = d.id		
+	</select>
+	
+	<!-- 회원 등록 -->
+	<insert id="memberRegister" parameterType="memberShipVO">
+		INSERT INTO tbl_user
+				(
+					id,	
+					email,
+					name,
+					password,
+					nickname,
+					reg_dt
+				)
+		VALUES
+				(
+					#{id},
+					#{email},
+					#{name},
+					#{password},
+					#{nickname},
+					now()
+				)
+	</insert>
+	
+	<!-- 회원 등록(SNS) -->
+	<insert id="memberRegisterSns" parameterType="memberShipSnsVO">
+		INSERT INTO tbl_user
+				(
+					id,	
+					email,
+					name,
+					nickname,
+					authority,
+					reg_dt
+				)
+		VALUES
+				(
+					#{id},
+					#{email},
+					#{name},
+					#{nickname},
+					'ROLE_MEMBER',
+					now()
+				)
+	</insert>
+	
+	
+	
+	<!-- 회원가입 인증키 -->
+	<insert id="memberApproval">
+		INSERT INTO tbl_approval
+				(	
+					id,
+					approval_key,
+					approval_status		
+				)
+		VALUES
+				(
+					#{id},
+					#{approval_key},
+					'false'
+				)
+	</insert>
+	
+	<!-- 회원가입 승인 -->
+	<update id="approvalStatus">
+		UPDATE
+			tbl_approval a, tbl_user u
+		SET
+			a.approval_status = 'true',
+			u.authority = 'ROLE_MEMBER'
+		WHERE
+			u.id = #{id}
+		AND
+			a.approval_key = #{approval_key} 
+		AND 
+			u.authority = 'ROLE_USER'
+	</update>
+	
+	<!-- 회원가입 승인(SNS) -->
+	<insert id="approvalStatusSns">
+		INSERT INTO tbl_approval
+				(
+					id,
+					approval_key,
+					approval_status 
+				)
+		VALUES
+				(
+					#{id},
+					#{approval_key},
+					'true'
+				)
+	</insert>
+	
+	<!-- 회원 찾기(기본 회원) -->
+	<select id="findByEmail" resultType="memberShipVO">
+		SELECT
+			*
+		FROM
+			tbl_user
+		WHERE
+			email = #{email}			
+	</select>
+
+	
+	<!-- 비밀번호 찾기 (기본 회원)-->
+	<update id="findPw" parameterType="memberShipVO">
+		UPDATE
+			tbl_user
+		SET
+			password = #{password}
+		WHERE
+			email = #{email}		
+	</update>
+	
+	<!-- 회원 정보 변경 (기본 회원)-->
+	<update id="updateUserInfo" parameterType="memberShipVO">
+		UPDATE
+			tbl_user
+		SET
+			nickname = #{nickname}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 비밀번호 변경(기본 회원) -->
+	<update id="updateUserPw" parameterType="memberShipVO">
+		UPDATE
+			tbl_user
+		SET
+			password = #{password}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMemberShip" parameterType="user">
+		DELETE
+			u, d, a 
+		FROM 
+			tbl_user u
+		INNER JOIN tbl_user_detail d ON u.id = d.id
+		INNER JOIN tbl_approval a ON u.id = a.id
+		WHERE
+			u.id = #{id}
+	</delete>
+	
+	<select id="passwordCheck" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_user
+		WHERE
+			id = #{id} AND password = #{pw}
+	</select>
+	
+	
+	<!-- //////////////////// 회원 추가 정보 ///////////////////// -->
+	
+	<!-- 추가정보 입력 -->
+	<insert id="insertMemberShipDetail">
+		INSERT INTO tbl_user_detail
+				(
+					id,
+					email,
+					name,
+					nickname,
+					mobile,
+					birth,
+					sex,
+					member_section
+				)		
+		VALUES
+				(
+					#{id},
+					#{email},
+					#{name},
+					#{nickname},
+					#{mobile},
+					#{birth},
+					#{sex},
+					#{member_section}
+				)
+	</insert>
+	
+	<!-- 회원 정보(Detail) 수정 -->
+	<update id="updateMemberShipDetail">
+		UPDATE
+			tbl_user_detail
+		SET
+			nickname = #{nickname},
+			mobile = #{mobile},
+			birth = #{birth},
+			sex = #{sex}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 유저 프로필 이미지 -->
+	<update id="updateUserProfile">
+		UPDATE
+			tbl_user_detail
+		SET
+			profile_img =  
+				(
+					SELECT 
+						file_name
+					FROM
+						tbl_user_profile					
+					WHERE		
+						reg_id = #{id}
+				)
+		WHERE
+			id = #{id}
+	</update>
+	
+	<select id="getUserProfile" resultType="String">
+		SELECT
+			profile_img
+		FROM
+			tbl_user_detail
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getUserProfileNickName" resultType="String">
+		SELECT
+			profile_img
+		FROM
+			tbl_user_detail
+		WHERE
+			nickname = #{nickname}
+	</select>
+	
+	<select id="getUserDetailInfo" resultType="memberShipDetailVO">
+		SELECT
+			*
+		FROM
+			tbl_user_detail
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="deleteUserDetailProfile">
+		UPDATE
+			tbl_user_detail
+		SET
+			profile_img = NULL
+		WHERE
+			id = #{id}
+	</update>
+	
+	
+
+</mapper>

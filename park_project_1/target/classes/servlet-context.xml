@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+
+	<beans:bean id="loginInterceptor" class="com.park.web.interceptor.LoginInterceptor" />
+	<beans:bean id="authInterceptor" class="com.park.web.interceptor.AuthInterceptor" />
+
+	<mvc:interceptors>
+		
+		<!-- Login Interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/login/postLogin" />
+			<beans:ref bean="loginInterceptor" />
+		</mvc:interceptor>
+		
+		<!-- Auth Interceptor -->
+	    <mvc:interceptor> 
+	    	<mvc:mapping path="/board/**" />   
+	    	<mvc:mapping path="/restBoard2/**" /> 
+	    	<mvc:mapping path="/mypage/**" /> 
+	    	<mvc:mapping path="/message/**" /> 
+	    	<beans:ref bean="authInterceptor" /> 
+	    </mvc:interceptor>
+	
+	</mvc:interceptors>
+
+
+
+	<!-- oauth2 login -->
+	
+	<!-- Naver -->
+	<beans:bean id="naverClientID" class="java.lang.String">
+		<beans:constructor-arg value="YEKrxcPnJtvwkjK_SYbz" />
+	</beans:bean>
+	<beans:bean id="naverClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="K8LDYs0BpB" />
+	</beans:bean>
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://chparkland.com/park_project_1/login/auth/naver/callback" />
+	</beans:bean>
+
+	<beans:bean id="snsNaver" class="com.park.web.oauth.SnsValue">
+		<beans:constructor-arg value="naver" />
+		<beans:constructor-arg ref="naverClientID" />
+		<beans:constructor-arg ref="naverClientSecret" />
+		<beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+
+
+	<!-- Google -->
+	<beans:bean id="googleClientID" class="java.lang.String">
+		<beans:constructor-arg value="919440269162-rp9fr2d7schkgs3p1949e49ncd0js2fu.apps.googleusercontent.com" />
+	</beans:bean>
+	<beans:bean id="googleClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="G0rHks0fu5eROIDnGD-7uU-1" />
+	</beans:bean>
+	<beans:bean id="googleRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://chparkland.com/park_project_1/login/auth/google/callback" />
+	</beans:bean>
+
+	<beans:bean id="snsGoogle" class="com.park.web.oauth.SnsValue">
+		<beans:constructor-arg value="google" />
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+		<beans:constructor-arg ref="googleRedirectUrl" />
+	</beans:bean>
+	
+	<beans:bean id="googleOAuth2Template" class="org.springframework.social.google.connect.GoogleOAuth2Template">
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+	</beans:bean>
+
+	<beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<!-- <beans:property name="scope" value="https://www.googleapis.com/auth/userinfo.profile" /> -->
+		<beans:property name="scope" value="profile" />	
+		<beans:property name="redirectUri" ref="googleRedirectUrl" />
+	</beans:bean>
+	
+	
+	<!-- Kakao -->
+	<beans:bean id="kakaoClientID" class="java.lang.String">
+		<beans:constructor-arg value="c586580946d90e23acb162ba247ff093" />
+	</beans:bean>
+	<beans:bean id="kakaoClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="uOZ0y9SC2gFS17wgKnDwrSwKiVG8W82y" />
+	</beans:bean>
+	<beans:bean id="kakaoRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://chparkland.com/park_project_1/login/auth/kakao/callback" />
+	</beans:bean> 
+
+	<beans:bean id="snsKakao" class="com.park.web.oauth.SnsValue">
+		<beans:constructor-arg value="kakao" />
+		<beans:constructor-arg ref="kakaoClientID" />
+		<beans:constructor-arg ref="kakaoClientSecret" />
+		<beans:constructor-arg ref="kakaoRedirectUrl" />
+	</beans:bean>
+	
+	
+	<context:component-scan base-package="com.park.web" />
+	
+
+</beans:beans>

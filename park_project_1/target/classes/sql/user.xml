@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	
+
+	<select id="selectUserById" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user, tbl_approval
+		WHERE
+			tbl_user.id = tbl_approval.id
+		AND	
+			tbl_user.id = #{id}
+	</select>
+	
+	<select id="selectUserByNickname" resultType="user">
+		SELECT
+			id,
+			nickname,
+			email
+		FROM
+			tbl_user
+		WHERE
+			nickname = #{nickname}
+	</select>
+	
+	
+	<select id="selectUserList" resultType="memberShipVO">
+		SELECT DISTINCT
+			u.id,
+			u.name,	
+			u.password,
+			u.email,
+			u.reg_dt,
+			a.approval_status
+		FROM
+			tbl_user u, tbl_approval a
+		WHERE 
+			u.id = a.id
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="searchType == 'id' ">
+					AND	tbl_user.id like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'name' ">
+					AND	tbl_user.name like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'email' ">
+					AND	tbl_user.email like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'approval_status' ">
+					AND	tbl_approval.approval_status like CONCAT('%', #{keyword}, '%') 
+				</if>
+			</if>
+		</trim>				
+		LIMIT #{pageStart}, #{listSize}					
+	</select>
+	
+	
+	<select id="selectUserListCnt" resultType="int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			tbl_user, tbl_approval
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="searchType == 'id' ">
+					AND	id like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'name' ">
+					AND	name like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'email' ">
+					AND	email like CONCAT('%', #{keyword}, '%') 
+				</if>
+				<if test="searchType == 'approval_status' ">
+					AND	approval_status like CONCAT('%', #{keyword}, '%') 
+				</if>
+			</if>
+		</trim>				
+	</select>
+	
+
+	<select id="login" resultType="user">
+		SELECT
+			* 
+		FROM
+			tbl_user
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="loginSession" parameterType="user">
+		UPDATE tbl_user SET session_key = #{session_key}, session_limit = #{session_limit}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<select id="loginCheck" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user
+		WHERE
+			session_key = #{loginCookie} and session_limit > now()
+	</select>
+	
+	<select id="getByNaver" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getByGoogle" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getByKakao" resultType="user">
+		SELECT
+			*
+		FROM
+			tbl_user
+		WHERE
+			id = #{id}
+	</select>
+	
+	
+	<!-- 로그인 시도(계정 잠금) -->
+	<update id="loginSuccessReset" parameterType="user">
+		UPDATE
+			tbl_approval
+		SET
+			login_fail_cnt = 0,
+			is_lock = 'N',
+			lock_dt = NULL
+		WHERE
+			id = #{id}	
+	</update>
+	
+	<update id="loginFailCnt" parameterType="user">
+		UPDATE
+			tbl_approval
+		SET
+			login_fail_cnt = login_fail_cnt + 1
+		WHERE
+			id = #{id}
+	</update>
+		
+	<update id="updateLoginAccountLock" parameterType="user">
+		UPDATE
+			tbl_approval
+		SET
+			is_lock = 'Y',
+			lock_dt = now()
+		WHERE
+			id = #{id} AND login_fail_cnt >= 5	
+	</update>	
+	
+	<select id="isAccountLock" resultType="String">
+		SELECT
+			is_lock
+		FROM
+			tbl_approval			
+		WHERE
+			id = #{id}
+	</select>
+	
+
+	<update id="loginSuccessResetAfter" parameterType="user">
+		UPDATE
+			tbl_approval
+		SET
+			login_fail_cnt = 0,
+			is_lock = 'N',
+			lock_dt = NULL
+		WHERE
+			id = #{id} 
+		AND
+			DATE_ADD( now(), INTERVAL -10 MINUTE) > lock_dt 		
+	</update>
+</mapper>    

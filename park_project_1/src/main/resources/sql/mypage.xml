@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mypage">
+	
+	<!-- boardList from id -->
+	<select id="getBoardListPagingFromId" resultType="board">
+		SELECT
+			b.bid, 
+			b.title, 
+			b.content, 
+			b.view_cnt,
+			b.reg_id, 
+			b.reg_nickname,
+			<![CDATA[
+			IF	(
+	                DATE_FORMAT(b.reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(b.reg_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(b.reg_dt, '%H:%i')
+                ) as reg_dt,
+            ]]> 
+			b.edit_dt, 
+			b.reply_view_cnt, 
+			b.bg_no,
+			g.bg_name
+		FROM
+			tbl_board b, tbl_board_group g
+		WHERE
+			b.reg_id = #{loginUser} AND b.bg_no = g.bg_no	
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'title' ">
+				AND	title like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'content' ">
+				AND	content like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'title_content' ">
+				AND (
+						title like CONCAT('%', #{keyword}, '%')
+					or	content like CONCAT('%', #{keyword}, '%')
+					)
+			</if>
+		</if>
+		ORDER BY bid DESC
+		LIMIT #{pageStart}, #{listSize}
+	</select>
+	
+	<select id="getBoardListPagingFromIdCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_board
+		WHERE
+			reg_id = #{id}
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'title' ">
+				AND	title like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'content' ">
+				AND	content like CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'title_content' ">
+				AND (
+						title like CONCAT('%', #{keyword}, '%')
+					or	content like CONCAT('%', #{keyword}, '%')
+					)
+			</if>
+		</if>
+	</select>
+	
+	<!-- board delete -->
+	<delete id="deleteMyPageBoard">
+		DELETE FROM tbl_board
+		WHERE
+			bid = #{bid}
+	</delete>
+	
+	
+	<!-- replyList from id -->
+	<select id="getReplyListPagingFromId" resultType="reply">
+		SELECT
+			r.rid, 
+			r.bid, 
+			r.rcontent, 
+			r.reg_id, 
+			r.reg_nickname,
+			<![CDATA[ 
+			IF	(
+	                DATE_FORMAT(r.reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(r.reg_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(r.reg_dt, '%H:%i')
+                ) as reg_dt,
+            ]]> 
+			r.edit_dt,
+			b.title
+		FROM
+			tbl_reply r, tbl_board b
+		WHERE
+			r.reg_id = #{loginUser} AND r.bid = b.bid
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'rcontent' ">
+				AND	rcontent like CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>	
+		ORDER BY rid DESC
+		LIMIT #{pageStart}, #{listSize}
+	</select>
+	
+	
+	<select id="getReplyListPagingFromIdCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_reply
+		WHERE 
+			reg_id = #{id}
+		<if test="keyword != null and keyword != '' ">
+			<if test="searchType == 'rcontent' ">
+				AND	rcontent like CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>	
+	</select>
+	
+	<!-- reply delete -->
+	<delete id="deleteMyPageReply">
+		DELETE FROM tbl_reply
+		WHERE
+			rid = #{rid}
+	</delete>
+		
+		
+	<!-- Alarm -->
+	<select id="getBoardAlarm" resultType="reply">
+		SELECT
+			*
+		FROM
+			tbl_reply
+		WHERE
+			reg_nickname = #{reg_nickname} AND rid = #{rid}
+	</select>
+	
+	<select id="getBoardRegIdFromBid" resultType="String">
+		SELECT
+			reg_id
+		FROM
+			tbl_board
+		WHERE
+			bid = #{bid}
+	</select>
+	
+	
+	<select id="getMessageAlarm" resultType="messageVO">
+		SELECT
+			*
+		FROM
+			tbl_message_receive
+		WHERE
+			message_sender = #{message_sender} AND message_serial = #{message_serial}
+	</select>
+	
+	<insert id="insertAlarm" parameterType="alarmVO">
+		INSERT INTO tbl_alarm
+				(
+					target_id,
+					nickname,
+					msg,
+					alert_dt
+				)	
+		VALUES
+				(
+					#{target_id},
+					#{nickname},
+					#{msg},
+					now()
+				)
+	</insert>
+	
+	<!-- alarmList from id -->
+	<select id="getAlarmListPagingFromId" resultType="alarmVO">
+		SELECT
+			aid,
+			target_id, 
+			nickname,
+			msg,
+			<![CDATA[ 
+			IF	(
+	                DATE_FORMAT(alert_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
+	                DATE_FORMAT(alert_dt, '%Y-%m-%d'),
+	                DATE_FORMAT(alert_dt, '%H:%i')
+                ) as alert_dt
+            ]]> 		
+		FROM
+			tbl_alarm
+		WHERE
+			target_id = #{loginUser}	
+		ORDER BY aid DESC
+		LIMIT #{pageStart}, #{listSize}
+	</select>
+	
+	
+	<select id="getAlarmListPagingFromIdCnt" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tbl_alarm
+		WHERE
+			target_id = #{id}
+	</select>
+	
+	<select id="getAlarmAllCnt" resultType="int">
+		SELECT	
+			count(*)
+		FROM
+			tbl_alarm
+		WHERE
+			target_id = #{loginUser}
+	</select>
+	
+	<!-- alarm delete -->
+	<delete id="deleteMyPageAlarm">
+		DELETE FROM tbl_alarm
+		WHERE
+			aid = #{aid}
+	</delete>
+	
+	<delete id="deleteMyPageAlarmExpired">
+		DELETE FROM tbl_alarm
+		WHERE
+			DATE_SUB( now(), INTERVAL 7 DAY) > alert_dt
+	</delete>
+		
+</mapper>    
