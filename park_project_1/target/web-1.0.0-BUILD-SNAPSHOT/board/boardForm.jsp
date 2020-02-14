@@ -53,7 +53,7 @@
 												<form:input path="reg_nickname" type="text" class="form-control" id="reg_nickname" value="${user.nickname}" readonly="true" />												
 											</c:when>
 											<c:when test="${mode == 'edit'}">
-												<form:input path="reg_id" type="hidden" class="form-control" id="reg_id" value="${boardContent.id}"/>
+												<form:input path="reg_id" type="hidden" class="form-control" id="reg_id" value="${boardContent.reg_id}"/>
 												<form:input path="reg_nickname" type="text" class="form-control" id="reg_nickname" value="${boardContent.reg_nickname}" readonly="true" />
 											</c:when>
 										</c:choose>
@@ -115,7 +115,7 @@
 								<br/>
 								
 								<div class="box-footer">      
-					                <ul class="mailbox-attachments clearfix uploadedFileList" style="display: inline;"></ul>
+					                <ul class="attachments clearfix uploadedFileList" style="display: inline;"></ul>
 					            </div>
 					            <br/><br/>
 					            
@@ -142,11 +142,11 @@
 <!-- 파일 업로드 -->
 <script id="fileTemplate" type="text/x-handlebars-template">
     <div style="width: 100px; float:left; margin-right: 12px;">
-        <span class="mailbox-attachment-icon has-img">
- 			<a href="{{ori_fileUrl}}" class="mailbox-attachment-name">
+        <span class="attachment-icon has-img">
+ 			<a href="{{ori_fileUrl}}" class="attachment-name">
                 <img src="{{imgSrc}}" alt="Attachment> 
             </a>           
-        	<div class="mailbox-attachment-info">
+        	<div class="attachment-info">
 				<a href="{{ori_fileUrl}}" class="attachment-name" style="display: none;">
                 	<i class="fa fa-paperclip"></i> {{ori_fileName}} 
            	 	</a>
@@ -157,7 +157,7 @@
         </span>
     </div>
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/common/js/file_upload.js?ver=1.6"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/common/js/file_upload.js?ver=1.5"></script>
 <script>
 	
 $(document).ready(function() {

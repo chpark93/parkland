@@ -24,9 +24,10 @@
 				<!-- User List(Admin) -->
 				<article>
 					<div>
-						<div class="align-center">
-							<h2>User List</h2>
+						<div>
+							<h2>유저 리스트</h2>
 						</div>
+						<br/>
 						
 						<div class="table-responsive">
 							<table class="table table-striped table-sm">

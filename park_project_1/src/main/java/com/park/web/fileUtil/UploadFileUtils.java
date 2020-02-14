@@ -2,6 +2,7 @@ package com.park.web.fileUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.UUID;
@@ -27,7 +28,8 @@ public class UploadFileUtils {
 
     	S3Utils s3 = new S3Utils();
 		String bucketName = "chparklandbucket";
-    	
+		String inputDirectory = "upload";
+				
         String ori_fileName = file.getOriginalFilename(); //파일명
         byte[] fileData = file.getBytes();  //파일 데이터
 
@@ -37,7 +39,7 @@ public class UploadFileUtils {
         //파일 업로드 경로 설정
         String rootPath = getRootPath(ori_fileName, request); //기본 경로 추출
         String datePath = getDatePath(rootPath); //날짜 경로 추출, 날짜 생성
-
+        	
         //서버에 파일 저장
         File target = new File(rootPath + datePath, uuidFileName); //파일 객체 생성
         FileCopyUtils.copy(fileData, target); //파일 객체에 파일 데이터 복사
@@ -45,9 +47,11 @@ public class UploadFileUtils {
         //썸네일이미지 생성
         if (MediaUtils.getMediaType(ori_fileName) != null) {
             uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
+            //uuidFileName = makeThumbnail(bucketName, inputDirectory + datePath, uuidFileName);
+            
         }
         
-        s3.fileUpload(bucketName, uuidFileName, fileData);
+        s3.fileUpload(bucketName, inputDirectory + datePath + "/" + uuidFileName, fileData);
 
         //파일 저장 경로 치환
         return replaceFilePath(datePath, uuidFileName);
@@ -120,13 +124,18 @@ public class UploadFileUtils {
     //기본 경로 
     public static String getRootPath(String fileName, HttpServletRequest request) {
     	
-        String rootPath = "/resources/upload";
+        //String rootPath = "/resources/upload";
+        String rootPath = "http://s3.console.aws.amazon.com/s3/buckets/chparklandbucket/upload";
+        
         MediaType mediaType = MediaUtils.getMediaType(fileName); //파일타입 확인
         
-        if (mediaType != null)
-            return request.getSession().getServletContext().getRealPath(rootPath + "/images"); //이미지 경로
-
-        return request.getSession().getServletContext().getRealPath(rootPath + "/files"); //일반파일 경로
+        if (mediaType != null) {
+            //return request.getSession().getServletContext().getRealPath(rootPath + "/images"); //이미지 경로
+        	return request.getSession().getServletContext().getRealPath(rootPath); //이미지 경로
+        }
+        
+        //return request.getSession().getServletContext().getRealPath(rootPath + "/files"); //일반파일 경로
+        return request.getSession().getServletContext().getRealPath(rootPath); //일반파일 경로
     }
     
     //날짜 폴더명
@@ -172,7 +181,7 @@ public class UploadFileUtils {
 
     //썸네일 생성
     private static String makeThumbnail(String uploadRootPath, String datePath, String fileName) throws Exception {
-
+    	
         //원본이미지 메모리상에 로딩
         BufferedImage ori_img = ImageIO.read(new File(uploadRootPath + datePath, fileName));
         

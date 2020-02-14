@@ -9,7 +9,7 @@
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
 
 <script
-	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.4">
+	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.3">
 </script>
 
 <title>Board Content</title>
@@ -22,13 +22,14 @@
 		
 		<!-- Main -->
 		<div id="main">
+		
 			<div class="inner">
 				
 				<!-- Header -->
 				<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 				<br/><br/>
 				
-					<div class="main special">
+					<div>
 					<div class="box" id="box">
 						<div class="col-6 col-12-xsmall">
 							<label class="col-sm-5 control-label" style="margin-bottom : 10px; font-size : 18px"><c:out value="${boardContent.title}"/> </label>
@@ -134,7 +135,7 @@
 					
 							
 							<!-- pagination(start) -->
-							<div class="paginationBox" >
+							<div class="paginationBox align-center" >
 								<div style="text-align: center;">
 									<ul class="pagination" id="pagination" style="margin-top: 10px">
 									</ul>

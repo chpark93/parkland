@@ -10,15 +10,21 @@
 <title>MemberShip Detail</title>
 </head>
 <body>
-	<div class="container" >
-		<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">	       
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+	 			
+	<div id="main">
+		<br/><br/>
+		
+		<div class="inner" style="width: 50%; height: 50%;">	       
 			<!-- Header -->	
 			<div class="form-header align-center">
 	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/initPage/main.jsp">#ChPark</a></label>
 	        	<label style="font-size:24px;">회원 정보</label>
 	        </div>
 	      
-	        <div class="box" style="width:600px;">
+	        <div class="box">
 				
 				<form:form name="form" id="form" class="form" role="form" modelAttribute="userVO" style="margin-left: auto; margin-right: auto;"
 					action="${pageContext.request.contextPath}/memberShip/updateUserInfo" method="post">
@@ -144,6 +150,8 @@
 				</form:form>
 			</div>
 		</div>
+		<br/><br/><br/>
+	</div>
 	</div>
 <%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>
 </body>

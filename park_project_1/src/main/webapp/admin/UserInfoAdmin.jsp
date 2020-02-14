@@ -11,20 +11,21 @@
 </head>
 <body class="is-preload">
 	
-	<div class="container">
+	<!-- Wrapper -->
+	<div id="wrapper">
+	
 		<div id="main">
-		
-			<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">	       
+			<br/><br/><br/>
+			<div class="inner" style="width: 50%; height: 50%;">	       
 				
 				<!-- Header -->	
-				<%@ include file="/WEB-INF/views/layout/header.jsp"%>
-				<br/><br/>
+				<%-- <%@ include file="/WEB-INF/views/layout/header.jsp"%> --%>	
 				
 				<div class="align-center">
 		        	<label style="font-size:24px;">회원 정보(관리자용)</label>
 		        </div>
 		      
-		        <div class="box" style="width:600px;">
+		        <div class="box">
 					<div class="">
 						
 						<!-- 아이디 -->
@@ -81,6 +82,7 @@
 				</div>
 			</div>
 		</div>
+		<br/><br/><br/>
 		<!-- Sidebar -->
 		<%@ include file="/WEB-INF/views/layout/sidebar.jsp"%>	
 		<%@ include file="/WEB-INF/views/layout/messageModal.jsp"%>

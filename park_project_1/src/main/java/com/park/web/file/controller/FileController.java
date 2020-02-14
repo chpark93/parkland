@@ -6,7 +6,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,18 +34,19 @@ public class FileController {
 	S3Utils s3 = new S3Utils();
 	String bucketName = "chparklandbucket";
 	
-	
-	
 	//업로드
 	@RequestMapping(value="/uploadFile", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) throws Exception{
 		ResponseEntity<String> entity = null;
+		String inputDirectory = "upload";
 		
 		try {
 			String savedFilePath = UploadFileUtils.uploadFile(file, request);
 			entity = new ResponseEntity<String>(savedFilePath, HttpStatus.CREATED);
+			//entity = new ResponseEntity<String>(bucketName + inputDirectory + savedFilePath, HttpStatus.CREATED);
 			
 			System.out.println("savedFilePath : " + savedFilePath);
+			System.out.println("FilePath : " + bucketName + inputDirectory + savedFilePath);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -62,24 +62,29 @@ public class FileController {
 	public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws Exception {
 		ResponseEntity<byte[]> entity = null;
 		InputStream in = null;
+		String inputDirectory = "upload";
 		
 		HttpHeaders httpHeaders = UploadFileUtils.getHttpHeaders(fileName); //http 헤더 설정 가져오기
 		String rootPath = UploadFileUtils.getRootPath(fileName, request); //업로드 기본 경로
 		
 		//데이터, HttpHeader 전송 
-		try(InputStream is = new FileInputStream(rootPath + fileName)) {
+		//try(InputStream is = new FileInputStream(rootPath + fileName)) {
+		try {
 			
 			URL url;
 			
 			try {
-				url = new URL(s3.getFileURL(bucketName, fileName));
+				url = new URL(s3.getFileURL(bucketName, inputDirectory + fileName));
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-				in = urlConnection.getInputStream(); // 이미지를 불러옴
+				in = urlConnection.getInputStream(); //이미지를 불러옴
+				//in = new FileInputStream(s3.getFileURL(bucketName, inputDirectory + fileName));
+			
 			} 
 			catch (Exception e) {
 				url = new URL(s3.getFileURL(bucketName, "default.jpg"));
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 				in = urlConnection.getInputStream();
+				//in = new FileInputStream(s3.getFileURL(bucketName, inputDirectory + "default.jpg"));
 			}
 
 			//entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), httpHeaders, HttpStatus.CREATED);
@@ -116,10 +121,11 @@ public class FileController {
 	@RequestMapping(value="/deleteFile", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String fileName, HttpServletRequest request) throws Exception {
 		ResponseEntity<String> entity = null;
+		String inputDirectory = "upload";
 		
 		try {
 			UploadFileUtils.deleteFile(fileName, request);
-			s3.fileDelete(bucketName, fileName);
+			s3.fileDelete(bucketName, inputDirectory + fileName);
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);
 		}
 		catch(Exception e) {
@@ -134,10 +140,11 @@ public class FileController {
 	@RequestMapping(value="/deleteFile/{bid}", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(@PathVariable("bid") Integer bid, String fileName, HttpServletRequest request) throws Exception {
 		ResponseEntity<String> entity = null;
+		String inputDirectory = "upload";
 		
 		try {
 			UploadFileUtils.deleteFile(fileName, request);
-			s3.fileDelete(bucketName, fileName);
+			s3.fileDelete(bucketName, inputDirectory + fileName);
 			fileservice.deleteFile(bid, fileName);
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);
 			
@@ -154,6 +161,7 @@ public class FileController {
 	@RequestMapping(value="/deleteAllFiles", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteAllFiles(@RequestParam("files[]") String[] files, HttpServletRequest request) throws Exception {
 		ResponseEntity<String> entity = null;
+		String inputDirectory = "upload";
 		
 		if(files == null || files.length == 0) {
 			return new ResponseEntity<String>("delete", HttpStatus.OK);
@@ -161,7 +169,7 @@ public class FileController {
 		
 		try {
 			for(String fileName : files) {
-				s3.fileDelete(bucketName, fileName);
+				s3.fileDelete(bucketName, inputDirectory + fileName);
 				UploadFileUtils.deleteFile(fileName, request);
 			}
 			entity = new ResponseEntity<String>("delete", HttpStatus.OK);

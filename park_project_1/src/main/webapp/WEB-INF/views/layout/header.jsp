@@ -104,6 +104,58 @@
 
 
 <script>
+
+//댓글  WebSocket
+var socket = null;
+
+$(document).ready(function() {
+	
+	connectWebSocket();
+
+});
+	
+function connectWebSocket() {
+	    
+	//var ws = new WebSocket("ws://chparkland.com/replyEcho/websocket");
+	var ws = new WebSocket("ws://localhost:8090/web/replyEcho/websocket");
+	socket = ws;
+	
+	ws.onopen = function () {
+	    console.log('Info: connection opened.');
+	   
+	};
+	
+	ws.onmessage = function (e) {
+	    console.log("Receive Message : ", e.data + '\n');
+	
+		var $alertSocket = $("div#alertSocket");
+				
+		$alertSocket.html(e.data);
+		$alertSocket.css('display', 'block');
+		
+		setTimeout( function() {
+        	$alertSocket.css('display', 'none');
+        }, 8000);
+		
+		//$(".notification").append(e.data);
+	};
+	
+	
+	ws.onclose = function (e) { 
+		console.log('Info: connection closed.'); 
+	
+	};
+	
+	ws.onerror = function (e) { 
+		console.log('Info: connection closed.'); 
+		
+	};
+	
+}
+
+</script>
+
+<script>
 	var el = document.querySelector('.notification');
 
     var count = Number(el.getAttribute('data-count')) || 0;
@@ -119,3 +171,5 @@
     
 
 </script>
+
+

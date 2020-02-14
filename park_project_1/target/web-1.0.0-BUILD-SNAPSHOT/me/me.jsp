@@ -110,7 +110,7 @@
 						<p>프레임 워크 : Spring Framework, MyBatis</p>							
 						<p>DB : MariaDB</p>													
 						<p>Tools : STS, HeidiSql, Putty </p>							
-						<p>개발 기간 : 2019.10 ~ 2020.01 </p>							
+						<p>개발 기간 : 2019.10 ~ 2020.02 </p>							
 					</section>
 				</div>
 			</div>

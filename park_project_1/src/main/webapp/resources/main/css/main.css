@@ -2349,6 +2349,8 @@ input, select, textarea {
 		cursor: default;
 		list-style: none;
 		padding-left: 0;
+		min-width: 600px;
+		
 	}
 
 		ul.pagination li {
@@ -2395,7 +2397,8 @@ input, select, textarea {
 			ul.pagination li:last-child {
 				padding-left: 0.75em;
 			}
-
+		
+		/* 		
 		@media screen and (max-width: 480px) {
 
 			ul.pagination li:nth-child(n+2):nth-last-child(n+2) {
@@ -2406,7 +2409,8 @@ input, select, textarea {
 				padding-right: 0;
 			}
 
-		}
+		} 
+		*/
 
 /* Table */
 
@@ -3003,7 +3007,8 @@ input, select, textarea {
 		-ms-flex-direction: row-reverse;
 		flex-direction: row-reverse;
 		min-height: 100vh;
-		min-width: 600px;
+		min-width: 768px;
+		/* min-width: 100vh */;
 	}
 
 	#wrapper {
@@ -3031,7 +3036,7 @@ input, select, textarea {
 			margin: 0 auto;
 			/* max-width: 110em; */
 			max-width: 960px;
-			min-width: 600px;
+			min-width: 768px;
 		}
 
 			#main > .inner > section {
@@ -3066,8 +3071,9 @@ input, select, textarea {
 				}
 
 		} 
-
-		@media screen and (max-width: 736px) {
+		
+		/* 
+		@media screen and (max-width: 768px) {
 
 			#main > .inner {
 				padding: 0 2em 0.1em 2em ;
@@ -3077,8 +3083,7 @@ input, select, textarea {
 					padding: 3em 0 1em 0 ;
 				}
 
-		}
-		
+		} */
 		
 
 /* Sidebar */

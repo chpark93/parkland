@@ -9,16 +9,22 @@
 <title>MemberShip</title>
 </head>
 <body>
-	<div class="container" >
-		<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">	       
+	
+	<!-- Wrapper -->
+	<div id="wrapper">
+	
+	<div id="main">
+		<br/><br/>
+		
+		<div class="inner" style="width: 50%; height: 50%;">	       
 			
 			<!-- Header -->	
-			<div class="form-header align-center">
+			<div class="align-center">
 	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/main/mainPage" >#ChPark</a></label>
 	        	<label style="font-size:24px;">회원 가입(SNS)</label>
 	        </div>
 	      
-	        <div class="box" style="width:600px;">
+	        <div class="box" >
 	
 				<form:form id="joinForm" modelAttribute="memberShipSnsVO" action="${pageContext.request.contextPath}/memberShip/memberRegisterSns" method="post">
 					<div class="">
@@ -86,7 +92,10 @@
 				</form:form>
 			</div>
 		</div>
+		<br/><br/><br/>
+		
 	</div>	
+	</div>
 <%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>	
 </body>
 

@@ -58,23 +58,14 @@ $('.fileDropProfile').on("drop", function(e){
 		//메소드 호출
 		uploadFile(formData);
 		
-		/*	
-		if() {
-			alert("프로필 이미지를 업로드 했습니다.");
-			
-		}
-		else {
-			alert("이미지 파일만 업로드 가능합니다");
-			return false;
-		}
-		*/
+	
 	}
 });
 
 
 function uploadFile(formData) {
 	
-	var url = "../file/uploadFile";
+	var url = "/file/uploadFile";
 	
 	$.ajax({	
 		url : url,
@@ -129,7 +120,7 @@ function filesSubmit(lastTem) {
 
 //파일 목록(게시글)
 function getFiles(bid) {
-	$.getJSON("../file/getFiles/" + bid, function(list){
+	$.getJSON("/file/getFiles/" + bid, function(list){
 		 
 		if(list.length === 0) {
 			$(".uploadedFileList").html("<span class='noAttach'>첨부파일이 없습니다</span>");
@@ -144,14 +135,14 @@ function getFiles(bid) {
 
 //파일 삭제(boardForm)
 function deleteFilePage(lastTem) {
-	var url = "../file/deleteFile";
+	var url = "/file/deleteFile";
 	
 	deleteFile(url, lastTem);
 }
 
 //파일 삭제(updateBoard)
 function deleteFileModPage(lastTem, bid) {
-	var url = "../file/deleteFile/" + bid;
+	var url = "/file/deleteFile/" + bid;
 	
 	deleteFile(url, lastTem);
 }
@@ -186,15 +177,15 @@ function getFileInfo(fullName) {
 	//이미지
 	if(checkImgType(fullName)) {
 		//썸네일 링크
-		imgSrc = "../file/displayFile?fileName=" + fullName;
-		uuidFileName = fullName.substr(14);
+		imgSrc = "/file/displayFile?fileName=" + fullName;
+		uuidFileName = fullName.substr(12);
 		
-		var ori_img = fullName.substr(0, 12) + fullName.substr(14);
+		var ori_img = fullName.substr(0, 12) + fullName.substr(12);
 		//원본 이미지 링크
-		ori_fileUrl = "../file/displayFile?fileName=" + ori_img;
+		ori_fileUrl = "/file/displayFile?fileName=" + ori_img;
 	}
 	else {
-		imgSrc = "../resources/img/fileIcon.jpg";
+		imgSrc = "/resources/img/fileIcon.jpg";
 		uuidFileName = fullName.substr(12);
 		
 		//파일 다운로드 링크

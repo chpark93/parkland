@@ -13,16 +13,22 @@
 
 </head>
 <body>
-	<div class="container" >
-		<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">	       
+					
+	<!-- Wrapper -->
+	<div id="wrapper">	
+	
+	<div id="main" >
+		<br/><br/>
+		
+		<div class="inner" style="width: 50%; height: 50%;">	       
 			
 			<!-- Header -->	
-			<div class="form-header align-center">
+			<div class="align-center">
 	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/main/mainPage">#ChPark</a></label>
 	        	<label style="font-size:24px;">프로필 이미지 변경</label>
 	        </div>
 	      
-	        <div class="box" style="width:600px;">
+	        <div class="box">
 				
 				<form:form id="form" role="form" method="post" modelAttribute="userVO" enctype="multipart/form-data"
 					action="${pageContext.request.contextPath}/memberShip/updateUserProfile">
@@ -86,8 +92,9 @@
 						
 				</form:form>
 			</div>
-			<br/><br/>
+			<br/><br/><br/>
 		</div>
+	</div>
 	</div>
 <%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>
 </body>
