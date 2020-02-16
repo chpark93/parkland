@@ -188,15 +188,12 @@
 <!-- script -->
 <script id="fileTemplate" type="text/x-handlebars-template">
     <div style="width: 100px; float:left; margin-right: 12px;">
-        <span class="attachment-icon has-img">
- 			<a href="{{ori_fileUrl}}" class="attachment-name">
-                <img src="{{imgSrc}}" alt="Attachment> 
-            </a>           
-        	<div class="attachment-info">
-				<a href="{{ori_fileUrl}}" class="attachment-name" style="display: none;">
-                	<i class="fa fa-paperclip"></i> {{ori_fileName}} 
+        <span class="attachment-icon has-img">				
+			<div class="attachment-info">
+				<a href="{{ori_fileUrl}}" class="attachment-name">
+ 	              	<img src="{{imgSrc}}" alt="Attachment" style="width: 100px; height: 100px;"> 
            	 	</a>
-        	</div>
+        	</div>           
         </span>
     </div>
 </script>

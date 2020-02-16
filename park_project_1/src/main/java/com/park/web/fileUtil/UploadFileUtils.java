@@ -29,9 +29,9 @@ public class UploadFileUtils {
     	S3Utils s3 = new S3Utils();
 		String bucketName = "chparklandbucket";
 		String inputDirectory = "upload";
-				
-        String ori_fileName = file.getOriginalFilename(); //파일명
-        byte[] fileData = file.getBytes();  //파일 데이터
+			   	
+        String ori_fileName = file.getOriginalFilename();	//파일명
+        byte[] fileData = file.getBytes();	//파일 데이터
 
         //파일명 중복 방지 
         String uuidFileName = getUuidFileName(ori_fileName);
@@ -39,16 +39,15 @@ public class UploadFileUtils {
         //파일 업로드 경로 설정
         String rootPath = getRootPath(ori_fileName, request); //기본 경로 추출
         String datePath = getDatePath(rootPath); //날짜 경로 추출, 날짜 생성
-        	
+        	   
         //서버에 파일 저장
         File target = new File(rootPath + datePath, uuidFileName); //파일 객체 생성
         FileCopyUtils.copy(fileData, target); //파일 객체에 파일 데이터 복사
 
         //썸네일이미지 생성
         if (MediaUtils.getMediaType(ori_fileName) != null) {
-            uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
-            //uuidFileName = makeThumbnail(bucketName, inputDirectory + datePath, uuidFileName);
-            
+           uuidFileName = makeThumbnail(rootPath, datePath, uuidFileName);
+           
         }
         
         s3.fileUpload(bucketName, inputDirectory + datePath + "/" + uuidFileName, fileData);
@@ -57,9 +56,14 @@ public class UploadFileUtils {
         return replaceFilePath(datePath, uuidFileName);
     }
     
+    
     //ckeditor uploadFile
     public static String ckeditorUploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
-    	 
+    	
+    	S3Utils s3 = new S3Utils();
+		String bucketName = "chparklandbucket";
+		String inputDirectory = "upload";
+    	
 		String ori_fileName = file.getOriginalFilename(); //파일명
 	    byte[] fileData = file.getBytes();  //파일 데이터
         
@@ -74,6 +78,8 @@ public class UploadFileUtils {
         File target = new File(rootPath + datePath, uuidFileName); //파일 객체 생성
         FileCopyUtils.copy(fileData, target); //파일 객체에 파일 데이터 복사
  
+        s3.fileUpload(bucketName, inputDirectory + datePath + "/" + uuidFileName, fileData);
+        
         //파일 저장 경로 치환
         return replaceFilePath(datePath, uuidFileName);
     }

@@ -12,7 +12,7 @@
 <title>Message</title>
 </head>
 <body class="is-preload">
-	<div id="wrapper">
+	<div id="wrapper" style="height: 1000px;">
 	
 		<!-- Main -->
 		<div id="main">

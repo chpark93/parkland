@@ -43,10 +43,8 @@ public class FileController {
 		try {
 			String savedFilePath = UploadFileUtils.uploadFile(file, request);
 			entity = new ResponseEntity<String>(savedFilePath, HttpStatus.CREATED);
-			//entity = new ResponseEntity<String>(bucketName + inputDirectory + savedFilePath, HttpStatus.CREATED);
 			
 			System.out.println("savedFilePath : " + savedFilePath);
-			System.out.println("FilePath : " + bucketName + inputDirectory + savedFilePath);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -68,7 +66,6 @@ public class FileController {
 		String rootPath = UploadFileUtils.getRootPath(fileName, request); //업로드 기본 경로
 		
 		//데이터, HttpHeader 전송 
-		//try(InputStream is = new FileInputStream(rootPath + fileName)) {
 		try {
 			
 			URL url;
@@ -77,14 +74,14 @@ public class FileController {
 				url = new URL(s3.getFileURL(bucketName, inputDirectory + fileName));
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 				in = urlConnection.getInputStream(); //이미지를 불러옴
-				//in = new FileInputStream(s3.getFileURL(bucketName, inputDirectory + fileName));
+				
 			
 			} 
 			catch (Exception e) {
 				url = new URL(s3.getFileURL(bucketName, "default.jpg"));
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 				in = urlConnection.getInputStream();
-				//in = new FileInputStream(s3.getFileURL(bucketName, inputDirectory + "default.jpg"));
+				
 			}
 
 			//entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), httpHeaders, HttpStatus.CREATED);

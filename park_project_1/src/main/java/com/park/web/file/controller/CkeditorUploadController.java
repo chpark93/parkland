@@ -2,8 +2,11 @@ package com.park.web.file.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.JsonObject;
+import com.park.web.fileUtil.S3Utils;
 import com.park.web.fileUtil.UploadFileUtils;
 
 @Controller
@@ -32,8 +36,7 @@ public class CkeditorUploadController {
 	@RequestMapping(value="/ckeditorUpload", method=RequestMethod.POST)
     public void ckeditorUpload(HttpServletRequest request, HttpServletResponse response,
         MultipartHttpServletRequest multiFile ) throws Exception {
-        
-		//JsonObject json = new JsonObject();
+    
 		PrintWriter printWriter = null;
 		OutputStream os = null;
       
@@ -46,6 +49,7 @@ public class CkeditorUploadController {
     	   String fileName = file.getName();
     	   byte[] bytes = file.getBytes();
     	   
+    	   //String uploadPath = request.getSession().getServletContext().getRealPath("/resources/upload");
     	   String uploadPath = request.getSession().getServletContext().getRealPath("/resources/upload");
     	   File uploadFile = new File(uploadPath);
     	   
@@ -66,12 +70,21 @@ public class CkeditorUploadController {
            String callback =request.getParameter("CKEditorFuncNum");
            String message="'이미지를 업로드 했습니다.'";
            
+           URL url;
+           
+           S3Utils s3 = new S3Utils();
+   		   String bucketName = "chparklandbucket";
+   	       String inputDirectory = "upload/board";
+           
+   	       s3.fileUpload(bucketName, inputDirectory + "/" + fileName, bytes);
+           url = new URL(s3.getFileURL(bucketName, inputDirectory + "/" + fileName));
            
            StringBuffer sbuffer =new StringBuffer();
            sbuffer.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");         
            sbuffer.append(callback);
            sbuffer.append(", '");
-           sbuffer.append(fileUrl);
+           //sbuffer.append(fileUrl);
+           sbuffer.append(url);
            sbuffer.append(" ' , " + message);
            sbuffer.append(") </script>");
     

@@ -143,17 +143,14 @@
 <script id="fileTemplate" type="text/x-handlebars-template">
     <div style="width: 100px; float:left; margin-right: 12px;">
         <span class="attachment-icon has-img">
- 			<a href="{{ori_fileUrl}}" class="attachment-name">
-                <img src="{{imgSrc}}" alt="Attachment> 
-            </a>           
         	<div class="attachment-info">
-				<a href="{{ori_fileUrl}}" class="attachment-name" style="display: none;">
-                	<i class="fa fa-paperclip"></i> {{ori_fileName}} 
-           	 	</a>
-            	<a href="{{fullName}}" class="btn btn-default btn-xs pull-right deleteFileBtn">
-                	<i class="fa fa-fw fa-remove"></i>
-            	</a>
+ 				<a href="{{ori_fileUrl}}" class="attachment-name">
+     	           <img src="{{imgSrc}}" alt="Attachment" style="width: 100px; height: 100px;"> 
+       	     	</a>           
         	</div>
+			<a href="{{fullName}}" class="btn btn-default btn-xs pull-right deleteFileBtn">
+                <i class="fa fa-fw fa-remove"></i>
+            </a>
         </span>
     </div>
 </script>

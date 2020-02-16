@@ -12,10 +12,12 @@
 <title>Message</title>
 </head>
 <body class="is-preload">
-	<div id="wrapper">
+	<!-- Wrapper -->
+	<div id="wrapper" style="height: 1000px;">
 	
 		<!-- Main -->
 		<div id="main">
+		
 			<div class="inner">
 			
 				<!-- Header -->
