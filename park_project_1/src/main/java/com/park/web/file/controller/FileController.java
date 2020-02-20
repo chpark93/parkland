@@ -38,7 +38,6 @@ public class FileController {
 	@RequestMapping(value="/uploadFile", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) throws Exception{
 		ResponseEntity<String> entity = null;
-		String inputDirectory = "upload";
 		
 		try {
 			String savedFilePath = UploadFileUtils.uploadFile(file, request);

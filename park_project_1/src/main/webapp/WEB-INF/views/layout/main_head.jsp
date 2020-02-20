@@ -8,7 +8,7 @@
 
 
 <!-- main CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/main/css/main.css?ver=1.5" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/main/css/main.css?ver=1.7" />
 
 <!-- modal -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/modal.css" />

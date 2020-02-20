@@ -9,19 +9,26 @@
 <meta charset="UTF-8">
 <title>Modify Page</title>
 </head>
-<body class="">
-	<div class="container">
-		<div class="inner"
-			style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">
+<body>
 
+	<!-- Wrapper -->
+	<div id="wrapper" style="height: 1200px;">
+	
+	<div id="main">
+	
+		<div class="inner" style="width: 50%; height: 50%;">
+			<br/><br/><br/>
 			<!-- Header -->
-			<div class="form-header align-center">
-				<label style="font-size: 20px;"><a
-					href="${pageContext.request.contextPath}/initPage/main.jsp">#ChPark</a></label>
-				<label style="font-size: 24px;">비밀번호 변경</label>
+			<div class="align-center">
+				<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
+				<label style="font-size: 24px;">비밀번호(PW) 변경</label>
 			</div>
 
-			<div class="box" style="width: 600px;">
+			<div class="box">
 
 				<form:form name="form" id="form" class="user" role="form"
 					modelAttribute="memberShipVO"
@@ -64,7 +71,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>
 </body>
 

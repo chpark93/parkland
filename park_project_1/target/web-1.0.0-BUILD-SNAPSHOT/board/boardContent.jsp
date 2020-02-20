@@ -38,12 +38,7 @@
 						 
 						<div class="col-6 col-12-xsmall">
 							<c:if test="${loginUser.id ne boardContent.reg_id}">
-								<c:if test="${userInfo ne null && userInfo ne '' }">
-									<span class="board_id"><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${boardContent.reg_nickname}" ><c:out value="${boardContent.reg_nickname}"/></a></span> 								
-								</c:if>
-								<c:if test="${userInfo eq null || userInfo eq '' }">
-									<span class="board_id" style="color: black;"><c:out value="${boardContent.reg_nickname}"/></span> 								
-								</c:if>
+								<span class="board_id"><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${boardContent.reg_nickname}" ><c:out value="${boardContent.reg_nickname}"/></a></span> 								
 							</c:if>
 							<c:if test="${loginUser.id eq boardContent.reg_id}">
 								<span class="board_id"><a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId" ><c:out value="${boardContent.reg_nickname}"/></a></span> 

@@ -11,7 +11,7 @@
 <title>Message Form</title>
 </head>
 <body>
-	<div id="wrapper">
+	<div id="wrapper" style="height: 1200px;">
 		
 		<div id="main" class="wrapper" >
 			<div class="inner">
@@ -41,7 +41,7 @@
 	
 									<div class="col-12">
 										<input type="text" name="mailSubject" id="mailSubject"
-											placeholder="제목을 입력 해주세요."></input>
+											placeholder="이메일을 입력 해주세요."></input>
 									</div>
 									
 									<div class="col-12">

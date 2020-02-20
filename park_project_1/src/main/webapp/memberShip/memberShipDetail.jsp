@@ -12,15 +12,20 @@
 <body>
 
 	<!-- Wrapper -->
-	<div id="wrapper">
+	<div id="wrapper" style="height: 1200px;">
 	 			
 	<div id="main">
 		<br/><br/>
 		
 		<div class="inner" style="width: 50%; height: 50%;">	       
+			
 			<!-- Header -->	
-			<div class="form-header align-center">
-	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/initPage/main.jsp">#ChPark</a></label>
+			<div class="align-center">
+	        	<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
 	        	<label style="font-size:24px;">회원 정보</label>
 	        </div>
 	      
@@ -141,8 +146,9 @@
 					<!-- button -->
 					<div class="" align="right">	
 						<c:if test="${user.member_section eq 'member' }">
-							<button type="button" id="btnModifyPw" class="btn btn-primary" style="float:left;">비밀번호 변경</button>						
+							<button type="button" id="btnModifyPw" class="btn btn-primary" style="float:left; margin-right: 5px;">비밀번호 변경</button>						
 						</c:if>
+						<button type="button" id="btnWithdraw" class="btn btn-primary" style="float:left;">회원 탈퇴</button>
 						<button type="button" id="btnSubmit" class="btn btn-primary">회원 정보 수정</button>
 						<button type="button" id="btnCancel" class="btn btn-primary">취소</button>
 					</div>
@@ -184,6 +190,12 @@ $(document).on('click', '#btnModifyPw', function(e) {
 	location.href = "${pageContext.request.contextPath}/memberShip/modifyPwPage";
 });
 
+//회원 탈퇴
+$(document).on('click', '#btnWithdraw', function(e) {
+	e.preventDefault();
+	
+	location.href = "${pageContext.request.contextPath}/memberShip/deleteMemberShipPage";
+});
 
 $(document).ready(function(){
 	

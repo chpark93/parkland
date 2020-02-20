@@ -55,7 +55,7 @@ public class MemberShipController {
 	
 	@RequestMapping(value="/memberRegister", method=RequestMethod.POST)
 	public String memberRegister(@ModelAttribute("memberShipVO") @Valid MemberShipVO memberShipVO, BindingResult bindingResult, 
-			MemberShipDetailVO memberShipDetailVO, Model model) throws Exception {
+			MemberShipDetailVO memberShipDetailVO, Model model, HttpServletResponse response) throws Exception {
 		
 		if(bindingResult.hasErrors()) {
 			return "/memberShip/memberShipJoin";
@@ -93,7 +93,7 @@ public class MemberShipController {
 		String bcryptPw = BCrypt.hashpw(memberShipVO.getPassword(), BCrypt.gensalt()); 
 		memberShipVO.setPassword(bcryptPw);
 		
-		msservice.register(memberShipVO);
+		msservice.register(memberShipVO, response);
 		msservice.registerDetail(memberShipDetailVO);
 		
 		return "redirect:/login/login";
@@ -177,24 +177,41 @@ public class MemberShipController {
 		return "/memberShip/findPwForm";
 	}
 	@RequestMapping(value="/findPw", method= RequestMethod.POST)
-	public String findPw(@ModelAttribute MemberShipVO memberShipVO, HttpServletResponse response, 
-			RedirectAttributes rttr, Model model, Errors errors) throws Exception {
+	public String findPw(@ModelAttribute MemberShipVO memberShipVO, Errors errors, HttpServletResponse response, 
+			RedirectAttributes rttr) throws Exception {
 		
 		new FindPasswordValidator().validate(memberShipVO, errors);
-	
+		
 		if(errors.hasErrors()) {
 			return "memberShip/findPwForm";
 		}
-		try {
-			MemberShipVO result = msservice.execute(memberShipVO);
-			rttr.addFlashAttribute("result", result);
-			msservice.findPw(memberShipVO, response);
-			return "/";
+
+		
+		if(msservice.findByEmail(memberShipVO) != null) {
 			
-		}catch(Exception e) {
-			errors.rejectValue("email","emailNotExist");
+			if(msservice.findByEmail(memberShipVO).getPassword() == null) {
+				
+				errors.rejectValue("email","SnsLogin", "SNS로 가입한 회원 입니다.");
+				
+				return "memberShip/findPwForm";
+			}
+			else {
+				
+				MemberShipVO result = msservice.execute(memberShipVO);
+				rttr.addFlashAttribute("result", result);
+				
+				msservice.findPw(memberShipVO, response);
+				
+				return "redirect:/login/login";
+			}
+		}
+		else {
+			errors.rejectValue("email","emailNotExist", "존재하지 않는 이메일 입니다.");
+			
 			return "memberShip/findPwForm";
 		}
+		
+		
 	}
 	
 	
@@ -310,11 +327,24 @@ public class MemberShipController {
 		UserVO loginUser = (UserVO) session.getAttribute(SessionName.LOGIN);
 		
 		if(loginUser != null) {
-			model.addAttribute("user", msservice.getUserInfo(loginUser.getId()));
+			
+			if(loginUser.getPassword() == null) {
+				model.addAttribute("user", msservice.getUserInfo(loginUser.getId()));
+				
+				return "/memberShip/withdrawMemberShipSns";
+			}
+			else {
+				model.addAttribute("user", msservice.getUserInfo(loginUser.getId()));
+				
+				return "/memberShip/withdrawMemberShip";
+			}
+		}
+		else {
+			return "redirect:/login/login";
 		}
 		
-		return "/memberShip/withdrawMemberShip";
 	}
+	//member
 	@RequestMapping(value="/deleteMemberShip", method=RequestMethod.POST)
 	public String deleteMemberShip(@ModelAttribute("loginDTO") @Valid LoginDTO loginDTO , UserVO userVO, Model model, HttpSession session,BindingResult bindingResult,RedirectAttributes rttr, Errors errors) throws Exception {
 		
@@ -343,6 +373,29 @@ public class MemberShipController {
 		
 		return "redirect:/main/mainPage";
 	}
+	
+	//Sns member
+	@RequestMapping(value="/deleteMemberShipSns", method=RequestMethod.POST)
+	public String deleteMemberShipSns(UserVO userVO, Model model, HttpSession session, BindingResult bindingResult, RedirectAttributes rttr, Errors errors) throws Exception {
+		
+		UserVO loginUser = (UserVO) session.getAttribute(SessionName.LOGIN);
+		
+		if(bindingResult.hasErrors()) {
+			return "/memberShip/withdrawMemberShip";
+		}
+		
+		if(loginUser != null) {
+			model.addAttribute("user", loginUser);
+			
+			msservice.deleteMemberShip(userVO);
+			
+		}
+		
+		session.invalidate();
+		
+		return "redirect:/main/mainPage";
+	}
+	
 	
 	//패스워드 체크
 	@ResponseBody

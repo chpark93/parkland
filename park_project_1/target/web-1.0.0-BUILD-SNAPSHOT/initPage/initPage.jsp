@@ -36,7 +36,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/chpark93" class="fab fa-github" data-tooltip-text="깃허브">
+							<a href="https://github.com/chpark93/parkland" class="fab fa-github" data-tooltip-text="깃허브">
 								<span class="label">Github</span>
 							</a>
 						</li>

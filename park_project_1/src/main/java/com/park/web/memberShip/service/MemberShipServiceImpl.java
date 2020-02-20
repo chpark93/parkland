@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,8 +87,11 @@ public class MemberShipServiceImpl implements MemberShipService {
 	//회원 등록
 	@Transactional
 	@Override
-	public void register(MemberShipVO memberShipVO) throws Exception {
+	public void register(MemberShipVO memberShipVO, HttpServletResponse response) throws Exception {
 		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();	
+	
 		//인증키 생성
 		String approvalKey = new TempKey().createKey();
 		
@@ -98,6 +102,9 @@ public class MemberShipServiceImpl implements MemberShipService {
 		
 		//인증메일 전송
 		sendMail(memberShipVO, "join");
+		
+		out.print("<script> alert('이메일 주소로 인증 메일을 보냈습니다. 인증 후 이용 해주세요'); location.href='http://chparkland.com/park_project_1/login/login'; </script>");
+		out.close();
 	}
 	
 	//회원 등록(SNS)
@@ -147,7 +154,7 @@ public class MemberShipServiceImpl implements MemberShipService {
 			sendMail.setMsg(new StringBuffer().append("<h1>임시 비밀번호</h1>")
 					.append("<div align='center' style='border:1px solid black; font-family:verdana'>")
 					.append("<h3 style='color:powderblue'>") 
-					.append(memberShipVO.getId() + "님의 임시 비밀번호 입니다.</h3>") 
+					.append(msmanager.findByEmail(memberShipVO).getId() + "님의 임시 비밀번호 입니다.</h3>") 
 					.append("<div style='font-size: 120%'>") 
 					.append("<p>임시 비밀번호 : ")
 					.append(memberShipVO.getPassword() + "</p>")
@@ -190,14 +197,18 @@ public class MemberShipServiceImpl implements MemberShipService {
 		//임시 비밀번호 생성
 		String tempPw = new TempKey().tempPw();
 		memberShipVO.setPassword(tempPw);
-		
+			
+		//비밀번호 변경 메일 발송
+		sendMail(memberShipVO, "findPw");
+				
+		//비밀번호 암호화
+		String bcryptPw = BCrypt.hashpw(memberShipVO.getPassword(), BCrypt.gensalt()); 
+		memberShipVO.setPassword(bcryptPw);
+	
 		//임시 비밀번호로 변경
 		msmanager.findPw(memberShipVO);
 		
-		//비밀번호 변경 메일 발송
-		sendMail(memberShipVO, "findPw");
-		
-		out.print("<script> alert('임시 비밀번호를 메일로 발송하였습니다. 비밀번호 변경 후 사용 바랍니다.'); location.href='/web'; </script>");
+		out.print("<script> alert('임시 비밀번호를 메일로 발송하였습니다. 비밀번호 변경 후 사용 바랍니다.'); location.href='http://chparkland.com/park_project_1/login/login'; </script>");
 		out.close();
 	}
 	
@@ -205,9 +216,11 @@ public class MemberShipServiceImpl implements MemberShipService {
 	@Override
 	public MemberShipVO execute(MemberShipVO memberShipVO) throws Exception {
 		MemberShipVO result = msmanager.findByEmail(memberShipVO);
+		
 		if(result == null) {
 			throw new Exception();
 		}
+		
 		return result;
 	}
 	

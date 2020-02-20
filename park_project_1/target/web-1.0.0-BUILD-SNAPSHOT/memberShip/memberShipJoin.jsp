@@ -11,7 +11,7 @@
 <body class="is-preload">
 	
 	<!-- Wrapper -->
-	<div id="wrapper">
+	<div id="wrapper" style="height: 1200px;">
 	
 	<div id="main" >
 		<br/><br/>
@@ -19,7 +19,11 @@
 			
 			<!-- Header -->	
 			<div class="align-center">
-	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/initPage/main.jsp">#ChPark</a></label>
+	        	<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
 	        	<label style="font-size:24px;">회원 가입</label>
 	        </div>
 	      
@@ -112,7 +116,6 @@ $(document).on('click', '#btnSubmit', function(e){
 	e.preventDefault();
 	
 	$("#form").submit();
-	alert('이메일 주소로 인증 메일을 보냈습니다. 인증 후 이용 해주세요');
 	
 });
  

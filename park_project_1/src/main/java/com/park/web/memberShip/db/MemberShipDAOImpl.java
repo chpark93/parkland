@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.park.web.login.db.LoginDTO;
 import com.park.web.user.db.UserVO;
 
+
 @Repository
-public class MemberShipDAOImpl implements MemberShipDAO{
+public class MemberShipDAOImpl implements MemberShipDAO {
 	
 	@Inject
 	private SqlSession sqlsession;
@@ -99,6 +100,7 @@ public class MemberShipDAOImpl implements MemberShipDAO{
 	public boolean passwordCheck(LoginDTO loginDTO) throws Exception {
 		return sqlsession.selectOne("memberShip.passwordCheck", loginDTO);
 	}
+	
 	
 	
 	

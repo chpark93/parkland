@@ -56,7 +56,7 @@ public class UploadFileUtils {
         return replaceFilePath(datePath, uuidFileName);
     }
     
-    
+    /*
     //ckeditor uploadFile
     public static String ckeditorUploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
     	
@@ -83,7 +83,7 @@ public class UploadFileUtils {
         //파일 저장 경로 치환
         return replaceFilePath(datePath, uuidFileName);
     }
- 
+ 	*/
     
     
     //파일 삭제

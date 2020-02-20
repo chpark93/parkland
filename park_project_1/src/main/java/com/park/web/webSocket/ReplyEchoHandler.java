@@ -20,11 +20,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.park.web.interceptor.SessionName;
 import com.park.web.user.db.UserVO;
 
-@Repository
+
 public class ReplyEchoHandler extends TextWebSocketHandler {
-	
-	@Inject
-	SqlSession sqlsession;
+
 	
 	private final Logger logger = LoggerFactory.getLogger(ReplyEchoHandler.class);
 	
@@ -34,7 +32,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("afterConnectionEstablished : " + session);
-	
+		
 		sessions.add(session);
 		String senderId = getId(session);
 		

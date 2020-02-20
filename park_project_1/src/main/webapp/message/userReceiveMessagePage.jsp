@@ -18,7 +18,7 @@
 <body class="is-preload">
 	
 	<!-- Wrapper -->
-	<div id="wrapper">
+	<div id="wrapper" style="height: 1200px;">
 	
 		<!-- Main -->
 		<div id="main">

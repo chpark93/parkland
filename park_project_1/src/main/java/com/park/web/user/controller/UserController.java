@@ -255,7 +255,6 @@ public class UserController {
 		}
 		else {
 			//네이버 로그인
-			
 			//code 이용 access_token 받음 -> access_token 으로 사용자 profile 가져옴
 			SnsLogin snsLogin = new SnsLogin(sns);
 			UserVO userVO = snsLogin.getUserProfile(code);
@@ -265,7 +264,7 @@ public class UserController {
 			//DB 해당 유저 존재 체크
 			UserVO user = userservice.getBySns(userVO);
 			 
-			if(userVO == null) {
+			if(user == null) {
 				//유저 info 없을 경우 가입 페이지
 				rttr.addAttribute("result", "존재하지 않는 회원입니다. 가입 후 이용해주세요");
 				rttr.addFlashAttribute("member_section", "naver");

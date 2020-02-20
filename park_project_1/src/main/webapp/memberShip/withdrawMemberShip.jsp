@@ -10,15 +10,24 @@
 <title>Withdraw MemberShip</title>
 </head>
 <body>
-	<div class="container" >
-		<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">	       
+	
+	<!-- Wrapper -->
+	<div id="wrapper" style="height: 1200px;">
+	
+	<div id="main" >
+		
+		<div class="inner" style="width: 50%; height: 50%;">	       
 			<!-- Header -->	
-			<div class="form-header align-center">
-	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/initPage/main.jsp">#ChPark</a></label>
+			<div class="align-center" style="padding-top: 60px;">
+	        	<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
 	        	<label style="font-size:24px;">회원 탈퇴</label>
 	        </div>
 	      
-	        <div class="box" style="width:600px;">
+	        <div class="box" >
 				
 				<form:form name="form" id="form" class="form" role="form"  modelAttribute="loginDTO" style="margin-left: auto; margin-right: auto;"
 					action="${pageContext.request.contextPath}/memberShip/deleteMemberShip" method="post">
@@ -53,6 +62,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
 <%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>
 </body>
 
@@ -77,11 +87,22 @@ $(document).on('click', '#btnSubmit', function(e){
 		success : function(data) {
 			
 			if(data == true) {
-				if(confirm("회원 탈퇴를 하시겠습니까?")) {	
-					$("#form").submit();
-				}
 				
-				alert('탈퇴 완료되었습니다. 그 동안 감사했습니다.');
+				var check = $("#withdrawCheck").val();
+				
+				if(check != "회원 탈퇴를 하겠습니다") {
+					alert('입력창을 다시 확인 해주세요.');
+					
+					return false;
+				}
+				else {
+					
+					if(confirm("정말로 회원 탈퇴를 하시겠습니까?")) {	
+						$("#form").submit();
+					}
+					
+					alert('탈퇴 완료되었습니다. 그 동안 감사했습니다.');
+				}
 			}
 			else {
 				alert('비밀번호를 다시 입력해주세요.');
@@ -97,7 +118,7 @@ $(document).on('click', '#btnCancel', function(e){
 	e.preventDefault();
 	
 	if(confirm("회원 탈퇴를 취소 하시겠습니까?")) {
-		location.href = "${pageContext.request.contextPath}/initPage/main.jsp";	
+		location.href = "${pageContext.request.contextPath}/main/mainPage";	
 	}
 });
 </script>

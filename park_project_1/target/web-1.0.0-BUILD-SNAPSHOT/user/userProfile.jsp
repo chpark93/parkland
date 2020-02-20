@@ -15,7 +15,7 @@
 <body>
 					
 	<!-- Wrapper -->
-	<div id="wrapper">	
+	<div id="wrapper" style="height: 1200px;">	
 	
 	<div id="main" >
 		<br/><br/>
@@ -24,7 +24,11 @@
 			
 			<!-- Header -->	
 			<div class="align-center">
-	        	<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/main/mainPage">#ChPark</a></label>
+	        	<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
 	        	<label style="font-size:24px;">프로필 이미지 변경</label>
 	        </div>
 	      

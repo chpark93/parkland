@@ -12,6 +12,7 @@
 <title>Message</title>
 </head>
 <body class="is-preload">
+	
 	<!-- Wrapper -->
 	<div id="wrapper" style="height: 1000px;">
 	

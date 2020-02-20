@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <header id="header">
-	<a href="${pageContext.request.contextPath}/main/mainPage" class="logo">The
+	<a href="${pageContext.request.contextPath}/main/mainPage" class="logo" style="margin-top: 14px;">The
 		Flow Of<strong>&nbsp; ChParkLand</strong>
 	</a>
 
@@ -105,7 +105,6 @@
 
 <script>
 
-//댓글  WebSocket
 var socket = null;
 
 $(document).ready(function() {
@@ -116,8 +115,8 @@ $(document).ready(function() {
 	
 function connectWebSocket() {
 	    
-	//var ws = new WebSocket("ws://chparkland.com/replyEcho/websocket");
-	var ws = new WebSocket("ws://localhost:8090/web/replyEcho/websocket");
+	var ws = new WebSocket("wss://chparkland.com/park_project_1/replyEcho/websocket");
+	//var ws = new WebSocket("ws://localhost:8090/web/replyEcho/websocket");
 	socket = ws;
 	
 	ws.onopen = function () {

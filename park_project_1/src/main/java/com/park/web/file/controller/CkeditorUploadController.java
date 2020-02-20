@@ -32,7 +32,6 @@ public class CkeditorUploadController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CkeditorUploadController.class);
 	
-	
 	@RequestMapping(value="/ckeditorUpload", method=RequestMethod.POST)
     public void ckeditorUpload(HttpServletRequest request, HttpServletResponse response,
         MultipartHttpServletRequest multiFile ) throws Exception {
@@ -45,68 +44,70 @@ public class CkeditorUploadController {
         response.setContentType("text/html; charset=utf-8");
         MultipartFile file = multiFile.getFile("upload");
     
-       try {
-    	   String fileName = file.getName();
-    	   byte[] bytes = file.getBytes();
+        try {
+    	    String fileName = file.getName();
+    	    byte[] bytes = file.getBytes();
     	   
-    	   //String uploadPath = request.getSession().getServletContext().getRealPath("/resources/upload");
-    	   String uploadPath = request.getSession().getServletContext().getRealPath("/resources/upload");
-    	   File uploadFile = new File(uploadPath);
+    	    String uploadPath = request.getSession().getServletContext().getRealPath("/resources/upload");
+    	    File uploadFile = new File(uploadPath);
     	   
-    	   if(!uploadFile.exists()){
-    		   uploadFile.mkdirs();
+    	    if(!uploadFile.exists()){
+    		    uploadFile.mkdirs();
     		   
-    	   } 
+    	    } 
     	   
-    	   fileName = UUID.randomUUID().toString();
-    	   uploadPath = uploadPath + "/" + fileName;
-    	   os = new FileOutputStream(new File(uploadPath));
-    	   os.write(bytes);
+    	    fileName = UUID.randomUUID().toString();
+    	    uploadPath = uploadPath + "/" + fileName;
+    	    os = new FileOutputStream(new File(uploadPath));
+    	    os.write(bytes);
     	   
-    	   printWriter = response.getWriter();
-           response.setContentType("text/html");
-           String fileUrl = request.getContextPath() + "/resources/upload/" + fileName;
+    	    printWriter = response.getWriter();
+            response.setContentType("text/html");
            
-           String callback =request.getParameter("CKEditorFuncNum");
-           String message="'이미지를 업로드 했습니다.'";
+            //로컬
+            String fileUrl = request.getContextPath() + "/resources/upload/" + fileName;
            
-           URL url;
+            String callback =request.getParameter("CKEditorFuncNum");
+            String message="'이미지를 업로드 했습니다.'";
            
-           S3Utils s3 = new S3Utils();
-   		   String bucketName = "chparklandbucket";
-   	       String inputDirectory = "upload/board";
+            URL url;
            
-   	       s3.fileUpload(bucketName, inputDirectory + "/" + fileName, bytes);
-           url = new URL(s3.getFileURL(bucketName, inputDirectory + "/" + fileName));
+            //Aws S3
+            S3Utils s3 = new S3Utils();
+   		    String bucketName = "chparklandbucket";
+   	        String inputDirectory = "upload/board";
            
-           StringBuffer sbuffer =new StringBuffer();
-           sbuffer.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");         
-           sbuffer.append(callback);
-           sbuffer.append(", '");
-           //sbuffer.append(fileUrl);
-           sbuffer.append(url);
-           sbuffer.append(" ' , " + message);
-           sbuffer.append(") </script>");
+   	        s3.fileUpload(bucketName, inputDirectory + "/" + fileName, bytes);
+            url = new URL(s3.getFileURL(bucketName, inputDirectory + "/" + fileName));
+           
+            StringBuffer sbuffer =new StringBuffer();
+            sbuffer.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");         
+            sbuffer.append(callback);
+            sbuffer.append(", '");
+            //sbuffer.append(fileUrl);
+            sbuffer.append(url);
+            sbuffer.append(" ' , " + message);
+            sbuffer.append(") </script>");
     
-           printWriter.println(sbuffer.toString());
-           printWriter.flush();
+            printWriter.println(sbuffer.toString());
+            printWriter.flush();
     	   
-       }
-       catch(Exception e) {
-    	   e.printStackTrace();
-       }
-       finally{
-           if(os != null){
-               os.close();
-           }
-           if(printWriter != null){
-               printWriter.close();
-           }		
-		}
+        }
+        catch(Exception e) {
+    	    e.printStackTrace();
+        }
+        finally{
+            if(os != null){
+                os.close();
+            }
+            if(printWriter != null){
+                printWriter.close();
+            }		
+		 }
 
           
              
-    }
+     }
       
   
 }

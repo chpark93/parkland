@@ -14,19 +14,25 @@
 <body class="is-preload">
 
 	<!-- Wrapper -->
-	<div id="wrapper">				
+	<div id="wrapper" style="height: 1200px;">				
 	
 		<div id="main">
 		
 			<div class="inner" style="width: 50%; height: 50%;">
-				<br/><br/>
+				<br/><br/><br/>
 				
-				<article>
+				<article style="width: 500px; margin-left: 80px;">
+				
+					<!-- Header -->	
 					<div class="align-center">
-						<h2>Login</h2> 
-					</div>
+			        	<label style="margin-bottom: 50px;">
+			        		<a href="${pageContext.request.contextPath}/main/mainPage">
+			        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+			        		</a>
+			        	</label>
+			        </div>
 					
-					<div class="container" role="main">
+					<div class="container" role="main" style="width: 500px;">
 						<div class="box">
 							
 							<form:form role="form" modelAttribute="loginDTO" action="${pageContext.request.contextPath}/login/postLogin" method="post">
@@ -62,7 +68,7 @@
 									<div class="form-group">
 										<div class="custom-control custom-checkbox small" style="float:left; margin-top: 8px;">
 											<input type="checkbox" class="custom-control-input" id="customCheck" name="customCheck"> 
-											<label class="custom-control-label" for="customCheck">Remember Me</label>
+											<label class="custom-control-label" for="customCheck">로그인 유지</label>
 										</div>
 										<div align="right">
 											<button type="submit" class="btn btn-primary">Sign In</button>

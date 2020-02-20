@@ -8,24 +8,34 @@
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
 <title>Find Password Form</title>
 </head>
-<body class="bg-gradient-primary">
-	<div class="container">
-		<div class="inner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 680px;">
-			
+<body>
+
+	<!-- Wrapper -->
+	<div id="wrapper" style="height: 1200px;">
+	
+	<div id="main">
+		
+		<div class="inner" style="width: 50%; height: 50%;">
+			<br/><br/><br/>
 			<!-- Header -->
-			<div class="form-header align-center">
-				<label style="font-size:20px;"><a href="${pageContext.request.contextPath}/main/mainPage" >#ChPark</a></label>
-				<label style="font-size: 24px;">비밀번호(PW) 찾기</label>								
+			<div class="align-center">
+				<label style="margin-bottom: 50px;">
+	        		<a href="${pageContext.request.contextPath}/main/mainPage">
+	        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+	        		</a>
+	        	</label>
+				<label style="font-size: 24px;">비밀번호 찾기</label>								
 			</div>	
 			<br/>
 			
-			<div class="box" style="width:600px;">
+			<div class="box">
 			
 				<form:form name="form" id="form" class="user" role="form" modelAttribute="memberShipVO" action="${pageContext.request.contextPath}/memberShip/findPw" method="post">
 					<div class="form-group">
 						<label>Email</label>
 						<form:input path="email" type="email" class="form-control form-control-user" id="email" />
 					</div>
+					<br/>
 					<div>
 						<form:errors path="email" class="label label-danger" style="color:red; margin-top:2px" />
 					</div>
@@ -39,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<%@ include file="/WEB-INF/views/layout/main_plugins.jsp"%>
 </body>
 </html>

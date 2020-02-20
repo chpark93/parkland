@@ -18,7 +18,7 @@ public interface MemberShipService {
 	
 	public UserVO getUserInfo(String id) throws Exception;
 
-	public void register(MemberShipVO memberShipVO) throws Exception;
+	public void register(MemberShipVO memberShipVO, HttpServletResponse response) throws Exception;
 	
 	public void registerSNS(MemberShipSnsVO memberShipSnsVO) throws Exception;
 		

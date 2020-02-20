@@ -3006,9 +3006,10 @@ input, select, textarea {
 		-webkit-flex-direction: row-reverse;
 		-ms-flex-direction: row-reverse;
 		flex-direction: row-reverse;
-		min-height: 100vh;
+		/* min-height: 100vh; */
+		min-height: 1280px;;
 		min-width: 768px;
-		/* min-width: 100vh */;
+		
 	}
 
 	#wrapper {
@@ -3051,11 +3052,11 @@ input, select, textarea {
 		 @media screen and (max-width: 1680px) {
 
 			#main > .inner {
-				padding: 0 5em 0.1em 5em ;
+				padding: 0 4em 0.1em 4em ;
 			}
 
 				#main > .inner > section {
-					padding: 5em 0 3em 0 ;
+					padding: 4em 0 2em 0 ;
 				}
 
 		}
