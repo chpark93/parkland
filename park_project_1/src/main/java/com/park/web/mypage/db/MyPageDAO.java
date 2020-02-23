@@ -39,7 +39,7 @@ public interface MyPageDAO {
 
 	void deleteMyPageAlarmExpired() throws Exception;
 
-	void getAlarmAllCnt(String id) throws Exception;
+	String getAlarmAllCnt(String id) throws Exception;
 
 	
 

@@ -109,8 +109,8 @@ public class MyPageDAOImpl implements MyPageDAO{
 	}
 	
 	@Override
-	public void getAlarmAllCnt(String id) throws Exception {
-		sqlsession.selectOne("mypage.getAlarmAllCnt", id);
+	public String getAlarmAllCnt(String id) throws Exception {
+		return sqlsession.selectOne("mypage.getAlarmAllCnt", id);
 	}
 
 	

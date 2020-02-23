@@ -95,12 +95,12 @@
 			<div class="row">
 				<div class="col-6 col-8-medium col-12-small">
 					<article class="box style2">
-						<a href="#" class="image featured"><img src="images/pic01.jpg"
-							alt=""></a>
+						<a href="https://chparkland.com/park_project_1" class="image featured">
+							<img src="${pageContext.request.contextPath}/resources/img/init.png" alt="">
+						</a>
 						<h3>
-							<a href="#">Magna feugiat</a>
-						</h3>
-						<p>Ornare nulla proin odio consequat.</p>
+							<a href="https://chparkland.com/park_project_1">ChParkLand</a>
+						</h3>			
 					</article>
 				</div>
 				<div class="col-4 col-4-medium col-12-small">

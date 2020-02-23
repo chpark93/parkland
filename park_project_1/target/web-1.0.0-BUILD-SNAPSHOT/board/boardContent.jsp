@@ -525,6 +525,7 @@
 						
 						$('#rcontent').val(""); //댓글 입력창 공백 
 						
+						/*
 						//댓글 webSocket
 						console.log("reply socket : ", socket);
 						
@@ -535,6 +536,7 @@
 							
 							socket.send(socketMsg);
 						}
+						*/
 						
 					}
 					
@@ -768,7 +770,7 @@
 				if(result === "insertSuccess") {
 					alert("대댓글이 작성 되었습니다.");
 					
-					
+					/*
 					//댓글 webSocket
 					console.log("reply socket : ", socket);			
 					if(socket) {
@@ -778,6 +780,7 @@
 						
 						socket.send(socketMsg);
 					}
+					*/
 					
 				}	
 			},

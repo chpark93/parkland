@@ -10,7 +10,7 @@
 	
 	<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/mypage/getAlarmListPagingFromId" > 
-		    <span id="alarm" class="notification"></span>
+		    <span id="alarm" class="notification" ></span>
 		</a>
 	</div>
 </header>
@@ -22,7 +22,6 @@
     display: inline-block;
     position: relative;
     padding: 0.6em;
-    /* background: #3498db; */
     background: #6CC5AF;
     border-radius: 0.2em;
     font-size: 1.3em;
@@ -116,27 +115,35 @@ $(document).ready(function() {
 function connectWebSocket() {
 	    
 	var ws = new WebSocket("wss://chparkland.com/park_project_1/replyEcho/websocket");
-	//var ws = new WebSocket("ws://localhost:8090/web/replyEcho/websocket");
+	//var ws = new WebSocket("ws://localhost:8080/web/replyEcho/websocket");
 	socket = ws;
 	
-	ws.onopen = function () {
+	ws.onopen = function (e) {
 	    console.log('Info: connection opened.');
 	   
+	   	ws.send("${loginUser.id}");
 	};
 	
 	ws.onmessage = function (e) {
 	    console.log("Receive Message : ", e.data + '\n');
-	
-		var $alertSocket = $("div#alertSocket");
-				
-		$alertSocket.html(e.data);
-		$alertSocket.css('display', 'block');
+	    
 		
-		setTimeout( function() {
-        	$alertSocket.css('display', 'none');
-        }, 8000);
+		var el = document.querySelector('.notification');
+
+	    //var count = Number(el.getAttribute('data-count')) || 0;
+	    var count = Number(el.getAttribute('data-count'));
+	    el.setAttribute('data-count', e.data);
+	    el.classList.remove('notify');
+	    el.offsetWidth = el.offsetWidth;
+	    el.classList.add('notify');
+	    
+	    
+	    if(count === 0) {
+	       
+	    	el.classList.add('show-count');
+	    }
+	    
 		
-		//$(".notification").append(e.data);
 	};
 	
 	
@@ -151,23 +158,6 @@ function connectWebSocket() {
 	};
 	
 }
-
-</script>
-
-<script>
-	var el = document.querySelector('.notification');
-
-    var count = Number(el.getAttribute('data-count')) || 0;
-    el.setAttribute('data-count', count);
-    el.classList.remove('notify');
-    el.offsetWidth = el.offsetWidth;
-    el.classList.add('notify');
-    
-    if(count === 0){
-       
-    	el.classList.add('show-count');
-    }
-    
 
 </script>
 

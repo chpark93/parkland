@@ -73,7 +73,6 @@ public class FileController {
 				url = new URL(s3.getFileURL(bucketName, inputDirectory + fileName));
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 				in = urlConnection.getInputStream(); //이미지를 불러옴
-				
 			
 			} 
 			catch (Exception e) {
@@ -83,7 +82,6 @@ public class FileController {
 				
 			}
 
-			//entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), httpHeaders, HttpStatus.CREATED);
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), httpHeaders, HttpStatus.CREATED);
 		}
 		catch(Exception e) {
