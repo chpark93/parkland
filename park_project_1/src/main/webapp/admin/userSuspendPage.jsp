@@ -17,9 +17,15 @@
 		<div id="main">
 			<br/><br/><br/>
 			<div class="inner" style="width: 50%; height: 50%;">	       
-									
+										
 				<!-- Header -->	
-				<%-- <%@ include file="/WEB-INF/views/layout/header.jsp"%> --%>
+				<div class="align-center">
+		        	<label style="margin-bottom: 50px;">
+		        		<a href="${pageContext.request.contextPath}/main/mainPage">
+		        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+		        		</a>
+		        	</label>
+		        </div>
 				
 				<div class="align-center">
 		        	<label style="font-size:24px;">회원 정지 페이지(관리자용)</label>
@@ -30,13 +36,18 @@
 						<form:form id="suspendForm" modelAttribute="userVO" action="${pageContext.request.contextPath}/admin/userSuspend" method="post">
 							
 							<!-- 아이디 -->
-							<input name="id" type="hidden" class="form-control" value="${user.id}" readonly />
-							<c:if test="${user.member_section eq 'member'}">
-								<div class="form-group">
-									<label for="id">아이디</label>
-									<input name="id" type="text" class="form-control" value="${user.id}" readonly />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${user.member_section eq 'member'}">
+									<div class="form-group">
+										<label for="id">아이디</label>
+										<input name="id" type="text" class="form-control" value="${user.id}" readonly />
+									</div>
+								</c:when>
+								
+								<c:otherwise>
+									<input name="id" type="hidden" class="form-control" value="${user.id}" readonly />
+								</c:otherwise>
+							</c:choose>
 							<br/>
 							
 							<!-- 이름  -->

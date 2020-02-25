@@ -22,7 +22,6 @@ import com.park.web.common.PageMaker;
 import com.park.web.common.SearchCriteria;
 import com.park.web.interceptor.SessionName;
 import com.park.web.user.db.UserVO;
-import com.park.web.user.service.UserService;
 
 @Controller
 @RequestMapping(value="/admin")
@@ -30,11 +29,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Inject
-	private AdminService aservice; 
-	
-	@Inject
-	private UserService userservice; 
-	
+	private AdminService aservice;	
 	
 
 	//회원 관리  리스트
@@ -96,9 +91,11 @@ public class AdminController {
 			userVO.setSuspend_term(userVO.getSuspend_term());
 			
 			aservice.userSuspend(userVO);
+			
 		}
 		
 		rttr.addAttribute("id", userVO.getId());
+		
 		return "redirect:/admin/userSuspendPage";
 	}
 	

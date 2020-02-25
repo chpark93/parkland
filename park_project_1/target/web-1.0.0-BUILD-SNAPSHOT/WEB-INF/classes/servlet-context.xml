@@ -53,6 +53,17 @@
 	    </mvc:interceptor>
 	
 	</mvc:interceptors>
+	
+	
+	<beans:bean id="htmlEscapingObjectMapper" class="com.park.web.XSSFilter.HtmlEscapingObjectMapperFactory" />
+
+	<mvc:annotation-driven>
+	    <mvc:message-converters>
+	        <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+	        	<beans:property name="objectMapper" ref="htmlEscapingObjectMapper"></beans:property>
+	        </beans:bean>
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
 
 
 

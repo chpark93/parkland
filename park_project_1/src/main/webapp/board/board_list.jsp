@@ -53,6 +53,13 @@
 							</select>
 						</div>				
 					</div>	
+									
+					<div class="form-group">
+						<div class="custom-control custom-checkbox small" style="float:left; margin-top: 8px;">
+							<input type="checkbox" class="custom-control-input" id="noticeCheck" name="noticeCheck"> 
+							<label class="custom-control-label" for="noticeCheck">공지 숨기기</label>
+						</div>
+					</div>
 				</div>
 				<br/>
 				
@@ -97,72 +104,35 @@
 										<td colspan="6" align="center">데이터가 없습니다</td>
 									</tr>
 								</c:when>
+								
 								<c:when test="${not empty boardList}">
-									<c:if test="${loginUser.authority ne 'ROLE_ADMIN'}">
-										<c:forEach var="list" items="${boardList}">
-											<tr>
-												<td><c:out value="${list.bid}" /></td>
-												<td>
-													<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
-														<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}"><c:out value="${list.getShortTitle(30)}" />
-														</a>												
-													</c:if>
-													<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
-														<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}"><c:out value="${list.getShortTitle(30)}" />
-														</a>
-													</c:if>
-													&nbsp;
-													<c:if test="${list.reply_view_cnt > 0}">
-														<span class="badge bg-teal"><i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>										
-													</c:if>
-												</td>
-												<td>
-													<c:if test="${list.reg_id eq loginUser.id}">
-														<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
-															<c:out value="${list.reg_nickname}" />
-														</a>
-													</c:if>
-													<c:if test="${list.reg_id ne loginUser.id}">
-														<a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${list.reg_nickname}">
-															<c:out value="${list.reg_nickname}" />
-														</a>
-													</c:if>
-												</td>
-												<td><c:out value="${list.view_cnt}" /></td>
-												<td><c:out value="${list.reg_dt}" /></td>
-											</tr>
-										</c:forEach>
-									</c:if>
 									
-									<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
-										<form id="deleteCheckedBoxForm" method="post" action="${pageContext.request.contextPath}/board/deleteBoardAdmin">
+									<!-- 유저 게시판 뷰 -->
+									<c:if test="${loginUser.authority ne 'ROLE_ADMIN'}">
+								
+										<c:forEach var="list" items="${boardList}">
 											
-											<input type="hidden" name="bg_no" value="${searchCriteria.bg_no}">
-											<input type="hidden" name="page" value="${searchCriteria.page}">
-				                            <input type="hidden" name="listSize" value="${searchCriteria.listSize}">
-				                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
-				                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
-											
-											<c:forEach var="list" items="${boardList}">
+											<!-- 일반 글 -->			
+											<c:if test="${list.notice eq '0'}">
 												<tr>
-													<td>
-														<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
-														<label for="deleteCheckBox${list.bid}"></label>
-													</td>
 													<td><c:out value="${list.bid}" /></td>
 													<td>
-														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
-															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}"><c:out
-																value="${list.getShortTitle(30)}" /> </a>
-														</c:if> 
+														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
+															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}">
+																<c:out value="${list.getShortTitle(30)}" />
+															</a>												
+														</c:if>
 														<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
-															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}"><c:out
-																value="${list.getShortTitle(30)}" /> </a>
-														</c:if> &nbsp; <c:if test="${list.reply_view_cnt > 0}">
-															<span class="badge bg-teal">
-															<i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>
+															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}">
+																<c:out value="${list.getShortTitle(30)}" />
+															</a>
+														</c:if>
+														&nbsp;
+														<c:if test="${list.reply_view_cnt > 0}">
+															<span class="badge bg-teal"><i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>										
 														</c:if>
 													</td>
+															
 													<td>
 														<c:if test="${list.reg_id eq loginUser.id}">
 															<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
@@ -178,6 +148,146 @@
 													<td><c:out value="${list.view_cnt}" /></td>
 													<td><c:out value="${list.reg_dt}" /></td>
 												</tr>
+											</c:if>
+											
+											<!-- 공지글 -->
+											<c:if test="${list.notice eq '1'}">
+												<tr class="noticeList" style="">
+													<td><c:out value="공지" /></td>
+													<td>
+														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
+															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
+																<c:out value="${list.getShortTitle(30)}" />
+															</a>												
+														</c:if>
+														<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
+															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
+																<c:out value="${list.getShortTitle(30)}" />
+															</a>
+														</c:if>
+														&nbsp;
+														<c:if test="${list.reply_view_cnt > 0}">
+															<span class="badge bg-teal"><i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>										
+														</c:if>
+													</td>
+															
+													<td>
+														<c:if test="${list.reg_id eq loginUser.id}">
+															<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
+																<c:out value="${list.reg_nickname}" />
+															</a>
+														</c:if>
+														<c:if test="${list.reg_id ne loginUser.id}">
+															<a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${list.reg_nickname}">
+																<c:out value="${list.reg_nickname}" />
+															</a>
+														</c:if>
+													</td>
+													<td><c:out value="${list.view_cnt}" /></td>
+													<td><c:out value="${list.reg_dt}" /></td>
+												</tr>
+											</c:if>
+										</c:forEach>
+									</c:if>
+									
+									<!-- 관리자 게시판 뷰 -->
+									<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
+										<form id="deleteCheckedBoxForm" method="post" action="${pageContext.request.contextPath}/board/deleteBoardAdmin">
+											
+											<input type="hidden" name="bg_no" value="${searchCriteria.bg_no}">
+											<input type="hidden" name="page" value="${searchCriteria.page}">
+				                            <input type="hidden" name="listSize" value="${searchCriteria.listSize}">
+				                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+				                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
+									
+									
+											<c:forEach var="list" items="${boardList}">
+												
+												<!-- 일반글 -->
+												<c:if test="${list.notice eq '0'}">
+													<tr>
+														<td>
+															<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
+															<label for="deleteCheckBox${list.bid}"></label>
+														</td>
+														<td><c:out value="${list.bid}" /></td>
+														<td>
+															<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
+																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}">
+																	<c:out value="${list.getShortTitle(30)}" /> 
+																</a>
+															</c:if> 
+															<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
+																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}">
+																	<c:out value="${list.getShortTitle(30)}" /> 
+																</a>
+															</c:if> 
+															&nbsp; 
+															<c:if test="${list.reply_view_cnt > 0}">
+																<span class="badge bg-teal">
+																<i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>
+															</c:if>	
+														</td>
+														
+														<td>
+															<c:if test="${list.reg_id eq loginUser.id}">
+																<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
+																	<c:out value="${list.reg_nickname}" />
+																</a>
+															</c:if>
+															<c:if test="${list.reg_id ne loginUser.id}">
+																<a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${list.reg_nickname}">
+																	<c:out value="${list.reg_nickname}" />
+																</a>
+															</c:if>
+														</td>
+														<td><c:out value="${list.view_cnt}" /></td>
+														<td><c:out value="${list.reg_dt}" /></td>
+													</tr>
+												</c:if>
+															
+												<!-- 공지글 -->
+												<c:if test="${list.notice eq '1'}">
+													<tr class="noticeList" style="">
+														<td>
+															<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
+															<label for="deleteCheckBox${list.bid}"></label>
+														</td>
+														<td><c:out value="공지" /></td>
+														<td>
+															<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
+																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
+																	<c:out value="${list.getShortTitle(30)}" /> 
+																</a>
+															</c:if> 
+															<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
+																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeQuery(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
+																	<c:out value="${list.getShortTitle(30)}" /> 
+																</a>
+															</c:if> 
+															&nbsp; 
+															<c:if test="${list.reply_view_cnt > 0}">
+																<span class="badge bg-teal">
+																<i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>
+															</c:if>	
+														</td>
+														
+														<td>
+															<c:if test="${list.reg_id eq loginUser.id}">
+																<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
+																	<c:out value="${list.reg_nickname}" />
+																</a>
+															</c:if>
+															<c:if test="${list.reg_id ne loginUser.id}">
+																<a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=${list.reg_nickname}">
+																	<c:out value="${list.reg_nickname}" />
+																</a>
+															</c:if>
+														</td>
+														<td><c:out value="${list.view_cnt}" /></td>
+														<td><c:out value="${list.reg_dt}" /></td>
+													</tr>
+												</c:if>
 											</c:forEach>
 										</form>
 									</c:if>
@@ -251,6 +361,7 @@
 	$(document).ready(function(){
 		setPageCnt();
 		setSearchPage();
+		checkNotice();
 	});
 	
 	//게시글 작성
@@ -300,6 +411,55 @@
 			
 		});
 	}
+			
+	
+	//공지 숨기기
+	function checkNotice() { 
+		
+		var noticeCheckCookie = getCookie("noticeCheckCookie");
+		var noticeList = document.getElementsByClassName("noticeList");
+		
+		if(noticeCheckCookie == 'Y') {
+	        $("#noticeCheck").prop("checked", true);
+	        
+	        for(i = 0; i < noticeList.length; i++) {
+        		noticeList[i].style.display = "none";
+        	}
+	        
+	    } else {
+	        $("#noticeCheck").prop("checked", false);
+	        
+	        for(i = 0; i < noticeList.length; i++) {
+            	noticeList[i].style.display = "";
+            }
+            
+	    } 
+		
+		$("#noticeCheck").change(function(){
+	        var noticeList = document.getElementsByClassName("noticeList");
+	        
+	        if($("#noticeCheck").is(":checked")) {    
+	        
+	        	for(i = 0; i < noticeList.length; i++) {
+	        		noticeList[i].style.display = "none";
+	        	}
+	        	
+	        	setCookie("noticeCheckCookie", "Y", 1);
+	        	
+	        }
+	        else {
+	           
+	            for(i = 0; i < noticeList.length; i++) {
+	            	noticeList[i].style.display = "";
+	            }
+	            
+	            deleteCookie("noticeCheckCookie");
+	    
+	        }
+	    });
+		
+	}
+							
 </script>
 
 
@@ -342,6 +502,46 @@ $("#deleteBtnChecked").click(function(e) {
 		$("#deleteCheckedBoxForm").submit();
 	}
 });
+</script>
+
+
+<script>
+//쿠키
+
+//setCookie
+function setCookie(cookieName, value, exdays) {
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + exdays);
+	var cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+	document.cookie = cookieName + "=" + cookieValue;
+
+}
+
+//getCookie
+function getCookie(cookie_name) {
+	var x, y;
+	var val = document.cookie.split(';');
+	
+	for(var i = 0; i < val.length; i++) {
+		x = val[i].substr(0, val[i].indexOf('='));
+		y = val[i].substr(val[i].indexOf('=') + 1);
+		
+		x = x.replace(/^\s+|\s+$/g, ''); //공백 제거
+		
+		if(x == cookie_name) {
+			return unescape(y); //디코딩 후 리턴
+		}
+	}
+	
+}
+
+//delete cookie
+function deleteCookie(cookieName) {
+	var expireDate = new Date();
+	expireDate.setDate(expireDate.getDate() - 1);
+	document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+
 </script>
 
 <!-- script(end) -->

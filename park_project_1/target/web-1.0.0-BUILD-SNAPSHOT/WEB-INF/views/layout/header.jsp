@@ -127,10 +127,9 @@ function connectWebSocket() {
 	ws.onmessage = function (e) {
 	    console.log("Receive Message : ", e.data + '\n');
 	    
-		
+		//알람 count		
 		var el = document.querySelector('.notification');
 
-	    //var count = Number(el.getAttribute('data-count')) || 0;
 	    var count = Number(el.getAttribute('data-count'));
 	    el.setAttribute('data-count', e.data);
 	    el.classList.remove('notify');

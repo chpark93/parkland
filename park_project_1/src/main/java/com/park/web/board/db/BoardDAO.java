@@ -23,6 +23,10 @@ public interface BoardDAO {
 
 	public void updateBoardRecommend(BoardVO boardVO) throws Exception;
 
+	public void updateBoardNotice(BoardVO boardVO) throws Exception;
+	
+	public void updateBoardNoticeCancel(BoardVO boardVO) throws Exception;
+
 
 	//게시글 리스트
 	public List<BoardVO> searchBoardList(SearchCriteria searchCriteria) throws Exception;
@@ -51,6 +55,8 @@ public interface BoardDAO {
 	public List<BoardVO> getViewBestBoardList(SearchCriteria searchCriteria) throws Exception;
 
 	public int getViewBestBoardCnt(Integer view_cnt, SearchCriteria searchCriteria) throws Exception;
+
+
 
 		
 

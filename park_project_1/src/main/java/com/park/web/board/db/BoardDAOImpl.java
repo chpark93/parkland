@@ -61,7 +61,18 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlsession.update("board.updateReplyViewCnt", paramMap);
 	}
 	
-
+	//공지글
+	@Override
+	public void updateBoardNotice(BoardVO boardVO) throws Exception {
+		sqlsession.update("board.updateBoardNotice", boardVO);
+	}
+	
+	//공지 내리기
+	@Override
+	public void updateBoardNoticeCancel(BoardVO boardVO) throws Exception {
+		sqlsession.update("board.updateBoardNoticeCancel", boardVO);
+	}
+	
 	
 	//검색
 	@Override

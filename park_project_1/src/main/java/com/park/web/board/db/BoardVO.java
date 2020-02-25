@@ -4,18 +4,19 @@ import com.park.web.board.util.StringUtil;
 
 public class BoardVO {
 
-	private Integer bid; //글번호
-	private String title; //제목
-	private String content; //글 내용
-	private int view_cnt;
-	private int reply_view_cnt;
-	private int recommend_cnt;
-	private String reg_id; //작성자 아이디
-	private String reg_nickname; //작성자 닉네임
-	private String reg_dt;
-	private String edit_dt;	
-	private String bg_no; //게시판 그룹 번호(다중 게시판)
-	private String bg_name; //게시판 그룹 이름
+	private Integer bid; 			//글번호
+	private String title; 			//제목
+	private String content; 		//글 내용
+	private int view_cnt;			//조회수
+	private int reply_view_cnt;		//댓글수
+	private int recommend_cnt;		//추천수
+	private String reg_id; 			//작성자 아이디
+	private String reg_nickname; 	//작성자 닉네임
+	private String reg_dt;			//작성일
+	private String edit_dt;			//수정일
+	private String bg_no; 			//게시판 그룹 번호(다중 게시판)
+	private String bg_name; 		//게시판 그룹 이름
+	private Integer notice;			//1 => 공지
 	
 	/* 첨부파일 */
 	private String[] files;
@@ -124,6 +125,14 @@ public class BoardVO {
 
 	public void setBg_name(String bg_name) {
 		this.bg_name = bg_name;
+	}
+
+	public Integer getNotice() {
+		return notice;
+	}
+
+	public void setNotice(Integer notice) {
+		this.notice = notice;
 	}
 
 

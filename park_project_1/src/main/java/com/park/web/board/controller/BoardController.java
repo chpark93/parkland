@@ -305,6 +305,43 @@ public class BoardController {
 	}
 	
 	
+	//게시글 공지
+	@RequestMapping(value="/updateBoardNotice", method= {RequestMethod.GET, RequestMethod.POST})
+	public String updateBoardNotice(BoardVO boardVO, SearchCriteria searchCriteria, RedirectAttributes rttr, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		service.updateBoardNotice(boardVO);
+				
+		rttr.addAttribute("bid", boardVO.getBid());
+		rttr.addAttribute("bg_no", searchCriteria.getBg_no());
+		rttr.addAttribute("page", searchCriteria.getPage());
+		rttr.addAttribute("listSize", searchCriteria.getListSize());
+		rttr.addAttribute("searchType", searchCriteria.getSearchType());
+		rttr.addAttribute("keyword", searchCriteria.getKeyword());
+		rttr.addAttribute("boardSection", searchCriteria.getBoardSection());
+		 
+		return "redirect:/board/getBoardContent";
+	}
+	
+	//공지 내리기
+	@RequestMapping(value="/updateBoardNoticeCancel", method= {RequestMethod.GET, RequestMethod.POST})
+	public String updateBoardNoticeCancel(BoardVO boardVO, SearchCriteria searchCriteria, RedirectAttributes rttr, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		service.updateBoardNoticeCancel(boardVO);
+		
+		rttr.addAttribute("bid", boardVO.getBid());
+		rttr.addAttribute("bg_no", searchCriteria.getBg_no());
+		rttr.addAttribute("page", searchCriteria.getPage());
+		rttr.addAttribute("listSize", searchCriteria.getListSize());
+		rttr.addAttribute("searchType", searchCriteria.getSearchType());
+		rttr.addAttribute("keyword", searchCriteria.getKeyword());
+		rttr.addAttribute("boardSection", searchCriteria.getBoardSection());
+		
+		return "redirect:/board/getBoardContent";
+	}
+	
+	
 	//추천 게시글
 	@RequestMapping(value="/getRecommendBoardList", method=RequestMethod.GET)
 	public String getRecommendBoardList(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria, BoardVO boardVO, Model model, 

@@ -63,6 +63,16 @@ public class BoardServiceImpl implements BoardService {
 		manager.updateBoardRecommend(boardVO);
 	}
 	
+	@Override
+	public void updateBoardNotice(BoardVO boardVO) throws Exception {
+		manager.updateBoardNotice(boardVO);
+	}
+	
+	@Override
+	public void updateBoardNoticeCancel(BoardVO boardVO) throws Exception {
+		manager.updateBoardNoticeCancel(boardVO);
+	}
+	
 
 	//게시글 수정
 	//기존 첨부 파일 전체 삭제

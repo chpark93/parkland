@@ -13,7 +13,7 @@ public class Criteria {
 
 	public Criteria() {
 		this.page = 1;
-		this.listSize = 10;
+		this.listSize = 20;
 	}
 
 	public void setPage(Integer page) {
@@ -33,7 +33,7 @@ public class Criteria {
 	public void setListSize(int listSize) {
 
 		if (listSize <= 0 || listSize > 100) {
-			this.listSize = 10;
+			this.listSize = 20;
 			return;
 		}
 	

@@ -19,8 +19,14 @@
 			<div class="inner" style="width: 50%; height: 50%;">	       
 				
 				<!-- Header -->	
-				<%-- <%@ include file="/WEB-INF/views/layout/header.jsp"%> --%>	
-				
+				<div class="align-center">
+		        	<label style="margin-bottom: 50px;">
+		        		<a href="${pageContext.request.contextPath}/main/mainPage">
+		        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+		        		</a>
+		        	</label>
+		        </div>
+		        
 				<div class="align-center">
 		        	<label style="font-size:24px;">회원 정보(관리자용)</label>
 		        </div>

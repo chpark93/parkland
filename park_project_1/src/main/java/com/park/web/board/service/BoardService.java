@@ -30,6 +30,10 @@ public interface BoardService {
 	
 	public void updateBoardRecommend(BoardVO boardVO) throws Exception;
 
+	public void updateBoardNotice(BoardVO boardVO) throws Exception;
+	
+	public void updateBoardNoticeCancel(BoardVO boardVO) throws Exception;
+
 	public void deleteBoardAdmin(Integer bid) throws Exception;
 
 	
@@ -49,6 +53,7 @@ public interface BoardService {
 	public String getUserName(String id) throws Exception;
 
 	public UserVO loginInfo(String id) throws Exception;
+
 
 	
 	

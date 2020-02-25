@@ -51,9 +51,6 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("handleTextMessage : " + session + " : " + message);
 		
-		//protocol : cmd , 댓글 작성자, 게시글 작성자 , 게시글 번호  (ex : reply, user2, user1, bid)
-		String msg = message.getPayload();
-		
 		Map<String, Object> httpSession = session.getAttributes();
 		UserVO loginUser = (UserVO) httpSession.get(SessionName.LOGIN);
 		System.out.println("user : " + loginUser.getId());		
@@ -63,35 +60,6 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 		
 		session.sendMessage(new TextMessage(mypagemanager));
 		
-		
-		/*
-		if(StringUtils.isNotEmpty(msg)) { //null 처리
-			String[] str = msg.split(","); 
-			
-			if(str != null && str.length == 4) {
-				String cmd = str[0];	
-				String replyWriter = str[1];	
-				String boardWriter = str[2];	
-				String bid = str[3];	
-				
-				WebSocketSession boardWriterSession = userSessions.get(boardWriter);
-				System.out.println("bwsession : " + boardWriterSession);
-				
-				if("reply".equals(cmd) || boardWriterSession != null) {
-					System.out.println("3");
-					
-					TextMessage textmsg = new TextMessage(replyWriter + " 님이" + " <a href='../board/getBoardContent?bid=" + bid + " '>" + bid + "</a>번 글에 댓글을 남기셨습니다.");
-					
-					boardWriterSession.sendMessage(textmsg);
-					
-					
-				}
-				
-				
-				
-			}
-		}
-		*/
 			
 	}
 

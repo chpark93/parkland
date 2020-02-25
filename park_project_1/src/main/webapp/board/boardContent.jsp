@@ -28,8 +28,20 @@
 				<!-- Header -->
 				<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 				<br/><br/>
-				
-					<div>
+					
+					<div style="text-align: right">
+						<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
+							<c:if test="${boardContent.notice eq '0'}">
+								<button type="button" class="btn btn-sm btn-primary" id="btnNotice">공지로 올리기</button>					            								
+							</c:if>
+							<c:if test="${boardContent.notice eq '1'}">
+								<button type="button" class="btn btn-sm btn-primary" id="btnNoticeCancel">공지 내리기</button>					            								
+							</c:if>
+		            	</c:if>
+					</div>
+					<br/>
+					
+					<div>	
 					<div class="box" id="box">
 						<div class="col-6 col-12-xsmall">
 							<label class="col-sm-5 control-label" style="margin-bottom : 10px; font-size : 18px"><c:out value="${boardContent.title}"/> </label>
@@ -254,7 +266,38 @@
 			location.href = url;
 		}
 		
+	});
+	
+	
+	//게시글 공지로 
+	$(document).on('click', '#btnNotice', function() {
+		var url = "${pageContext.request.contextPath}/board/updateBoardNotice";
+		
+		if('${searchCriteria.boardSection}' == '') {
+			url = url + "?bid=" + ${boardContent.bid};			
+		}
+		else {
+			url = url + "?bid=" + ${boardContent.bid}			
+			url = url + "&boardSection=${searchCriteria.boardSection}";				
+		}
+		
+		location.href = url;
 	});	
+	
+	//공지 내리기
+	$(document).on('click', '#btnNoticeCancel', function() {
+		var url = "${pageContext.request.contextPath}/board/updateBoardNoticeCancel";
+		
+		if('${searchCriteria.boardSection}' == '') {
+			url = url + "?bid=" + ${boardContent.bid};			
+		}
+		else {
+			url = url + "?bid=" + ${boardContent.bid}			
+			url = url + "&boardSection=${searchCriteria.boardSection}";				
+		}
+		
+		location.href = url;
+	});
 	
 	//게시글 삭제
 	$(document).on('click', '#btnDelete', function() {
@@ -296,6 +339,7 @@
 			getFiles(bid);
 			
 			//WebSocket
+			/*
 			$('#btnSend').on('click', function(e) {
 				e.preventDefault();
 				
@@ -307,6 +351,7 @@
 				socket.send(msg);
 				
 			});
+			*/
 	});
 	
 	/* 댓글 start */
