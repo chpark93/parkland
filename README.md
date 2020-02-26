@@ -17,7 +17,7 @@
   - 운영 환경 : Apache Tomcat, AWS EC2(ubuntu), AWS RDS
   - 프레임 워크 : Spring Framework, MyBatis
   - DB : MariaDB
-  - Tools : STS, HeidiSql, Putty, 
+  - Tools : STS, HeidiSql, Putty, GitHub
   - etc : AWS S3
 
 
