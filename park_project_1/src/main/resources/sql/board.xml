@@ -322,7 +322,7 @@
 		ORDER BY bid DESC
 		LIMIT #{pageStart}, #{listSize}
 	</select>
-	
+					
 	
 	<select id="getRecommendBoardCnt" resultType="int">
 		SELECT
