@@ -12,12 +12,12 @@
 
 * 사용 기술 및 개발 환경 
 
-  - O/S : Windows 10 (개발), Linux ubuntu 18.04(운영)
+  - O/S : Windows 10 (개발 ), Linux ubuntu 18.04(운영)
   - JAVA8, JavaScript, JQuery, HTML5, CSS
   - 운영 환경 : Apache Tomcat, AWS EC2(ubuntu), AWS RDS
   - 프레임 워크 : Spring Framework, MyBatis
   - DB : MariaDB
-  - Tools : STS, HeidiSql, Putty
+  - Tools : STS, HeidiSql, Putty, 
   - etc : AWS S3
 
 
