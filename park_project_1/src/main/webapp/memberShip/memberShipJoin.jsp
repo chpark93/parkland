@@ -112,10 +112,18 @@
 
 <script>
  
+//회원가입 submit
 $(document).on('click', '#btnSubmit', function(e){
 	e.preventDefault();
 	
-	$("#form").submit();
+    if($("#checkMemberShip").is(":checked")) {    
+        
+		$("#form").submit();
+    }
+    else {
+		alert('가입 완료에 체크 해주세요'); 
+		return false;
+    }
 	
 });
  

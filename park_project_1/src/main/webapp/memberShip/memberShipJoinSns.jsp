@@ -90,7 +90,7 @@
 					
 					<!-- button -->
 					<div class="" align="right">
-						<button type="submit" class="btn btn-primary">회원 가입</button>
+						<button type="button" id="btnSubmit" class="btn btn-primary">회원 가입</button>
 						<button type="button" id="btnCancel" class="btn btn-primary">취소</button>
 					</div>		
 				</form:form>
@@ -104,6 +104,21 @@
 </body>
 
 <script>
+
+//회원가입 submit
+$(document).on('click', '#btnSubmit', function(e){
+	e.preventDefault();
+	
+    if($("#checkMemberShip").is(":checked")) {    
+        
+		$("#form").submit();
+    }
+    else {
+		alert('가입 완료에 체크 해주세요'); 
+		return false;
+    }
+	
+});
 
 //회원가입 취소
 $(document).on('click', '#btnCancel', function(e){

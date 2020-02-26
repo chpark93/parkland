@@ -506,7 +506,7 @@ $("#deleteBtnChecked").click(function(e) {
 
 
 <script>
-//쿠키
+//쿠키 저장
 
 //setCookie
 function setCookie(cookieName, value, exdays) {
