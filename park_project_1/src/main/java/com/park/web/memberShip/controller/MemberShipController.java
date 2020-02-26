@@ -165,10 +165,22 @@ public class MemberShipController {
 		return "/memberShip/findIdForm";
 	}
 	@RequestMapping(value="/findId", method=RequestMethod.POST)
-	public String findId(@ModelAttribute MemberShipVO memberShipVO, Model model) throws Exception {
-			model.addAttribute("memberShipVO", msservice.findByEmail(memberShipVO));
+	public String findId(@ModelAttribute MemberShipVO memberShipVO, Errors errors, Model model) throws Exception {
+		if(errors.hasErrors()) {
+			return "memberShip/findIdForm";
+		}	
+		
+		if(msservice.findByEmail(memberShipVO) != null) {
 			
+			model.addAttribute("memberShipVO", msservice.findByEmail(memberShipVO));
 			return "/memberShip/findIdResult";
+			
+		}
+		else {
+			errors.rejectValue("email","emailNotExist", "존재하지 않는 회원 이메일 입니다.");			
+			return "memberShip/findIdForm";
+		}
+		
 	}
 	
 	//비밀번호 찾기(member)

@@ -37,7 +37,11 @@
 						<label>Email</label>
 						<form:input path="email" type="email" class="form-control form-control-user" id="email" />													
 					</div>
-					<br/><br/>
+					<br/>
+					<div>
+						<form:errors path="email" class="label label-danger" style="color:red; margin-top:2px" />
+					</div>
+					<br/>
 					
 					<div style="text-align: right;">
 						<input type="submit" value="찾기" class="btn btn-primary">
