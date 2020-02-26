@@ -130,53 +130,7 @@
 			bid = #{bid}
 	</update>
 	
-	
-	<!-- 게시글 리스트 -->
-	<!-- <select id="searchBoardList" resultType="board">
-		SELECT
-			bid, 
-			title, 
-			content, 
-			view_cnt, 
-			reg_id, 
-			reg_nickname,
-			<![CDATA[ 
-			IF	(
-	                DATE_FORMAT(reg_dt, '%Y%m%d') < DATE_FORMAT(now(),'%Y%m%d'),
-	                DATE_FORMAT(reg_dt, '%Y-%m-%d'),
-	                DATE_FORMAT(reg_dt, '%H:%i')
-                ) as reg_dt,
-            ]]> 
-			edit_dt, 
-			bg_no, 
-			reply_view_cnt,
-			recommend_cnt,
-			notice
-		FROM
-			tbl_board		
-		WHERE 
-			bg_no = #{bg_no}
-		<if test="keyword != null and keyword != '' ">
-			<if test="searchType == 'title' ">
-				AND	title like CONCAT('%', #{keyword}, '%') 
-			</if>
-			<if test="searchType == 'content' ">
-				AND	content like CONCAT('%', #{keyword}, '%') 
-			</if>
-			<if test="searchType == 'reg_id' ">
-				AND	reg_id like CONCAT('%', #{keyword}, '%') 
-			</if>
-			<if test="searchType == 'title_content' ">
-				AND (
-						title like CONCAT('%', #{keyword}, '%')
-					or	content like CONCAT('%', #{keyword}, '%')
-					)
-			</if>
-		</if>
-		ORDER BY notice DESC, bid DESC
-		LIMIT #{pageStart}, #{listSize}
-	</select>
-	 -->
+
 
 	<!-- 게시글 리스트 -->
 	<select id="searchBoardList" resultType="board">

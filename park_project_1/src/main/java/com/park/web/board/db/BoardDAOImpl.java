@@ -19,32 +19,37 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSession sqlsession;
 
 	
-	
+	//게시글 상세
 	@Override
 	public BoardVO getBoardContent(Integer bid) throws Exception {
 		return sqlsession.selectOne("board.getBoardContent", bid);
 	}
 	
+	//게시글 인서트
 	@Override
 	public int insertBoard(BoardVO board) throws Exception {
 		return sqlsession.insert("board.insertBoard", board);
 	}
 	
+	//게시글 업데이트
 	@Override
 	public int updateBoard(BoardVO board) throws Exception {
 		return sqlsession.update("board.updateBoard", board);
 	}
 	
+	//게시글 삭제
 	@Override
 	public int deleteBoard(Integer bid) throws Exception {
 		return sqlsession.delete("board.deleteBoard", bid);
 	}
-
+	
+	//게시글 조회
 	@Override
 	public int updateViewCnt(Integer bid) throws Exception {
 		return sqlsession.update("board.updateViewCnt", bid);
 	}
 	
+	//게시글 추천
 	@Override
 	public void updateBoardRecommend(BoardVO boardVO) throws Exception {
 		sqlsession.update("board.updateBoardRecommend", boardVO);
@@ -74,7 +79,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	
-	//검색
+	//게시판 리스트
 	@Override
 	public List<BoardVO> searchBoardList(SearchCriteria searchCriteria) throws Exception {
 		return sqlsession.selectList("board.searchBoardList", searchCriteria);

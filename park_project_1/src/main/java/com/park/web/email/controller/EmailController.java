@@ -2,6 +2,7 @@ package com.park.web.email.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +26,10 @@ public class EmailController {
 	}
 	
 	@RequestMapping(value="/sendEmail")
-	public String sendEmail(@ModelAttribute("emailDTO") EmailDTO emailDTO, Model model, HttpServletRequest request) {
+	public String sendEmail(@ModelAttribute("emailDTO") EmailDTO emailDTO, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			emailservice.sendMail(emailDTO);
+			emailservice.sendMail(emailDTO, response);
 			model.addAttribute("message", "전송 완료");			
 		}
 		catch(Exception e) {

@@ -31,7 +31,7 @@
 						<br>
 						<h2>board Form</h2>
 						<br>
-
+   
 						<div>
 							<form:form name="form" id="form" role="form" modelAttribute="board" method="post" style="width:70%" action="${pageContext.request.contextPath}/board/saveBoard" enctype="multipart/form-data">
 								<form:hidden path="bid" />
@@ -120,7 +120,7 @@
 					            <br/><br/>
 					            
 					            <!-- 게시글 버튼  -->
-					            <div style="clear: both; text-align: right;">
+					            <div style="clear: both; text-align: right;">				            	
 									<button type="button" class="btn btn-sm btn-primary" id="btnSave">작성</button>
 									<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
 								</div>
@@ -196,6 +196,7 @@ $(document).ready(function() {
 			filesSubmit(lastTem);
 		}
 	});
+	
 	
 	
 	//목록으로
@@ -288,14 +289,14 @@ $("#boardFileUpload").change(function(e) {
 	}
 });
 
-//프로필 이미지 등록
+/*
 $("#form").submit(function(e){
 	e.preventDefault();
 	
 	var lastTem = $(this);
 	filesSubmit(lastTem);
 });
-
+*/
 
 </script>
 <!-- script (end) -->

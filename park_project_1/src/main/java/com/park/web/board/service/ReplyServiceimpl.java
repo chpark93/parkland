@@ -52,7 +52,7 @@ public class ReplyServiceimpl implements ReplyService{
 		String target_id = mpmanager.getBoardRegIdFromBid(bid);
 		
 		if(!replyVO.getReg_id().equals(target_id)) {			
-			String msg = replyVO.getReg_nickname() + "¥‘¿Ã " + "<a href='../board/getBoardContent?bid=" + bid + " '>" + bid + "</a>" + "π¯ ±€ø° ¥Ò±€¿ª ≥≤∞ÂΩ¿¥œ¥Ÿ.";
+			String msg = replyVO.getReg_nickname() + "¥‘¿Ã " + "<a href='../board/getBoardContent?boardSection=mypage&bid=" + bid + " '>" + bid + "</a>" + "π¯ ±€ø° ¥Ò±€¿ª ≥≤∞ÂΩ¿¥œ¥Ÿ.";
 			
 			AlarmVO alarmVO = new AlarmVO();
 			alarmVO.setNickname(replyVO.getReg_nickname());

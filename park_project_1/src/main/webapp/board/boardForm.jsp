@@ -289,14 +289,6 @@ $("#boardFileUpload").change(function(e) {
 	}
 });
 
-/*
-$("#form").submit(function(e){
-	e.preventDefault();
-	
-	var lastTem = $(this);
-	filesSubmit(lastTem);
-});
-*/
 
 </script>
 <!-- script (end) -->

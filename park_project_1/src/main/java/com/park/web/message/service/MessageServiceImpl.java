@@ -23,9 +23,6 @@ public class MessageServiceImpl implements MessageService{
 	private MessageDAO mmanager;
 	
 	@Inject
-	private UserDAO usermanager;
-	
-	@Inject
 	private MyPageDAO mpmanager;
 	
 	//쪽지 작성

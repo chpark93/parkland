@@ -1,9 +1,12 @@
 package com.park.web.email.service;
 
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,9 @@ public class EmailServiceImpl implements EmailService {
 	private JavaMailSender mailSender;
 	
 	@Override
-	public void sendMail(EmailDTO emailDTO) {
+	public void sendMail(EmailDTO emailDTO, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		
 		try {
 			
@@ -36,6 +41,9 @@ public class EmailServiceImpl implements EmailService {
 			
 			//전송
 			mailSender.send(msg);
+			
+			out.print("<script> alert('문의 메일 전송에 성공했습니다.'); location.href='https://chparkland.com/park_project_1'; </script>");
+			out.close();
 		
 		}
 		catch(Exception e) {

@@ -38,9 +38,6 @@ public class MyPageController {
 	private MyPageService mpservice;
 	
 	@Inject
-	private BoardService service;
-	
-	@Inject
 	private MemberShipService msservice;
 
 	

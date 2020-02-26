@@ -29,6 +29,7 @@ public class BoardServiceImpl implements BoardService {
 	private FileDAO filemanager;
 	
 	
+	//게시글 인서트
 	@Transactional
 	@Override
 	public void insertBoard(BoardVO boardVO) throws Exception {
@@ -46,6 +47,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 	
+	//게시글 상세
 	@Transactional
 	@Override
 	public BoardVO getBoardContent(Integer bid) throws Exception {
@@ -53,21 +55,25 @@ public class BoardServiceImpl implements BoardService {
 		return manager.getBoardContent(bid);
 	}
 	
+	//게시글 조회수
 	@Override
 	public int updateViewCnt(Integer bid) throws Exception {
 		return manager.updateViewCnt(bid);
 	}
 	
+	//게시글 추천
 	@Override
 	public void updateBoardRecommend(BoardVO boardVO) throws Exception {
 		manager.updateBoardRecommend(boardVO);
 	}
 	
+	//게시글 공지
 	@Override
 	public void updateBoardNotice(BoardVO boardVO) throws Exception {
 		manager.updateBoardNotice(boardVO);
 	}
 	
+	//공지 취소
 	@Override
 	public void updateBoardNoticeCancel(BoardVO boardVO) throws Exception {
 		manager.updateBoardNoticeCancel(boardVO);
@@ -125,6 +131,7 @@ public class BoardServiceImpl implements BoardService {
 		return manager.boardGroupInfoFromBg_no(bg_no);
 	}
 	
+	//게시글 삭제(관리자 권한)
 	@Transactional
 	@Override
 	public void deleteBoardAdmin(Integer bid) throws Exception {
