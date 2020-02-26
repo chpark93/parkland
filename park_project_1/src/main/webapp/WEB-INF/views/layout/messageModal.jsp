@@ -72,7 +72,7 @@
 						<div class="col-12">
 							<ul class="actions">
 								<li>
-									<input type="submit" id="sendMessage" value="Send Message" class="primary">
+									<input type="button" id="sendMessage" value="Send Message" class="primary">
 								</li>
 								<li>
 									<input type="reset" value="Reset">
@@ -88,6 +88,20 @@
 </div>
 
 <script>
+
+//쪽지 작성
+$(document).on('click', '#sendMessage', function(e){
+		e.preventDefault();
+		
+		if($("#message_content").val() == '' || $("#message_content").val() == null) {
+			alert('내용을 입력 해주세요.')
+			return false
+		}
+		else {
+			$("#form").submit();
+			
+		}
+	});
 
 //오픈
 function messageModal() {
