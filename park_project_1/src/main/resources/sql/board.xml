@@ -319,7 +319,7 @@
 					)
 			</if>
 		</if>
-		ORDER BY recommend_cnt DESC
+		ORDER BY bid DESC
 		LIMIT #{pageStart}, #{listSize}
 	</select>
 	
@@ -391,7 +391,7 @@
 					)
 			</if>
 		</if>
-		ORDER BY view_cnt DESC
+		ORDER BY bid DESC
 		LIMIT #{pageStart}, #{listSize}
 	</select>
 	
