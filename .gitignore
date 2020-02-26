@@ -37,6 +37,9 @@ tmp/
 local.properties
 .settings/
 .loadpath
+/src/main/resources/servlet-context.xml
+/src/main/resources/spring/root-context.xml
+/src/main/resources/properties/database-properties.xml
 .recommenders
 
 # External tool builders
