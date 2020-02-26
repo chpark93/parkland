@@ -53,7 +53,7 @@
 $(document).on('click', '#sendMessage', function(e){
 		e.preventDefault();
 		
-		if($("#message_content").val() == '' || $("#message_content").val() == null) {
+		if($("#message_content").val() == '') {
 			alert('내용을 입력 해주세요.')
 			return false
 		}

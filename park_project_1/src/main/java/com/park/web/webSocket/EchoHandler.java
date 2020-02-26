@@ -23,12 +23,12 @@ import com.park.web.mypage.db.MyPageDAO;
 import com.park.web.user.db.UserVO;
 
 @Repository
-public class ReplyEchoHandler extends TextWebSocketHandler {
+public class EchoHandler extends TextWebSocketHandler {
 
 	@Inject
 	SqlSession sqlsession;
 	
-	private final Logger logger = LoggerFactory.getLogger(ReplyEchoHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 	
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	Map<String, WebSocketSession> userSessions = new HashMap<String, WebSocketSession>(); 

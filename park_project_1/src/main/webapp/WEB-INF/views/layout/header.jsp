@@ -114,7 +114,7 @@ $(document).ready(function() {
 	
 function connectWebSocket() {
 	    
-	var ws = new WebSocket("wss://chparkland.com/park_project_1/replyEcho/websocket");
+	var ws = new WebSocket("wss://chparkland.com/park_project_1/echo/websocket");
 	//var ws = new WebSocket("ws://localhost:8080/web/replyEcho/websocket");
 	socket = ws;
 	
