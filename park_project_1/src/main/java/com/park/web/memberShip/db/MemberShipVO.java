@@ -27,10 +27,12 @@ public class MemberShipVO {
 	private String email;
 	
 	@NotBlank(message="ÀÌ¸§À» ÇÊ¼ö·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.")
+	@Size(min=2, max=20, message="ÀÌ¸§Àº 2~20ÀÚÀÇ ¿µ¹®,ÇÑ±Û¸¸ °¡´ÉÇÕ´Ï´Ù.")
 	@Pattern(regexp="^[°¡-ÆRa-zA-Z]*$", message="¼ıÀÚ³ª Æ¯¼ö¹®ÀÚ´Â ÀÔ·ÂÇÒ ¼ö ¾ø½À´Ï´Ù.")
 	private String name;
 	
 	@NotBlank(message="´Ğ³×ÀÓÀ» ÀÔ·Â ÇØÁÖ¼¼¿ä.")
+	@Size(min=2, max=20, message="´Ğ³×ÀÓÀº 2~20ÀÚÀÇ ¿µ¹®,ÇÑ±Û,¼ıÀÚ¸¸ °¡´ÉÇÕ´Ï´Ù.")
 	private String nickname;
 	
 	@NotNull(message="ºñ¹Ğ¹øÈ£¸¦ ÇÊ¼ö·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.")

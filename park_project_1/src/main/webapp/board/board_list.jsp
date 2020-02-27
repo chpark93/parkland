@@ -8,15 +8,15 @@
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
 <title>Board List</title>
 <style type="text/css">
-	#table a {
+	#table a {	
 		font: Normal 14px sans-serif; 
 		color:#333; 
 		text-decoration:none;
 	}
 </style>
 
-</head>
-<body class="is-preload">
+</head> 
+<body class="is-preload"> 
 	<!-- Wrapper -->				
 	<div id="wrapper">
 		

@@ -165,22 +165,10 @@ public class MemberShipController {
 		return "/memberShip/findIdForm";
 	}
 	@RequestMapping(value="/findId", method=RequestMethod.POST)
-	public String findId(@ModelAttribute MemberShipVO memberShipVO, Errors errors, Model model) throws Exception {
-		if(errors.hasErrors()) {
-			return "memberShip/findIdForm";
-		}	
-		
-		if(msservice.findByEmail(memberShipVO) != null) {
-			
+	public String findId(@ModelAttribute MemberShipVO memberShipVO, Model model) throws Exception {
 			model.addAttribute("memberShipVO", msservice.findByEmail(memberShipVO));
-			return "/memberShip/findIdResult";
 			
-		}
-		else {
-			errors.rejectValue("email","emailNotExist", "존재하지 않는 회원 이메일 입니다.");			
-			return "memberShip/findIdForm";
-		}
-		
+			return "/memberShip/findIdResult";
 	}
 	
 	//비밀번호 찾기(member)
@@ -200,11 +188,15 @@ public class MemberShipController {
 
 		
 		if(msservice.findByEmail(memberShipVO) != null) {
+			
 			if(msservice.findByEmail(memberShipVO).getPassword() == null) {
+				
 				errors.rejectValue("email","SnsLogin", "SNS로 가입한 회원 입니다.");
+				
 				return "memberShip/findPwForm";
 			}
 			else {
+				
 				MemberShipVO result = msservice.execute(memberShipVO);
 				rttr.addFlashAttribute("result", result);
 				
@@ -214,7 +206,7 @@ public class MemberShipController {
 			}
 		}
 		else {
-			errors.rejectValue("email","emailNotExist", "존재하지 않는 회원 이메일 입니다.");
+			errors.rejectValue("email","emailNotExist", "존재하지 않는 이메일 입니다.");
 			
 			return "memberShip/findPwForm";
 		}
@@ -317,11 +309,6 @@ public class MemberShipController {
 		
 		if(!memberShipVO.checkPassword()) {
 			errors.rejectValue("password", "pwEqualsNot", "비밀번호가 일치하지 않습니다.");
-			return "/memberShip/modifyPwPage";
-		}
-		
-		if(memberShipVO.getPassword().length() > 4 || memberShipVO.getPasswordChk().length() < 4) {
-			errors.rejectValue("password", "pwCheck", "비밀번호는 4자 이상 입력해주셔야 합니다.");
 			return "/memberShip/modifyPwPage";
 		}
 		

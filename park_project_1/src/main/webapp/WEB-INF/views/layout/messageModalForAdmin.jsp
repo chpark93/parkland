@@ -25,15 +25,14 @@
 
 						<!-- Break -->
 						<div class="col-12">
-							<textarea name="message_content"
-								id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
+							<textarea class="message_content_admin" name="message_content" id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
 						</div>
-
+						
 						<!-- Break -->
 						<div class="col-12">
 							<ul class="actions">
 								<li>
-									<input type="button" id="sendMessage" value="Send Message" class="primary">
+									<input type="button" id="sendMessageAdmin" value="Send Message" class="primary">
 								</li>
 								<li>
 									<input type="reset" value="Reset">
@@ -46,17 +45,17 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div>				
 
 <script>
 //쪽지 작성
-$(document).on('click', '#sendMessage', function(e){
+$(document).on('click', '#sendMessageAdmin', function(e){
 		e.preventDefault();
 		
-		if($("#message_content").val() == '') {
+		if($(".message_content_admin").val() == '') {
 			alert('내용을 입력 해주세요.')
 			return false
-		}
+		}			
 		else {
 			$("#form").submit();
 			

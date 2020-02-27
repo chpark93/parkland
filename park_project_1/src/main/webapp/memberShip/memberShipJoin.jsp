@@ -29,7 +29,8 @@
 	      
 	        <div class="box">
 				
-				<form:form id="form" modelAttribute="memberShipVO" action="${pageContext.request.contextPath}/memberShip/memberRegister" method="post">
+				<form:form name="form" id="form" class="form" role="form"  modelAttribute="memberShipVO" style="margin-left: auto; margin-right: auto;"
+					action="${pageContext.request.contextPath}/memberShip/memberRegister" method="post">
 						<div class="">
 							
 							<!-- Member Section -->

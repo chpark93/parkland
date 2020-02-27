@@ -64,8 +64,7 @@
 						
 						<!-- Content -->
 						<div class="col-12">
-							<textarea name="message_content"
-								id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
+							<textarea class="message_content" name="message_content" id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
 						</div>
 						
 						<!-- Button -->
@@ -88,12 +87,11 @@
 </div>
 
 <script>
-
 //쪽지 작성
 $(document).on('click', '#sendMessage', function(e){
 		e.preventDefault();
-		
-		if($("#message_content").val() == '') {
+					
+		if($(".message_content").val() == '' ) {
 			alert('내용을 입력 해주세요.')
 			return false
 		}
@@ -102,6 +100,7 @@ $(document).on('click', '#sendMessage', function(e){
 			
 		}
 	});
+
 
 //오픈
 function messageModal() {

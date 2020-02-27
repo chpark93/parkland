@@ -30,7 +30,7 @@
 	      
 	        <div class="box" >
 	
-				<form:form id="form" modelAttribute="memberShipSnsVO" action="${pageContext.request.contextPath}/memberShip/memberRegisterSns" method="post">
+				<form:form id="joinForm" modelAttribute="memberShipSnsVO" action="${pageContext.request.contextPath}/memberShip/memberRegisterSns" method="post">
 					<div class="">
 						
 						<!-- Member Section -->

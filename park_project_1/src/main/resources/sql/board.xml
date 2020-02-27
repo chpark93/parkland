@@ -319,10 +319,10 @@
 					)
 			</if>
 		</if>
-		ORDER BY bid DESC
+		ORDER BY recommend_cnt DESC
 		LIMIT #{pageStart}, #{listSize}
 	</select>
-					
+	
 	
 	<select id="getRecommendBoardCnt" resultType="int">
 		SELECT
@@ -391,7 +391,7 @@
 					)
 			</if>
 		</if>
-		ORDER BY bid DESC
+		ORDER BY view_cnt DESC
 		LIMIT #{pageStart}, #{listSize}
 	</select>
 	

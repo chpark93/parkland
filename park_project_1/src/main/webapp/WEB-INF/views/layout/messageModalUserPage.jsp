@@ -15,6 +15,7 @@
 			<div>
 				<form id="form" action="${pageContext.request.contextPath}/message/insertMessage" method="post">
 					<div class="row gtr-uniform col-12">
+						
 						<div class="col-6">
 							<input type="text" name="message_sender" id="message_sender" value="${loginUser.nickname}" readonly />
 						</div>
@@ -27,15 +28,14 @@
 						
 						<!-- Content -->
 						<div class="col-12">
-							<textarea name="message_content"
-								id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
+							<textarea class="message_content_user" name="message_content" id="message_content" placeholder="내용을 입력 해주세요." rows="6"></textarea>
 						</div>
 						
 						<!-- Button -->
 						<div class="col-12">
 							<ul class="actions">
 								<li>
-									<input type="button" id="sendMessage" value="Send Message" class="primary">
+									<input type="button" id="sendMessageUser" value="Send Message" class="primary">
 								</li>
 								<li>
 									<input type="reset" value="Reset">
@@ -52,10 +52,10 @@
 
 <script>
 //쪽지 작성
-$(document).on('click', '#sendMessage', function(e){
+$(document).on('click', '#sendMessageUser', function(e){
 		e.preventDefault();
 		
-		if($("#message_content").val() == '') {
+		if($(".message_content_user").val() == '' ) {
 			alert('내용을 입력 해주세요.')
 			return false
 		}

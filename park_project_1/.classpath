@@ -36,5 +36,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/qkrck/OneDrive/바탕 화면/Lib/jstl/1.2/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/qkrck/OneDrive/바탕 화면/Lib/jstl/1.2/jstl-1.2-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
