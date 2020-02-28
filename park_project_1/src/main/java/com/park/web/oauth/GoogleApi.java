@@ -26,7 +26,7 @@ public class GoogleApi extends GoogleApi20 implements SnsUrl{
     }
     
     public static String getAuthorizationUrl() {
-		String googleUrl = GOOGLE_AUTH + "?client_id=" + "919440269162-rp9fr2d7schkgs3p1949e49ncd0js2fu.apps.googleusercontent.com" + "&redirect_uri=" + "http://chparkland.com/park_project_1/login/auth/google/callback" + "&response_type=code";
+		String googleUrl = GOOGLE_AUTH + "?client_id=" + "********************************" + "&redirect_uri=" + "http://chparkland.com/park_project_1/login/auth/google/callback" + "&response_type=code";
 	
 		return googleUrl;
 	}
