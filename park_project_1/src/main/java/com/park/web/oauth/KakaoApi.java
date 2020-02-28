@@ -46,7 +46,7 @@ public class KakaoApi extends DefaultApi20 implements SnsUrl{
 
 	
 	public static String getAuthorizationUrl() {
-		String kakaoUrl = KAKAO_AUTH + "?client_id=" + "c586580946d90e23acb162ba247ff093" + "&redirect_uri=" + "http://chparkland.com/park_project_1/login/auth/kakao/callback" + "&response_type=code";
+		String kakaoUrl = KAKAO_AUTH + "?client_id=" + "************************" + "&redirect_uri=" + "http://chparkland.com/park_project_1/login/auth/kakao/callback" + "&response_type=code";
 	
 		return kakaoUrl;
 	}
@@ -58,7 +58,7 @@ public class KakaoApi extends DefaultApi20 implements SnsUrl{
         final List<NameValuePair> param = new ArrayList<NameValuePair>();
  
         param.add(new BasicNameValuePair("grant_type", "authorization_code"));
-        param.add(new BasicNameValuePair("client_id", "c586580946d90e23acb162ba247ff093"));
+        param.add(new BasicNameValuePair("client_id", "***********************"));
         param.add(new BasicNameValuePair("redirect_uri", "http://chparkland.com/park_project_1/login/auth/kakao/callback"));
         param.add(new BasicNameValuePair("code", code));
  
