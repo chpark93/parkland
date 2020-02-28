@@ -99,20 +99,20 @@ public class UserController {
 		}
 
 		
-		//Ä«Ä«¿À ·Î±×ÀÎ
+		//ì¹´ì¹´ì˜¤ ë¡œê·¸ì¸
 		if(snsService.equals("kakao")) {
-			//code ÀÌ¿ë access_token ¹ŞÀ½
+			//code ì´ìš© access_token ë°›ìŒ
 			JsonNode node = KakaoApi.getAccessToken(code);
 			JsonNode accessToken = node.get("access_token");
 			
-			//access_token À¸·Î »ç¿ëÀÚ profile °¡Á®¿È  => »ç¿ëÀÚ Á¤º¸
+			//access_token ìœ¼ë¡œ ì‚¬ìš©ì profile ê°€ì ¸ì˜´  => ì‚¬ìš©ì ì •ë³´
 			JsonNode userInfo = KakaoApi.getKakaoUserProfile(accessToken);
 			
-			//ÆÄ½Ì
+			//íŒŒì‹±
 			Gson gson = new Gson();
 			UserVO userVO = gson.fromJson(userInfo.toString(), UserVO.class);
 	
-			//get À¯ÀúÁ¤º¸
+			//get ìœ ì €ì •ë³´
 			JsonNode id = userInfo.path("id"); 
 			JsonNode properties = userInfo.path("properties");
 			JsonNode kakao_account = userInfo.path("kakao_account");
@@ -125,29 +125,29 @@ public class UserController {
 			userVO.setName(kakao_name);
 			userVO.setEmail(kakao_email);
 		
-			//DB ÇØ´ç À¯Àú Á¸Àç Ã¼Å©
+			//DB í•´ë‹¹ ìœ ì € ì¡´ì¬ ì²´í¬
 			UserVO user = userservice.getByKakao(userVO);
 			
 			if(user == null) {
-				//À¯Àú info ¾øÀ» °æ¿ì °¡ÀÔ ÆäÀÌÁö
-				rttr.addAttribute("result", "Á¸ÀçÇÏÁö ¾Ê´Â È¸¿øÀÔ´Ï´Ù. °¡ÀÔ ÈÄ ÀÌ¿ëÇØÁÖ¼¼¿ä");
+				//ìœ ì € info ì—†ì„ ê²½ìš° ê°€ì… í˜ì´ì§€
+				rttr.addAttribute("result", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íšŒì›ì…ë‹ˆë‹¤. ê°€ì… í›„ ì´ìš©í•´ì£¼ì„¸ìš”");
 				rttr.addFlashAttribute("member_section", "kakao");
 				session.setAttribute("snsUser", userVO);
 				
 				return "redirect:/memberShip/memberShipJoinSns";
 			}
 			else {
-				//Á¤Áö ±âÇÑ ³¡³­ ÈÄ Á¤Áö ÇØÁ¦
+				//ì •ì§€ ê¸°í•œ ëë‚œ í›„ ì •ì§€ í•´ì œ
 				aservice.userSuspendClear(aservice.getSuspendUserInfo(user.getId()));
 				
-				//Á¤Áö µÈ È¸¿ø
+				//ì •ì§€ ëœ íšŒì›
 				if(aservice.getSuspendUserInfo(user.getId()) != null) {
 					
 					if(aservice.isAccountSuspend(user.getId()).equals("Y")) {
 						
 						rttr.addFlashAttribute("errormsg", 
-								"Á¦ÀçµÈ È¸¿øÀÔ´Ï´Ù." +
-										"\r\n ( ³»¿ë : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ÀÏ Á¤Áö )");
+								"ì œì¬ëœ íšŒì›ì…ë‹ˆë‹¤." +
+										"\r\n ( ë‚´ìš© : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ì¼ ì •ì§€ )");
 						
 						return "redirect:/login/login";
 					}
@@ -155,7 +155,7 @@ public class UserController {
 				}
 				else {
 					
-					//À¯Àú Á¤º¸ Á¸Àç ½Ã ·Î±×ÀÎ
+					//ìœ ì € ì •ë³´ ì¡´ì¬ ì‹œ ë¡œê·¸ì¸
 					//Remember Me
 					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
 					userservice.loginSession(userVO.getId(), session.getId(), expired);
@@ -167,17 +167,17 @@ public class UserController {
 			return "redirect:/main/mainPage";
 			
 		}
-		//±¸±Û ·Î±×ÀÎ
+		//êµ¬ê¸€ ë¡œê·¸ì¸
 		else if(snsService.equals("google")) {
 			 
 	    	MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
 	    	param.add("grant_type", "authorization_code");
-	    	param.add("client_id", "919440269162-rp9fr2d7schkgs3p1949e49ncd0js2fu.apps.googleusercontent.com");
-	    	param.add("client_secret", "G0rHks0fu5eROIDnGD-7uU-1");
+	    	param.add("client_id", "********************");
+	    	param.add("client_secret", "**************");
 	    	param.add("redirect_uri", "http://chparkland.com/park_project_1/login/auth/google/callback");
 	    	param.add("code", code);
 	    	
-	    	//RestTemplate ÀÌ¿ë Access Token , profile ¿äÃ»
+	    	//RestTemplate ì´ìš© Access Token , profile ìš”ì²­
 	    	RestTemplate restTemplate = new RestTemplate();
 	    	
 	    	HttpHeaders headers = new HttpHeaders();
@@ -189,9 +189,9 @@ public class UserController {
 	    	@SuppressWarnings("unchecked")
 			Map<String, Object> responseMap = responseEntity.getBody();
 	    	
-	    	//id_token : »ç¿ëÀÚ Á¤º¸
-	    	//¹Ş¾Æ¿Â °á°ú´Â JWT(Json Web Token)Çü½Ä
-	    	//accessToken[1] : »ç¿ëÀÚ Á¤º¸ 
+	    	//id_token : ì‚¬ìš©ì ì •ë³´
+	    	//ë°›ì•„ì˜¨ ê²°ê³¼ëŠ” JWT(Json Web Token)í˜•ì‹
+	    	//accessToken[1] : ì‚¬ìš©ì ì •ë³´ 
 	    	String[] accessToken = ((String) responseMap.get("id_token")).split("\\.");
 	    	
 	    	Base64 base64 = new Base64(true);
@@ -201,11 +201,11 @@ public class UserController {
 			JsonNode node = mapper.readTree(body);
 	        System.out.println("node : " + node);
 	        
-	        //ÆÄ½Ì
+	        //íŒŒì‹±
 			Gson gson = new Gson();
 			UserVO userVO = gson.fromJson(node.toString(), UserVO.class);
 	        
-			//get À¯ÀúÁ¤º¸
+			//get ìœ ì €ì •ë³´
 	        String google_id = node.path("sub").asText();
 			String google_name = node.get("family_name").asText() + node.get("given_name").asText();
 			
@@ -213,35 +213,35 @@ public class UserController {
 			userVO.setName(google_name);
 			
 			
-			//DB ÇØ´ç À¯Àú Á¸Àç Ã¼Å©
+			//DB í•´ë‹¹ ìœ ì € ì¡´ì¬ ì²´í¬
 			UserVO user = userservice.getByGoogle(userVO);
 			
 			if(user == null) {
-				//À¯Àú info ¾øÀ» °æ¿ì °¡ÀÔ ÆäÀÌÁö
-				rttr.addAttribute("result", "Á¸ÀçÇÏÁö ¾Ê´Â È¸¿øÀÔ´Ï´Ù. °¡ÀÔ ÈÄ ÀÌ¿ëÇØÁÖ¼¼¿ä");
+				//ìœ ì € info ì—†ì„ ê²½ìš° ê°€ì… í˜ì´ì§€
+				rttr.addAttribute("result", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íšŒì›ì…ë‹ˆë‹¤. ê°€ì… í›„ ì´ìš©í•´ì£¼ì„¸ìš”");
 				rttr.addFlashAttribute("member_section", "google");
 				session.setAttribute("snsUser", userVO);
 				
 				return "redirect:/memberShip/memberShipJoinSns";
 			}
 			else {
-				//Á¤Áö ±âÇÑ ³¡³­ ÈÄ Á¤Áö ÇØÁ¦
+				//ì •ì§€ ê¸°í•œ ëë‚œ í›„ ì •ì§€ í•´ì œ
 				aservice.userSuspendClear(aservice.getSuspendUserInfo(user.getId()));
 				
-				//Á¤Áö µÈ È¸¿ø
+				//ì •ì§€ ëœ íšŒì›
 				if(aservice.getSuspendUserInfo(user.getId()) != null) {
 					
 					if(aservice.isAccountSuspend(user.getId()).equals("Y")) {
 						
 						rttr.addFlashAttribute("errormsg", 
-								"Á¦ÀçµÈ È¸¿øÀÔ´Ï´Ù." +
-										"\r\n ( ³»¿ë : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ÀÏ Á¤Áö )");
+								"ì œì¬ëœ íšŒì›ì…ë‹ˆë‹¤." +
+										"\r\n ( ë‚´ìš© : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ì¼ ì •ì§€ )");
 						
 						return "redirect:/login/login";
 					}
 					
 				}else {					
-					//À¯Àú Á¤º¸ Á¸Àç ½Ã ·Î±×ÀÎ
+					//ìœ ì € ì •ë³´ ì¡´ì¬ ì‹œ ë¡œê·¸ì¸
 					//Remember Me
 					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
 					userservice.loginSession(userVO.getId(), session.getId(), expired);
@@ -254,36 +254,36 @@ public class UserController {
 			
 		}
 		else {
-			//³×ÀÌ¹ö ·Î±×ÀÎ
-			//code ÀÌ¿ë access_token ¹ŞÀ½ -> access_token À¸·Î »ç¿ëÀÚ profile °¡Á®¿È
+			//ë„¤ì´ë²„ ë¡œê·¸ì¸
+			//code ì´ìš© access_token ë°›ìŒ -> access_token ìœ¼ë¡œ ì‚¬ìš©ì profile ê°€ì ¸ì˜´
 			SnsLogin snsLogin = new SnsLogin(sns);
 			UserVO userVO = snsLogin.getUserProfile(code);
 			
 			System.out.println("Profile : " + userVO);
 			
-			//DB ÇØ´ç À¯Àú Á¸Àç Ã¼Å©
+			//DB í•´ë‹¹ ìœ ì € ì¡´ì¬ ì²´í¬
 			UserVO user = userservice.getBySns(userVO);
 			 
 			if(user == null) {
-				//À¯Àú info ¾øÀ» °æ¿ì °¡ÀÔ ÆäÀÌÁö
-				rttr.addAttribute("result", "Á¸ÀçÇÏÁö ¾Ê´Â È¸¿øÀÔ´Ï´Ù. °¡ÀÔ ÈÄ ÀÌ¿ëÇØÁÖ¼¼¿ä");
+				//ìœ ì € info ì—†ì„ ê²½ìš° ê°€ì… í˜ì´ì§€
+				rttr.addAttribute("result", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íšŒì›ì…ë‹ˆë‹¤. ê°€ì… í›„ ì´ìš©í•´ì£¼ì„¸ìš”");
 				rttr.addFlashAttribute("member_section", "naver");
 				session.setAttribute("snsUser", userVO);
 		
 				return "redirect:/memberShip/memberShipJoinSns";
 			}
 			else {
-				//Á¤Áö ±âÇÑ ³¡³­ ÈÄ Á¤Áö ÇØÁ¦
+				//ì •ì§€ ê¸°í•œ ëë‚œ í›„ ì •ì§€ í•´ì œ
 				aservice.userSuspendClear(aservice.getSuspendUserInfo(user.getId()));	
 				
-				//Á¤Áö µÈ È¸¿ø
+				//ì •ì§€ ëœ íšŒì›
 				if(aservice.getSuspendUserInfo(user.getId()) != null) {
 					
 					if(aservice.isAccountSuspend(user.getId()).equals("Y")) {
 						
 						rttr.addFlashAttribute("errormsg", 
-								"Á¦ÀçµÈ È¸¿øÀÔ´Ï´Ù." +
-										"\r\n ( ³»¿ë : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ÀÏ Á¤Áö )");
+								"ì œì¬ëœ íšŒì›ì…ë‹ˆë‹¤." +
+										"\r\n ( ë‚´ìš© : " + aservice.getSuspendUserInfo(user.getId()).getSuspend_term() + "ì¼ ì •ì§€ )");
 						
 						return "redirect:/login/login";
 					}
@@ -291,7 +291,7 @@ public class UserController {
 				}
 				else {
 					
-					//À¯Àú Á¤º¸ Á¸Àç ½Ã ·Î±×ÀÎ
+					//ìœ ì € ì •ë³´ ì¡´ì¬ ì‹œ ë¡œê·¸ì¸
 					//Remember Me
 					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
 					userservice.loginSession(user.getId(), session.getId(), expired);
@@ -308,16 +308,16 @@ public class UserController {
 	public void login(LoginDTO loginDTO, Model model, HttpSession session) throws Exception {
 		logger.info("login : get");
 		
-		//³×ÀÌ¹ö
+		//ë„¤ì´ë²„
 		SnsLogin snsLoginNaver = new SnsLogin(snsNaver);
 		model.addAttribute("naverUrl", snsLoginNaver.getNaverAuth());
 		
-		//±¸±Û
+		//êµ¬ê¸€
 		String url = googleOAuth2Template.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOauth2Parameters);
 		
 		model.addAttribute("googleUrl", url);
 		
-		//Ä«Ä«¿À
+		//ì¹´ì¹´ì˜¤
 		String kakaoUrl = KakaoApi.getAuthorizationUrl();
 		model.addAttribute("kakaoUrl", kakaoUrl);
 		
@@ -336,19 +336,19 @@ public class UserController {
 		try {	
 			UserVO user = userservice.login(loginDTO);
 			
-			//·Î±×ÀÎ ¼º°ø
+			//ë¡œê·¸ì¸ ì„±ê³µ
 			if(user != null && BCrypt.checkpw(loginDTO.getPw(), user.getPassword())) {
 				System.out.println("user != null");
 				
-				//°èÁ¤ Àá±ä °æ¿ì 10ºĞ ÈÄ ÇØÁ¦ 
+				//ê³„ì • ì ê¸´ ê²½ìš° 10ë¶„ í›„ í•´ì œ 
 				userservice.loginSuccessResetAfter(loginDTO.getId());
 				
-				//Á¤Áö ±âÇÑ ³¡³­ ÈÄ Á¤Áö ÇØÁ¦
+				//ì •ì§€ ê¸°í•œ ëë‚œ í›„ ì •ì§€ í•´ì œ
 				aservice.userSuspendClear(aservice.getSuspendUserInfo(loginDTO.getId()));
 				
-				//·Î±×ÀÎ ½Ãµµ ¹æÁö
+				//ë¡œê·¸ì¸ ì‹œë„ ë°©ì§€
 				if(userservice.isAccountLock(loginDTO.getId()).equals("Y") ) {
-					bindingResult.rejectValue("pw", "Locked", "°èÁ¤ÀÌ ºñÈ°¼ºÈ­ µÇ¾ú½À´Ï´Ù. Àá½Ã ÈÄ ´Ù½Ã ·Î±×ÀÎ ÇØÁÖ¼¼¿ä.");
+					bindingResult.rejectValue("pw", "Locked", "ê³„ì •ì´ ë¹„í™œì„±í™” ë˜ì—ˆìŠµë‹ˆë‹¤. ì ì‹œ í›„ ë‹¤ì‹œ ë¡œê·¸ì¸ í•´ì£¼ì„¸ìš”.");
 					
 					ModelAndView mav = new ModelAndView("login/login");				
 					return mav;
@@ -356,13 +356,13 @@ public class UserController {
 				}
 				else {
 					
-					//Á¤Áö µÈ È¸¿ø
+					//ì •ì§€ ëœ íšŒì›
 					if(aservice.getSuspendUserInfo(loginDTO.getId()) != null) {
 						
 						if(aservice.isAccountSuspend(loginDTO.getId()).equals("Y")) {
 							bindingResult.rejectValue("pw", "Suspend", 
-								"Á¦ÀçµÈ È¸¿øÀÔ´Ï´Ù." +
-								"\r\n ( ³»¿ë : " + aservice.getSuspendUserInfo(loginDTO.getId()).getSuspend_term() + "ÀÏ Á¤Áö )");
+								"ì œì¬ëœ íšŒì›ì…ë‹ˆë‹¤." +
+								"\r\n ( ë‚´ìš© : " + aservice.getSuspendUserInfo(loginDTO.getId()).getSuspend_term() + "ì¼ ì •ì§€ )");
 							
 							ModelAndView mav = new ModelAndView("login/login");				
 							return mav;
@@ -377,7 +377,7 @@ public class UserController {
 						}
 					}
 					
-					//½ÇÆĞ È½¼ö ¸®¼Â
+					//ì‹¤íŒ¨ íšŸìˆ˜ ë¦¬ì…‹
 					userservice.loginSuccessReset(loginDTO.getId());
 					
 					//Remember Me
@@ -389,28 +389,28 @@ public class UserController {
 				}
 				
 				
-			} //·Î±×ÀÎ ½ÇÆĞ
+			} //ë¡œê·¸ì¸ ì‹¤íŒ¨
 			else if(user == null || !BCrypt.checkpw(loginDTO.getPw(), user.getPassword())){
 				System.out.println("user == null");
 				
-				//°èÁ¤ Àá±ä °æ¿ì 10ºĞ ÈÄ ÇØÁ¦ 
+				//ê³„ì • ì ê¸´ ê²½ìš° 10ë¶„ í›„ í•´ì œ 
 				userservice.loginSuccessResetAfter(loginDTO.getId());
 				
-				//·Î±×ÀÎ ½Ãµµ ½Ã
+				//ë¡œê·¸ì¸ ì‹œë„ ì‹œ
 				userservice.loginFailCnt(loginDTO.getId());
 				userservice.updateLoginAccountLock(loginDTO.getId());
 				
 				if(user == null) {
-					bindingResult.rejectValue("pw", "notUser", "Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ ÀÔ´Ï´Ù.");
+					bindingResult.rejectValue("pw", "notUser", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë”” ì…ë‹ˆë‹¤.");
 				}
 				else {
 					
 					if(userservice.isAccountLock(loginDTO.getId()).equals("N")) {
-						bindingResult.rejectValue("pw", "notMatch", "¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+						bindingResult.rejectValue("pw", "notMatch", "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					}				
 					else if(userservice.isAccountLock(loginDTO.getId()).equals("Y") ) {
-						//·Î±×ÀÎ ½Ãµµ ¹æÁö
-						bindingResult.rejectValue("pw", "Locked", "°èÁ¤ÀÌ ºñÈ°¼ºÈ­ µÇ¾ú½À´Ï´Ù. Àá½Ã ÈÄ ´Ù½Ã ·Î±×ÀÎ ÇØÁÖ¼¼¿ä.");
+						//ë¡œê·¸ì¸ ì‹œë„ ë°©ì§€
+						bindingResult.rejectValue("pw", "Locked", "ê³„ì •ì´ ë¹„í™œì„±í™” ë˜ì—ˆìŠµë‹ˆë‹¤. ì ì‹œ í›„ ë‹¤ì‹œ ë¡œê·¸ì¸ í•´ì£¼ì„¸ìš”.");
 					}
 				}
 					
@@ -423,7 +423,7 @@ public class UserController {
 			
 		}
 		catch(NotMatchedLoginException e) {
-			bindingResult.rejectValue("pw", "notMatch", "¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			bindingResult.rejectValue("pw", "notMatch", "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			ModelAndView mav = new ModelAndView("login/login");
 			return mav;
 		}
