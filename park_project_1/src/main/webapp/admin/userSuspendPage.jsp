@@ -6,8 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
-<title>MemberShip Detail</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css" />
+
+<title>User Suspend Page</title>
 </head>
 <body class="is-preload">
 

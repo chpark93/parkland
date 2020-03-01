@@ -6,12 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/boardForm.css?ver=1.2" />
 
 <!-- 위지윅 에디터 -->
 <script
 	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.4">
 </script>
+
 
 <title>boardForm</title>
 </head>
@@ -26,14 +29,14 @@
 				<!-- Header -->
 				<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 				<br />
-				<article>
+				<article> 
 					<div class="container" role="main">
 						<br>
 						<h2>board Form</h2>
 						<br>
    
 						<div>
-							<form:form name="form" id="form" role="form" modelAttribute="board" method="post" style="width:70%" action="${pageContext.request.contextPath}/board/saveBoard" enctype="multipart/form-data">
+							<form:form id="boardForm" modelAttribute="board" method="post" action="${pageContext.request.contextPath}/board/saveBoard" enctype="multipart/form-data">
 								<form:hidden path="bid" />
 								<input type="hidden" name="mode" />
 																											
@@ -121,7 +124,7 @@
 					            
 					            <!-- 게시글 버튼  -->
 					            <div style="clear: both; text-align: right;">				            	
-									<button type="button" class="btn btn-sm btn-primary" id="btnSave">작성</button>
+									<button type="submit" class="btn btn-sm btn-primary" id="btnSave">작성</button>
 									<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
 								</div>
 								
@@ -154,10 +157,12 @@
         </span>
     </div>
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/common/js/file_upload.js?ver=1.5"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/common/js/file_upload.js?ver=1.3"></script>
+	
 <script>
 	
 $(document).ready(function() {
+				
 	
 	var bid = "${board.bid}";
 	var mode = '<c:out value="${mode}" />';
@@ -177,9 +182,9 @@ $(document).ready(function() {
 		
 	}	
 	
+	/*
 	//글 작성
-	$(document).on('click', '#btnSave', function(e){
-		e.preventDefault();
+	$(document).on('click', '#btnSave', function(){
 		
 		if($("#title").val() == '' || $("#title").val() == null) {
 			alert('글 제목을 입력 해주세요.')
@@ -189,15 +194,38 @@ $(document).ready(function() {
 			alert('내용을 입력해주세요.');
 			return false
 		}
-		else {
-			$("#form").submit();
-			
-			var lastTem = $(this);
-			filesSubmit(lastTem);
+		else {			
+			$("#boardForm").submit(function() {
+			    
+			    var lastTem = $(this);
+				filesSubmit(lastTem);
+			});
 		}
 	});
+	*/
 	
 	
+	//글 작성
+	$("#boardForm").submit(function (e) {
+	    e.preventDefault();
+	    
+	    if($("#title").val() == '' || $("#title").val() == null) {
+			alert('글 제목을 입력 해주세요.')
+			return false
+		}
+		else if(CKEDITOR.instances.content.getData() == '' || CKEDITOR.instances.content.getData().length == 0 ) {
+			alert('내용을 입력해주세요.');
+			return false
+		}
+		
+		
+		var lastTem = $(this);
+		filesSubmit(lastTem);
+		
+	});
+		
+
+
 	
 	//목록으로
 	$(document).on('click','#btnList',function(e) {

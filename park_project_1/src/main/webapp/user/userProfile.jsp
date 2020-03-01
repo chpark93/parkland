@@ -7,10 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css"/>
+
 <title>User Profile</title>
 
+<style type="text/css">
+@media screen and (max-width: 736px) {
+	
+	table tbody tr #td1 {
+		display: none;
+	}
+}			
+</style>
 </head>
 <body>
 					
@@ -20,7 +30,7 @@
 	<div id="main" >
 		<br/><br/>
 		
-		<div class="inner" style="width: 50%; height: 50%;">	       
+		<div class="inner" style="height: 50%;">	       
 			
 			<!-- Header -->	
 			<div class="align-center">
@@ -63,12 +73,12 @@
 							<br/><br/>
 							
 							<!-- Upload Button -->
-							<table style="margin-left: auto; margin-right: auto;" >
+							<table style="table-layout: fixed">
 								<tbody>
 									<tr>
-										<td style="width : 150px;"><span>이미지 업로드</span></td>
-										<td>
-											<input type="file" id="userProfile" accept='image/*'/> 
+										<td id="td1" width="40%;"><span>이미지 업로드</span></td>
+										<td id="td2" width="auto;">
+											<input type="file" id="userProfile" accept="image/*" style="width: 100%;"/> 
 										</td>
 									</tr>
 								</tbody>

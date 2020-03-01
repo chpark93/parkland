@@ -13,7 +13,7 @@
 		</div>
 		<div class="" style="padding-top: 40px;">
 			<div>
-				<form id="form" action="${pageContext.request.contextPath}/message/insertMessage" method="post">
+				<form id="messageUserForm" action="${pageContext.request.contextPath}/message/insertMessage" method="post">
 					<div class="row gtr-uniform col-12">
 						
 						<div class="col-6">

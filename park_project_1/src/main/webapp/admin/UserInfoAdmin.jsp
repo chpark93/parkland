@@ -6,7 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css" />
+
 <title>MemberShip Detail</title>
 </head>
 <body class="is-preload">
@@ -16,7 +19,7 @@
 	
 		<div id="main">
 			<br/><br/><br/>
-			<div class="inner" style="width: 50%; height: 50%;">	       
+			<div class="inner" style="height: 50%;">	       
 				
 				<!-- Header -->	
 				<div class="align-center">

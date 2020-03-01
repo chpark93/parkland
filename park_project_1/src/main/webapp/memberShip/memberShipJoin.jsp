@@ -6,6 +6,10 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<!-- custom css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css"/>
+
+
 <title>MemberShip</title>
 </head>
 <body class="is-preload">
@@ -15,7 +19,7 @@
 	
 	<div id="main" >
 		<br/><br/>
-		<div class="inner" style="width: 50%; height: 50%;">	       
+		<div class="inner" style="height: 50%;">	       
 			
 			<!-- Header -->	
 			<div class="align-center">
@@ -83,6 +87,7 @@
 							<div class="form-group">
 							   	<label for="nickname">닉네임</label>
 								<form:input path="nickname" type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임을 입력해주세요"/>
+								<form:errors path="nickname" class="label label-danger" style="color:red;" />
 								<span id="nickName_check"class="label label-danger" style="color:red;">${nickNameCheck}</span>
 							</div>
 							<br/><br/>

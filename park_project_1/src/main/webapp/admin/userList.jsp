@@ -5,7 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/userList.css?ver=1.2" />
+
 <meta charset="UTF-8">
 <title>Admin Page</title>
 </head>
@@ -29,24 +32,38 @@
 						</div>
 						<br/>
 						
+						<!-- selectPage -->
+						<div class="row" style="flex-direction: row-reverse;">
+							<div class="form-group">
+								<div class="w100">
+									<select class="form-control" id="selectPageCnt">
+								  		<option value="10">10</option>
+								  		<option value="20">20</option>
+								  		<option value="30">30</option>
+									</select>
+								</div>				
+							</div>
+						</div>
+						<br/>
+						
 						<div class="table-responsive">
 							<table class="table table-striped table-sm">
 								<colgroup>
 									<col style="width: auto;" />
-									<col style="width: 10%;" />
-									<col style="width: 15%;" />
 									<col style="width: auto;" />
-									<col style="width: 15%;" />
-									<col style="width: 20%;" />
+									<col style="width: auto;" />		
+									<col id="col1" style="width: auto;" />
+									<col id="col2" style="width: 15%;" />
+									<col id="col3" style="width: 20%;" />
 								</colgroup>
 								<thead>
 									<tr>
 										<th>아이디</th>
 										<th>이름</th>
 										<th>닉네임</th>
-										<th>이메일</th>
-										<th>Section</th>
-										<th>가입일</th>
+										<th id="th1">이메일</th>
+										<th id="th2">Section</th>
+										<th id="th3">가입일</th>
 									</tr>
 								</thead>
 								<tbody> 
@@ -69,9 +86,9 @@
 													</td>
 													<td><c:out value="${list.name}"/></td>
 													<td><c:out value="${list.nickname}"/></td>
-													<td><c:out value="${list.email}"/></td>
-													<td><c:out value="${list.member_section}"/></td>
-													<td><c:out value="${list.reg_dt}"/></td>
+													<td id="td1"><c:out value="${list.email}"/></td>
+													<td id="td2"><c:out value="${list.member_section}"/></td>
+													<td id="td3"><c:out value="${list.reg_dt}"/></td>
 												</tr>
 											</c:forEach>
 										</c:when>
@@ -105,8 +122,8 @@
 						
 						
 						<!-- search(start) -->
-						<div class="form-group row justify-content-center">
-							<div style="padding-right:10px">
+						<div class="form-group row">
+							<div style="padding-right:10px; margin-bottom: 5px;">
 								<select class="form-control form-control-sm" name="searchType" id="searchType">
 									<option value="id" <c:out value="${searchCriteria.searchType eq 'id' ? 'selected' : ''}"/>>아이디</option>
 									<option value="name" <c:out value="${searchCriteria.searchType eq 'name' ? 'selected' : ''}"/>>이름</option>
@@ -121,21 +138,12 @@
 								<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
 							</div>
 							
-							<!-- selectPage -->
-							<div class="form-group row" style="text-align: right;">
-								<div class="w100">
-									<select class="form-control" id="selectPageCnt">
-								  		<option value="10">10</option>
-								  		<option value="20">20</option>
-								  		<option value="30">30</option>
-									</select>
-								</div>				
-							</div>
 						</div>
 						<!-- search(end) -->
 						
 					</div>
 				</article>
+				<br/><br/><br/>
 			</div>
 		</div>
 		<!-- Sidebar -->

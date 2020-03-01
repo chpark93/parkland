@@ -6,8 +6,7 @@
 		Flow Of<strong>&nbsp; ChParkLand</strong>
 	</a>
 
-	<div class="alert alert-success" id="alertSocket" role="alert"></div>
-	
+	<!-- Alert -->
 	<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/mypage/getAlarmListPagingFromId" > 
 		    <span id="alarm" class="notification" ></span>

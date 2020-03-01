@@ -5,7 +5,10 @@
 <!DOCTYPE html>
 <html> 
 <head>
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css" />
+
 <title>Board List</title>
 <style type="text/css">
 	#table a {	
@@ -17,6 +20,7 @@
 
 </head> 
 <body class="is-preload"> 
+
 	<!-- Wrapper -->				
 	<div id="wrapper">
 		
@@ -31,9 +35,11 @@
 				
 				<div class="">
 					<span style="font-size:20px; color: black;"><c:out value="${boardGroupInfo.bg_name}"/></span>
-					&nbsp;&nbsp; <c:out value="[" /> &nbsp;
-					<span><c:out value="${boardGroupInfo.bg_info}"/></span>
-					&nbsp; <c:out value="]" />
+					<div style="margin-top: 5px;">
+						<c:out value="[" /> &nbsp;
+						<c:out value="${boardGroupInfo.bg_info}"/>&nbsp;
+						<c:out value="]" />
+					</div>
 				</div>
 				<br/>
 				<div class="row" style="flex-direction: row-reverse;"> 
@@ -79,22 +85,22 @@
 							<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
 								<col style="width: 5%" />
 							</c:if>
-							<col style="width: 10%;" />
-							<col style="width: auto;" />
-							<col style="width: 15%;" />
-							<col style="width: 10%;" />
-							<col style="width: 20%;" />
+							<col id="col1" style="width: 10%;" />
+							<col id="col2" style="width: auto;" />
+							<col id="col3" style="width: auto;" />
+							<col id="col4" style="width: 10%;" />
+							<col id="col5" style="width: 20%;" />
 						</colgroup>
 						<thead>
 							<tr>
 								<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
 									<th></th>
 								</c:if>
-								<th>NO</th>
-								<th>글제목</th>
-								<th>작성자</th>
-								<th>조회수</th>
-								<th>작성일</th>
+								<th id="th1">NO</th>
+								<th id="th2">글제목</th>
+								<th id="th3">작성자</th>
+								<th id="th4">조회수</th>
+								<th id="th5">작성일</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -115,8 +121,8 @@
 											<!-- 일반 글 -->			
 											<c:if test="${list.notice eq '0'}">
 												<tr>
-													<td><c:out value="${list.bid}" /></td>
-													<td>
+													<td id="td1"><c:out value="${list.bid}" /></td>
+													<td id="td2">
 														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
 															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}">
 																<c:out value="${list.getShortTitle(30)}" />
@@ -133,7 +139,7 @@
 														</c:if>
 													</td>
 															
-													<td>
+													<td id="td3">
 														<c:if test="${list.reg_id eq loginUser.id}">
 															<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
 																<c:out value="${list.reg_nickname}" />
@@ -145,16 +151,16 @@
 															</a>
 														</c:if>
 													</td>
-													<td><c:out value="${list.view_cnt}" /></td>
-													<td><c:out value="${list.reg_dt}" /></td>
+													<td id="td4"><c:out value="${list.view_cnt}" /></td>
+													<td id="td5"><c:out value="${list.reg_dt}" /></td>
 												</tr>
 											</c:if>
 											
 											<!-- 공지글 -->
 											<c:if test="${list.notice eq '1'}">
 												<tr class="noticeList" style="">
-													<td><c:out value="공지" /></td>
-													<td>
+													<td id="td1"><c:out value="공지" /></td>
+													<td id="td2">
 														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
 															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
 																<c:out value="${list.getShortTitle(30)}" />
@@ -171,7 +177,7 @@
 														</c:if>
 													</td>
 															
-													<td>
+													<td id="td3">
 														<c:if test="${list.reg_id eq loginUser.id}">
 															<a href="${pageContext.request.contextPath}/mypage/getBoardListPagingFromId">
 																<c:out value="${list.reg_nickname}" />
@@ -183,8 +189,8 @@
 															</a>
 														</c:if>
 													</td>
-													<td><c:out value="${list.view_cnt}" /></td>
-													<td><c:out value="${list.reg_dt}" /></td>
+													<td id="td4"><c:out value="${list.view_cnt}" /></td>
+													<td id="td5"><c:out value="${list.reg_dt}" /></td>
 												</tr>
 											</c:if>
 										</c:forEach>
@@ -210,7 +216,7 @@
 															<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
 															<label for="deleteCheckBox${list.bid}"></label>
 														</td>
-														<td><c:out value="${list.bid}" /></td>
+														<td id="td1" ><c:out value="${list.bid}" /></td>
 														<td>
 															<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
 																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}">
@@ -241,7 +247,7 @@
 																</a>
 															</c:if>
 														</td>
-														<td><c:out value="${list.view_cnt}" /></td>
+														<td id="td4"><c:out value="${list.view_cnt}" /></td>
 														<td><c:out value="${list.reg_dt}" /></td>
 													</tr>
 												</c:if>
@@ -253,7 +259,7 @@
 															<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
 															<label for="deleteCheckBox${list.bid}"></label>
 														</td>
-														<td><c:out value="공지" /></td>
+														<td id="td1"><c:out value="공지" /></td>
 														<td>
 															<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
 																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeSearch(pagination.criteria.page)}&bid=${list.bid}" style="font-weight: bold;">
@@ -284,7 +290,7 @@
 																</a>
 															</c:if>
 														</td>
-														<td><c:out value="${list.view_cnt}" /></td>
+														<td id="td4"><c:out value="${list.view_cnt}" /></td>
 														<td><c:out value="${list.reg_dt}" /></td>
 													</tr>
 												</c:if>
@@ -307,7 +313,7 @@
 					<ul class="pagination" style="margin-top: 10px">
 						<c:if test="${pagination.prevPage}">
 							<li class="page">
-								<a class="button" href="${pageContext.request.contextPath}/board/getBoardList${pagination.makeSearch(pagination.startPage - 1)}">이전</a>
+								<a href="${pageContext.request.contextPath}/board/getBoardList${pagination.makeSearch(pagination.startPage - 1)}">◀</a>
 							</li>
 						</c:if>
 						
@@ -319,7 +325,9 @@
 						</c:forEach>
 
 						<c:if test="${pagination.nextPage && pagination.endPage > 0}">
-							<li class="page"><a class="button" href="${pageContext.request.contextPath}/board/getBoardList${pagination.makeSearch(pagination.endPage + 1)}">다음</a></li>
+							<li class="page">
+								<a href="${pageContext.request.contextPath}/board/getBoardList${pagination.makeSearch(pagination.endPage + 1)}">▶</a>
+							</li>
 						</c:if>
 					</ul>
 				</div>
@@ -327,8 +335,8 @@
 				
 				
 				<!-- search(start) -->
-				<div class="form-group row justify-content-center">
-					<div class="w100" style="padding-right: 10px">
+				<div class="form-group row">
+					<div class="w100" style="padding-right: 10px; margin-bottom: 5px;">
 						<select class="form-control form-control-sm" name="searchType" id="searchType">
 							<option value="title" <c:out value="${searchCriteria.searchType eq 'title' ? 'selected' : ''}"/>>제목</option>
 							<option value="content" <c:out value="${searchCriteria.searchType eq 'content' ? 'selected' : ''}"/>>내용</option>

@@ -8,8 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css" />
 
 <title>작성글 페이지</title>
 <style type="text/css">
@@ -101,7 +102,7 @@ Img {
 				<br/>
 				
 				<div class="row" style="flex-direction: row-reverse;">
-					<div>
+					<div id="userPageCheckbox">
 						<input type="checkbox" name="allCheck" id="allCheck" />
 						<label for="allCheck">모두 선택</label>					
 						<button type="button" id="deleteBtnChecked">선택 삭제</button>
@@ -122,14 +123,41 @@ Img {
 				
 				
 				<div id="user_write_info">
-					<div class="box">
+					
+					<!-- Mobile -->
+					<div class="box" id="mobileTable">
+						
+						<c:choose>		
+							<c:when test="${empty alarmList}">
+								<tr>
+									<td align="center">데이터가 없습니다</td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty alarmList}">
+								<ul class="alt">
+								<c:forEach var="list" items="${alarmList}">
+									<li>
+										<c:out value="${list.msg}" escapeXml="false"/>
+										<div style="font-size: 10px; text-align: right;">
+											<c:out value="${list.alert_dt}" />
+										</div>
+									</li>
+								</c:forEach>
+								</ul>
+							</c:when>
+						</c:choose>
+					</div>
+					
+					
+					<!-- Web -->
+					<div class="box" id="webTable">
 					
 						<!-- 알람 리스트  -->
 						<div>
 							<table class="table table-striped table-sm" id="table">
 								<colgroup>
 									<col style="width: 10%;" />
-									<col style="width: 50%;" />
+									<col style="width: auto;" />
 									<col style="width: 15%;" />
 								</colgroup>
 								<thead>

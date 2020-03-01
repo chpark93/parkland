@@ -64,6 +64,7 @@ $(document).on('click', '#sendMessageAdmin', function(e){
 
 //모달 오픈
 function enquireModal() {
+	$( '#sidebar' ).addClass('inactive');
 	document.getElementById('enquireModal').style.display = "block";
 	
 	$("#message_content").focus();

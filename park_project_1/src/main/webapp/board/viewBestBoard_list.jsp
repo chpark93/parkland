@@ -5,7 +5,10 @@
 <!DOCTYPE html>
 <html> 
 <head>
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css" />
+
 <title>Board List</title>
 
 <style type="text/css">
@@ -62,10 +65,10 @@
 							<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
 								<col style="width: 5%" />
 							</c:if>
-							<col style="width: 10%;" />
+							<col id="col1" style="width: 10%;" />
 							<col style="width: auto;" />
-							<col style="width: 15%;" />
-							<col style="width: 10%;" />
+							<col style="width: auto;" />
+							<col id="col4" style="width: 10%;" />
 							<col style="width: 20%;" />
 						</colgroup>
 						<thead>
@@ -73,10 +76,10 @@
 								<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
 									<th></th>
 								</c:if>
-								<th>NO</th>
+								<th id="th1">NO</th>
 								<th>글제목</th>
 								<th>작성자</th>
-								<th>조회수</th>
+								<th id="th4">조회수</th>
 								<th>작성일</th>
 							</tr>
 						</thead>
@@ -91,7 +94,7 @@
 									<c:if test="${loginUser.authority ne 'ROLE_ADMIN'}">
 										<c:forEach var="list" items="${viewBestBoardList}">
 											<tr>
-												<td><c:out value="${list.bid}" /></td>
+												<td id="td1"><c:out value="${list.bid}" /></td>
 												<td>
 													<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">										
 														<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bg_no=${list.bg_no}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}">
@@ -120,7 +123,7 @@
 														</a>
 													</c:if>
 												</td>
-												<td><c:out value="${list.view_cnt}" /></td>
+												<td id="td4"><c:out value="${list.view_cnt}" /></td>
 												<td><c:out value="${list.reg_dt}" /></td>
 											</tr>
 										</c:forEach>
@@ -141,7 +144,7 @@
 														<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.bid}" value="${list.bid}" data-checkbox="${list.bid}"/>
 														<label for="deleteCheckBox${list.bid}"></label>
 													</td>
-													<td><c:out value="${list.bid}" /></td>
+													<td id="td1"><c:out value="${list.bid}" /></td>
 													<td>
 														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
 															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bg_no=${list.bg_no}&bid=${list.bid}"><c:out
@@ -167,7 +170,7 @@
 															</a>
 														</c:if>
 													</td>
-													<td><c:out value="${list.view_cnt}" /></td>
+													<td id="td4"><c:out value="${list.view_cnt}" /></td>
 													<td><c:out value="${list.reg_dt}" /></td>
 												</tr>
 											</c:forEach>
@@ -185,7 +188,7 @@
 					<ul class="pagination" style="margin-top: 10px">
 						<c:if test="${pagination.prevPage}">
 							<li class="page">
-								<a class="button" href="${pageContext.request.contextPath}/board/getViewBestBoardList${pagination.makeSearch(pagination.startPage - 1)}">이전</a>
+								<a href="${pageContext.request.contextPath}/board/getViewBestBoardList${pagination.makeSearch(pagination.startPage - 1)}">◀</a>
 							</li>
 						</c:if>
 						
@@ -197,7 +200,9 @@
 						</c:forEach>
 
 						<c:if test="${pagination.nextPage && pagination.endPage > 0}">
-							<li class="page"><a class="button" href="${pageContext.request.contextPath}/board/getViewBestBoardList${pagination.makeSearch(pagination.endPage + 1)}">다음</a></li>
+							<li class="page">
+								<a href="${pageContext.request.contextPath}/board/getViewBestBoardList${pagination.makeSearch(pagination.endPage + 1)}">▶</a>
+							</li>
 						</c:if>
 					</ul>
 				</div>
@@ -205,8 +210,8 @@
 				
 				
 				<!-- search(start) -->
-				<div class="form-group row justify-content-center">
-					<div class="w100" style="padding-right: 10px">
+				<div class="form-group row">
+					<div class="w100" style="padding-right: 10px; margin-bottom: 5px;">
 						<select class="form-control form-control-sm" name="searchType" id="searchType">
 							<option value="title" <c:out value="${searchCriteria.searchType eq 'title' ? 'selected' : ''}"/>>제목</option>
 							<option value="content" <c:out value="${searchCriteria.searchType eq 'content' ? 'selected' : ''}"/>>내용</option>

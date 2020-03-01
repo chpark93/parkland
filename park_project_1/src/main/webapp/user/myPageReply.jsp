@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css" />
+
 <title>작성글 페이지</title>
 
 <style type="text/css">
@@ -90,7 +92,7 @@ Img {
 					<br/>
 					
 					<div class="row" style="flex-direction: row-reverse;">
-						<div>
+						<div id="userPageCheckbox">
 							<input type="checkbox" name="allCheck" id="allCheck" />
 							<label for="allCheck">모두 선택</label>					
 							<button type="button" id="deleteBtnChecked">선택 삭제</button>
@@ -110,23 +112,62 @@ Img {
 					<br/>
 					
 					<div id="user_write_info">
-						<div class="box">
+						
+						<!-- Mobile -->
+						<div class="box" id="mobileTable">
+							
+							<c:choose>		
+								<c:when test="${empty replyList}">
+									<tr>
+										<td align="center">데이터가 없습니다</td>
+									</tr>
+								</c:when>
+								<c:when test="${not empty replyList}">
+									<ul class="alt">
+									<c:forEach var="list" items="${replyList}">
+										<li class="liClick" onclick="location.href='${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}'">
+											<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
+												<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="color: black;">
+													<c:out value="${list.getShortRcontent(30)}" /> 
+												</a>
+											</c:if>
+											<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
+												<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllQuery(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="color: black;">
+													<c:out value="${list.getShortRcontent(30)}" /> 
+												</a>
+											</c:if>
+											<div style="font-size:10px; margin-top: 2px;">
+												<c:out value="[제목 : " /> 
+												<c:out value="${list.getShortTitle(20)}"/>
+												<c:out value="]" />
+												&nbsp;
+												<span><c:out value="${list.reg_dt}" /></span>
+											</div>
+										</li>
+									</c:forEach>
+									</ul>
+								</c:when>
+							</c:choose>
+						</div>
+						
+						<!-- Web -->
+						<div class="box" id="webTable">
 							<!-- 작성글,댓글  -->
 							<div>
 								<table class="table table-striped table-sm" id="table">
 									<colgroup>									
 										<col style="width: 5%;" />
-										<col style="width: 15%;" />
+										<col id="col1" style="width: 15%;" />
 										<col style="width: auto;" />
-										<col style="width: 20%;" />
+										<col id="col4" style="width: 20%;" />
 										<col style="width: 20%;" />
 									</colgroup>
 									<thead>
 										<tr>
 											<th></th>
-											<th>글 번호</th>
+											<th id="th1">글 번호</th>
 											<th>댓글 내용</th>
-											<th>닉네임</th>
+											<th id="th4">닉네임</th>
 											<th>작성일</th>
 										</tr>
 									</thead>
@@ -145,27 +186,27 @@ Img {
 															<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.rid}" value="${list.rid}" data-checkbox="${list.rid}"/>
 															<label for="deleteCheckBox${list.rid}"></label>
 														</td>
-														<td><c:out value="${list.bid}" /></td>
+														<td id="td1"><c:out value="${list.bid}" /></td>
 														<td>
 															<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
 																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}">
-																	<c:out value="${list.rcontent}" /> 
+																	<c:out value="${list.getShortRcontent(30)}" /> 
 																</a>
 															</c:if>
 															<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
 																<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllQuery(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}">
-																	<c:out value="${list.rcontent}" /> 
+																	<c:out value="${list.getShortRcontent(30)}" /> 
 																</a>
 															</c:if>
 															<div style="margin-top: 10px;">
 																<a href="${pageContext.request.contextPath}/board/getBoardContent?bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="font-size: 12px;">
-																	<c:out value="[게시글 제목 : " /> 
-																	<c:out value="${list.title}"/>
+																	<c:out value="[제목 : " /> 
+																	<c:out value="${list.getShortTitle(20)}"/>
 																	<c:out value="]" />
 																</a>
 															</div>
 														</td>
-														<td><c:out value="${list.reg_nickname}" /></td>
+														<td id="td4"><c:out value="${list.reg_nickname}" /></td>
 														<td><c:out value="${list.reg_dt}" /></td>
 													</tr>
 												</c:forEach>
@@ -181,8 +222,8 @@ Img {
 						<div id="paginationBox" style="text-align: center;">
 							<ul class="pagination" style="margin-top: 10px">
 								<c:if test="${pagination.prevPage}">
-									<li class="page"><a class="button"
-										href="${pageContext.request.contextPath}/mypage/getReplyListPagingFromId${pagination.makeAllSearch(pagination.startPage - 1)}">이전</a>
+									<li class="page">
+										<a href="${pageContext.request.contextPath}/mypage/getReplyListPagingFromId${pagination.makeAllSearch(pagination.startPage - 1)}">◀</a>
 									</li>
 								</c:if>
 		
@@ -194,20 +235,21 @@ Img {
 								</c:forEach>
 		
 								<c:if test="${pagination.nextPage && pagination.endPage > 0}">
-									<li class="page"><a class="button"
-										href="${pageContext.request.contextPath}/mypage/getReplyListPagingFromId${pagination.makeAllSearch(pagination.endPage + 1)}">다음</a></li>
+									<li class="page">
+										<a href="${pageContext.request.contextPath}/mypage/getReplyListPagingFromId${pagination.makeAllSearch(pagination.endPage + 1)}">▶</a>
+									</li>
 								</c:if>
 							</ul>
 						</div>
 						<!-- pagination(end) -->
 		
 						<!-- search(start) -->
-						<div class="form-group row justify-content-center">
-							<div class="w100" style="padding-right: 10px">
+						<div class="form-group row">
+							<div class="w100" style="padding-right: 10px; margin-bottom: 5px;">
 								<select class="form-control" id="searchType" name="searchType">
 									<option value="rcontent"
-										<c:out value="${searchCriteria.searchType eq 'rcontent' ? 'selected' : ''}"/>>내용</option>
-								</select>
+										<c:out value="${searchCriteria.searchType eq 'rcontent' ? 'selected' : ''}"/>>  내용   </option>
+								</select> 
 							</div>
 							<div class="w300" style="padding-right: 10px">
 								<input type="text" class="form-control" id="keyword" name="keyword" value="${searchCriteria.keyword}">

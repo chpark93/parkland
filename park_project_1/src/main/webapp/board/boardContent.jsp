@@ -6,10 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/boardContent.css?ver=1.2" />
 
 <script
-	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.3">
+	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.5">
 </script>
 
 <title>Board Content</title>
@@ -29,7 +31,8 @@
 				<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 				<br/><br/>
 					
-					<div style="text-align: right">
+					<div style="text-align: right">				
+						<button id="btnRecommend" >추천</button>
 						<c:if test="${loginUser.authority eq 'ROLE_ADMIN'}">
 							<c:if test="${boardContent.notice eq '0'}">
 								<button type="button" class="btn btn-sm btn-primary" id="btnNotice">공지로 올리기</button>					            								
@@ -62,7 +65,6 @@
 							&nbsp; <c:out value="|" /> &nbsp;
 							<span class="board_date"><c:out value="${boardContent.reg_dt }" /></span>
 							
-							<button id="btnRecommend" style="float: right;" >추천</button>
 						</div>		
 						<br/><br/>
 						
@@ -94,11 +96,12 @@
 								
 								<!-- 댓글 갯수 -->
 			                    <div class="box-header with-border">
-			                        <a class="link-black text-lg">
+			                      
 			                        	<span><i class="fa fa-comments-o" style="color: gray; font-size: 18px;" ></i></span>
+			                        	<span>댓글</span>
 			                        	&nbsp;
 			                        	<span style="color: gray;">[${boardContent.reply_view_cnt}]</span>
-			                        </a>
+			                      								
 			                    </div>
 								
 								<div id="replyList"></div>
@@ -673,36 +676,7 @@
 		});
 		
 	}
-	/* 댓글 end */
-
-	//pagination(start)  
-	function getReplyPaging(pagination) {
-		var str ="";
-		
-		if(pagination.prevPage) {
-			str += '<li>';
-			str += '<a class="button" href="#" onclick="getReplyListPaging(' + (pagination.startPage - 1) + '); return false;">이전</a>';
-			str += '</li>';
-		}	 
-		
-		for(var idx = pagination.startPage; idx <= pagination.endPage; idx++) { 
-			var strClass = pagination.criteria.page == idx ? 'active' : '';
-			
-			str += '<li>';
-			str += '<a class="page ' + strClass + '" href="#" onclick="getReplyListPaging(' + idx + '); return false;" >' + idx + '</li>';
-			str += '</li>';
-		}
-		
-		if(pagination.nextPage) {
-			str += '<li>';
-			str += '<a class="button" href="#" onclick="getReplyListPaging(' + (pagination.endPage + 1) + '); return false;">다음</a>';
-			str += '</li>';
-		}	
-		
-		$(".pagination").html(str);
-	} 
-	/* pagination(end) */
-    	
+	/* 댓글 end */	
 
 	
 	/* 대댓글  */
@@ -803,6 +777,35 @@
 	}
 	/* 대댓글 end */
 	
+	
+	//pagination(start)  
+	function getReplyPaging(pagination) {
+		var str ="";
+		
+		if(pagination.prevPage) {
+			str += '<li>';
+			str += '<a class="page" href="#" onclick="getReplyListPaging(' + (pagination.startPage - 1) + '); return false;">◀</a>';
+			str += '</li>';
+		}	 
+		
+		for(var idx = pagination.startPage; idx <= pagination.endPage; idx++) { 
+			var strClass = pagination.criteria.page == idx ? 'active' : '';
+			
+			str += '<li>';
+			str += '<a class="page ' + strClass + '" href="#" onclick="getReplyListPaging(' + idx + '); return false;" >' + idx + '</li>';
+			str += '</li>';
+		}
+		
+		if(pagination.nextPage) {
+			str += '<li>';
+			str += '<a class="page" href="#" onclick="getReplyListPaging(' + (pagination.endPage + 1) + '); return false;">▶</a>';
+			str += '</li>';
+		}	
+		
+		$(".pagination").html(str);
+	} 
+	/* pagination(end) */
+    
 
 </script>
 

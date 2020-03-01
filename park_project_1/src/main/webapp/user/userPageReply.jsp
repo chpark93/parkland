@@ -8,8 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css" />
 
 <title>유저 페이지</title>
 <style type="text/css">
@@ -92,20 +93,77 @@ Img {
 				</table>
 				<br/>
 				
+				<!-- selectPage -->
+				<div class="row" style="flex-direction: row-reverse;">
+					<div class="form-group row" style="text-align: right;">
+						<div class="w100">
+							<select class="form-control" id="selectPageCnt">
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
 				<div id="user_write_info">
-					<div class="box">
+					
+					<!-- Mobile -->
+					<div class="box" id="mobileTable">
+						
+						<c:choose>		
+							<c:when test="${empty replyList}">
+								<tr>
+									<td align="center">데이터가 없습니다</td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty replyList}">
+								<ul class="alt">
+								<c:forEach var="list" items="${replyList}">
+									<li class="liClick" onclick="location.href='${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}'">
+										<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
+											<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="color: black;">
+												<c:out value="${list.getShortRcontent(30)}" /> 
+											</a>
+										</c:if>
+										<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
+											<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllQuery(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="color: black;">
+												<c:out value="${list.getShortRcontent(30)}" /> 
+											</a>
+										</c:if>
+										<div style="font-size:10px; margin-top: 2px;">
+											<c:out value="[제목 : " /> 
+											<c:out value="${list.getShortTitle(20)}"/>
+											<c:out value="]" />
+										</div>
+										<div style="font-size:10px;"> 	
+											<span><c:out value="${list.reg_nickname}" /></span>
+											&nbsp;
+											<span><c:out value="${list.reg_dt}" /></span>
+										</div>
+									</li>
+								</c:forEach>
+								</ul>
+							</c:when>
+						</c:choose>
+					</div>
+					
+					
+					<!-- Web -->
+					<div class="box" id="webTable">
 						<!-- 작성글,댓글  -->
 						<div>
 							<table class="table table-striped table-sm" id="table">
 								<colgroup>
-									<col style="width: 15%;" />
+									<col id="col1" style="width: 15%;" />
 									<col style="width: auto;" />
 									<col style="width: 20%;" />
 									<col style="width: 20%;" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>글 번호</th>
+										<th id="th1">글 번호</th>
 										<th>댓글 내용</th>
 										<th>닉네임</th>
 										<th>작성일</th>
@@ -121,20 +179,20 @@ Img {
 										<c:when test="${not empty replyList}">
 											<c:forEach var="list" items="${replyList}">
 												<tr>
-													<td><c:out value="${list.bid}" /></td>
+													<td id="td1"><c:out value="${list.bid}" /></td>
 													<td>
 														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
 															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllSearch(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}"><c:out
-																value="${list.rcontent}" /> </a>
+																value="${list.getShortRcontent(30)}" /> </a>
 														</c:if> 
 														<c:if test="${searchCriteria.keyword eq null || searchCriteria.keyword eq '' }">
 															<a href="${pageContext.request.contextPath}/board/getBoardContent${pagination.makeAllQuery(pagination.criteria.page)}&bid=${list.bid}&boardSection=${searchCriteria.boardSection}"><c:out
-																value="${list.rcontent}" /> </a>
+																value="${list.getShortRcontent(30)}" /> </a>
 														</c:if>
 														<div style="margin-top: 10px;">
 															<a href="${pageContext.request.contextPath}/board/getBoardContent?bid=${list.bid}&boardSection=${searchCriteria.boardSection}" style="font-size: 12px;">
-																<c:out value="[게시글 제목 : " /> 
-																<c:out value="${list.title}"/>
+																<c:out value="[제목 : " /> 
+																<c:out value="${list.getShortTitle(20)}"/>
 																<c:out value="]" />
 															</a>
 														</div>
@@ -212,11 +270,11 @@ Img {
 					<!-- pagination(end) -->
 
 					<!-- search(start) -->
-					<div class="form-group row justify-content-center">
-						<div class="w100" style="padding-right: 10px">
+					<div class="form-group row">
+						<div class="w100" style="padding-right: 10px; margin-bottom: 5px;">
 							<select class="form-control" id="searchType" name="searchType">
 								<option value="rcontent"
-									<c:out value="${searchCriteria.searchType eq 'rcontent' ? 'selected' : ''}"/>>내용</option>
+									<c:out value="${searchCriteria.searchType eq 'rcontent' ? 'selected' : ''}"/>>  내용   </option>
 							</select>
 						</div>
 						<div class="w300" style="padding-right: 10px">
@@ -227,16 +285,6 @@ Img {
 							<button type="button" id="btnSearch">검색</button>
 						</div>
 
-						<!-- selectPage -->
-						<div class="form-group row" style="text-align: right;">
-							<div class="w100">
-								<select class="form-control" id="selectPageCnt">
-									<option value="10">10</option>
-									<option value="20">20</option>
-									<option value="30">30</option>
-								</select>
-							</div>
-						</div>
 					</div>
 					<!-- search(end) -->
 				</div>

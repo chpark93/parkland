@@ -6,6 +6,9 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<!-- custom css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css" />
+
 <title>MemberShip</title>
 </head>
 <body>
@@ -16,7 +19,7 @@
 	<div id="main">
 		<br/><br/>
 		
-		<div class="inner" style="width: 50%; height: 50%;">	       
+		<div class="inner" style="height: 50%;">	       
 			
 			<!-- Header -->	
 			<div class="align-center">
@@ -60,6 +63,7 @@
 							<div class="form-group">
 								<label for="email">Email</label>
 								<form:input path="email" id="email" type="text" class="form-control" value="${snsUser.email}" placeholder="이메일을 입력해주세요"/>
+		                   	   	<form:errors path="email" class="label label-danger" style="color:red;" />
 		                   	    <span id="email_check" class="label label-danger text-red" style="color:red;">${emailCheck}</span>
 							</div>
 							<br/>
@@ -75,6 +79,7 @@
 						<div class="form-group">
 						   	<label for="nickname">NickName</label>
 							<form:input path="nickname" type="text" id="nickname" name="nickname" class="form-control" value="${snsUser.nickname}" placeholder="닉네임을 입력해주세요" />
+							<form:errors path="nickname" class="label label-danger" style="color:red;" />
 							<span id="nickName_check"class="label label-danger" style="color:red;">${nickNameCheck}</span>
 						</div>
 						<br/>

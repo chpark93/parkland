@@ -8,8 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/common.css?ver=1.1" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/board.css?ver=1.1" />
 
 <title>유저 페이지</title>
 <style type="text/css">
@@ -92,24 +93,92 @@ Img {
 				</table>
 				<br/>
 				
+				<!-- selectPage -->
+				<div class="row" style="flex-direction: row-reverse;">
+					<div class="form-group row" style="text-align: right;">
+						<div class="w100">
+							<select class="form-control" id="selectPageCnt">
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
 				<div id="user_write_info">
-					<div class="box">
+					
+					<!-- Mobile -->
+					<div class="box" id="mobileTable">
+						
+						<!-- 작성글,댓글  -->
+						<c:choose>		
+							<c:when test="${empty boardList}">
+								<tr>
+									<td colspan="5" align="center">데이터가 없습니다</td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty boardList}">
+								<ul class="alt">
+								<c:forEach var="list" items="${boardList}">
+									<li class="liClick" onclick="location.href='${pageContext.request.contextPath}/board/getBoardContent?bg_no=${list.bg_no}&bid=${list.bid}'">
+										<a href="${pageContext.request.contextPath}/board/getBoardContent?bg_no=${list.bg_no}&bid=${list.bid}" style="color: black;">
+											<c:out value="${list.getShortTitle(20)}" />
+										</a>
+						
+										<span style="float: right; font-size:16px;">
+											<c:if test="${list.reply_view_cnt > 0}">
+												<span class="badge bg-teal">			
+												<i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>
+											</c:if>
+										</span>
+										<div style="font-size:10px;">
+											<span>
+												<c:out value="${list.reg_nickname}" />
+											</span>
+											&nbsp;
+											<span>
+												<c:out value="조회 : " />
+												<c:out value="${list.view_cnt}" />
+											</span>
+											&nbsp;
+											<span><c:out value="${list.reg_dt}" /></span>
+											<div>
+												<span>
+													<c:out value="[" /> 
+													<c:out value="${list.bg_name}"/>
+													<c:out value="]" />
+												</span>
+											</div>												
+										</div>
+										
+									</li>
+								</c:forEach>
+								</ul>
+							</c:when>
+						</c:choose>
+					</div>
+						
+					
+					<!-- Web -->
+					<div class="box" id="webTable">
 						<!-- 작성글,댓글  -->
 						<div>
 							<table class="table table-striped table-sm" id="table">
 								<colgroup>
-									<col style="width: 15%;" />
+									<col id="col1" style="width: 15%;" />
 									<col style="width: auto;" />
 									<col style="width: 15%;" />
-									<col style="width: 15%;" />
+									<col id="col4" style="width: 15%;" />
 									<col style="width: 15%;" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th>글 번호</th>
+										<th id="th1">글 번호</th>
 										<th>글 제목</th>
 										<th>작성자</th>
-										<th>조회수</th>
+										<th id="th4">조회수</th>
 										<th>작성일</th>
 									</tr>
 								</thead>    
@@ -123,15 +192,8 @@ Img {
 										<c:when test="${not empty boardList}">
 											<c:forEach var="list" items="${boardList}">
 												<tr>
-													<td>
+													<td id="td1">
 														<c:out value="${list.bid}" />
-														<div style="margin-top: 10px;">
-															<a href="${pageContext.request.contextPath}/board/getBoardList?bg_no=${list.bg_no}" style="font-size: 12px;">
-																<c:out value="[" /> 
-																<c:out value="${list.bg_name}"/>
-																<c:out value="]" />
-															</a>
-														</div>
 													</td>
 													<td>
 														<c:if test="${searchCriteria.keyword ne null && searchCriteria.keyword ne '' }">
@@ -145,6 +207,13 @@ Img {
 															<span class="badge bg-teal">
 															<i class="fa fa-comment-o"></i>[${list.reply_view_cnt}]</span>
 														</c:if>
+														<div style="margin-top: 10px;">
+															<a href="${pageContext.request.contextPath}/board/getBoardList?bg_no=${list.bg_no}" style="font-size: 12px;">
+																<c:out value="[" /> 
+																<c:out value="${list.bg_name}"/>
+																<c:out value="]" />
+															</a>
+														</div>
 													</td>
 													<td>
 														<c:if test="${list.reg_id eq loginUser.id}">
@@ -158,7 +227,7 @@ Img {
 															</a>
 														</c:if>
 													</td>
-													<td><c:out value="${list.view_cnt}" /></td>
+													<td id="td4"><c:out value="${list.view_cnt}" /></td>
 													<td><c:out value="${list.reg_dt}" /></td>
 												</tr>
 											</c:forEach>
@@ -220,8 +289,8 @@ Img {
 					<!-- pagination(end) -->
 
 					<!-- search(start) -->
-					<div class="form-group row justify-content-center">
-						<div class="w100" style="padding-right: 10px">
+					<div class="form-group row">
+						<div class="w100" style="padding-right: 10px; margin-bottom: 5px;">
 							<select class="form-control" id="searchType" name="searchType">
 								<option value="title"
 									<c:out value="${searchCriteria.searchType eq 'title' ? 'selected' : ''}"/>>제목</option>
@@ -238,17 +307,6 @@ Img {
 						</div>
 						<div>
 							<button type="button" id="btnSearch">검색</button>
-						</div>
-
-						<!-- selectPage -->
-						<div class="form-group row" style="text-align: right;">
-							<div class="w100">
-								<select class="form-control" id="selectPageCnt">
-									<option value="10">10</option>
-									<option value="20">20</option>
-									<option value="30">30</option>
-								</select>
-							</div>
 						</div>
 					</div>
 					<!-- search(end) -->

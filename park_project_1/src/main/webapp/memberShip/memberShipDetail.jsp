@@ -7,17 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<!-- custom css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css" />
+
 <title>MemberShip Detail</title>
 </head>
 <body>
 
 	<!-- Wrapper -->
-	<div id="wrapper" style="height: 1200px;">
+	<div id="wrapper" style="height: 1500px;">
 	 			
 	<div id="main">
 		<br/><br/>
 		
-		<div class="inner" style="width: 50%; height: 50%;">	       
+		<div class="inner" style="height: 50%;">	       
 			
 			<!-- Header -->	
 			<div class="align-center">
@@ -142,13 +145,17 @@
 							<br/>
 							
 						</div>
+						<hr>
 						
 					<!-- button -->
-					<div class="" align="right">	
+					<div align="right">
 						<c:if test="${user.member_section eq 'member' }">
-							<button type="button" id="btnModifyPw" class="btn btn-primary" style="float:left; margin-right: 5px;">비밀번호 변경</button>						
+							<button type="button" id="btnModifyPw" class="btn btn-primary">비밀번호 변경</button>						
 						</c:if>
-						<button type="button" id="btnWithdraw" class="btn btn-primary" style="float:left;">회원 탈퇴</button>
+						<button type="button" id="btnWithdraw" class="btn btn-primary" >회원 탈퇴</button>
+					</div>
+					<hr>
+					<div class="" align="right">	
 						<button type="button" id="btnSubmit" class="btn btn-primary">회원 정보 수정</button>
 						<button type="button" id="btnCancel" class="btn btn-primary">취소</button>
 					</div>
