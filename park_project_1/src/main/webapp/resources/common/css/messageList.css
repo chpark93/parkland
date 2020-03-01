@@ -102,13 +102,23 @@
 					padding: 3em 0 1em 0 ;
 				}		
 			
-			
+			/* table colgroup #col1 {
+				display: none;
+			} */
 			table colgroup #col4 {
 				display: none;
 			}
+			
+			/* table thead tr #th1 {
+				display: none;
+			} */
 			table thead tr #th4 {
 				display: none;
 			}
+			
+			/* table tbody tr #td1 {
+				display: none;
+			} */
 			table tbody tr #td4 {
 				display: none;
 			}

@@ -32,3 +32,23 @@
 	text-decoration: none;
 	cursor: pointer;
 }
+
+/* 
+
+		@media screen and (max-width: 1280px) {
+
+		} 
+		
+	
+		@media screen and (max-width: 736px) {
+			.modal-content {
+				width: 80%;
+			}
+			
+		}
+		
+		@media screen and (max-width: 480px) {
+			.modal-content {
+				width: 100%;
+			}
+		} */
