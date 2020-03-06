@@ -169,8 +169,8 @@ public class UserController {
 			 
 	    	MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
 	    	param.add("grant_type", "authorization_code");
-	    	param.add("client_id", "919440269162-rp9fr2d7schkgs3p1949e49ncd0js2fu.apps.googleusercontent.com");
-	    	param.add("client_secret", "G0rHks0fu5eROIDnGD-7uU-1");
+	    	param.add("client_id", "*************************");
+	    	param.add("client_secret", "*************************");
 	    	param.add("redirect_uri", "http://chparkland.com/park_project_1/login/auth/google/callback");
 	    	param.add("code", code);
 	    	
