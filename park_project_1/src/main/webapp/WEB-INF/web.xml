@@ -78,7 +78,6 @@
     </filter-mapping>
 								
 	<!-- Error Page -->
-	<!-- 
 	<error-page>
 		<error-code>400</error-code>
 		<location>/WEB-INF/views/error/errorPage.jsp</location>
@@ -103,5 +102,4 @@
 		<error-code>503</error-code>
 		<location>/WEB-INF/views/error/errorPage.jsp</location>
 	</error-page>
- -->
 </web-app>
