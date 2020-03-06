@@ -25,7 +25,7 @@
 
 # 내용
 
-* [PPT(SlideShare)](https://www.slideshare.net/secret/JGKnJYTfjDZ9LA)
+* [PPT](https://www.slideshare.net/secret/JGKnJYTfjDZ9LA)
 
 
 * 구현 기능 
