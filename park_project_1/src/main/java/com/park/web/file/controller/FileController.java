@@ -1,13 +1,18 @@
 package com.park.web.file.controller;
 
-import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.park.web.file.service.FileService;
 import com.park.web.fileUtil.S3Utils;
@@ -52,8 +58,9 @@ public class FileController {
 		
 		return entity;
 	}
-
 	
+		
+		
 	//첨부파일 출력
 	@RequestMapping(value="/displayFile", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) throws Exception {

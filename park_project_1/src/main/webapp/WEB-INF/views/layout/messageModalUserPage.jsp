@@ -60,7 +60,7 @@ $(document).on('click', '#sendMessageUser', function(e){
 			return false
 		}
 		else {
-			$("#form").submit();
+			$("#messageUserForm").submit();
 			
 		}
 	});

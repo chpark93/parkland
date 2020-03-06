@@ -5,7 +5,7 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/intro_head.jsp"%>
-<title>Insert title here</title>
+<title>ChParkLand</title>
 </head>
 <body class="">
 
@@ -106,7 +106,7 @@
 				<div class="col-4 col-4-medium col-12-small">
 					<section class="box style1">
 						<p>사용 기술 : JAVA8, JavaScript, JQuery, HTML5, CSS</p>
-						<p>운영 환경 : Apache Tomcat, AWS EC2(ubuntu), AWS RDS </p>
+						<p>운영 환경 : Tomcat8.5 , AWS EC2(ubuntu), AWS RDS </p>
 						<p>프레임 워크 : Spring Framework, MyBatis</p>							
 						<p>DB : MariaDB</p>													
 						<p>Tools : STS, HeidiSql, Putty </p>

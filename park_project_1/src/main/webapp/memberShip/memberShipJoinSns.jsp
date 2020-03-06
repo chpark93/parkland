@@ -79,6 +79,7 @@
 						<div class="form-group">
 						   	<label for="nickname">NickName</label>
 							<form:input path="nickname" type="text" id="nickname" name="nickname" class="form-control" value="${snsUser.nickname}" placeholder="닉네임을 입력해주세요" />
+							<br/>
 							<form:errors path="nickname" class="label label-danger" style="color:red;" />
 							<span id="nickName_check"class="label label-danger" style="color:red;">${nickNameCheck}</span>
 						</div>
@@ -116,7 +117,7 @@ $(document).on('click', '#btnSubmit', function(e){
 	
     if($("#checkMemberShip").is(":checked")) {    
         
-		$("#form").submit();
+		$("#joinForm").submit();
     }
     else {
 		alert('가입 완료에 체크 해주세요'); 

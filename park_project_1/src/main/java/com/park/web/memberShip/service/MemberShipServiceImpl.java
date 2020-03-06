@@ -134,7 +134,7 @@ public class MemberShipServiceImpl implements MemberShipService {
 		MailUtils sendMail = new MailUtils(mailSender);
 		
 		if(div.equals("join")) {
-			sendMail.setSubject("CHPark 회원가입 인증 메일 입니다.");
+			sendMail.setSubject("ChParkLand 회원가입 인증 메일 입니다.");
 			
 			sendMail.setMsg(new StringBuffer().append("<h1>회원 가입 인증 메일</h1>")
 				.append("<div align='center' style='border:1px solid black; font-family:verdana'>")
@@ -149,7 +149,7 @@ public class MemberShipServiceImpl implements MemberShipService {
 				.append("<input type='submit' value='회원인증'></form><br/></div>") 
 				.toString());
 		}else if(div.equals("findPw")) {
-			sendMail.setSubject("CHPark 임시 비밀번호 메일 입니다.");
+			sendMail.setSubject("ChParkLand 임시 비밀번호 메일 입니다.");
 			
 			sendMail.setMsg(new StringBuffer().append("<h1>임시 비밀번호</h1>")
 					.append("<div align='center' style='border:1px solid black; font-family:verdana'>")

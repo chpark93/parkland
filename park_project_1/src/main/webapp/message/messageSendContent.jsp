@@ -8,11 +8,13 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/messageContent.css?ver=1.1" />
+
 <meta charset="UTF-8">
 <title>Message</title>
 </head>
 <body class="is-preload">
-	<div id="wrapper" style="height: 1000px;">
+	<div id="wrapper" style="height: 1200px;">
 	
 		<!-- Main -->
 		<div id="main">
@@ -46,7 +48,7 @@
 					</div>	
 					
 					<!-- Button -->
-					<div class="col-12">					
+					<div class="col-12" style="float: right;">					
 						<ul class="actions">
 							<li>
 								<c:if test="${messageSendContent.message_sender ne messageSendContent.message_receiver}">
@@ -83,7 +85,7 @@
 $(document).on('click', '#btnDelete', function(e) {
 	e.preventDefault();
 	
-	var url = "${pageContext.request.contextPath}/message/deleteMessage";
+	var url = "${pageContext.request.contextPath}/message/deleteMessageSend";
 	url = url + "?mid=" + ${messageSendContent.mid};
 	
 	if(confirm("정말로 삭제 하시겠습니까?")) {	

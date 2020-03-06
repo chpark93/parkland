@@ -7,20 +7,27 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/emailWrite.css" />
+
 <meta charset="UTF-8">
 <title>Message Form</title>
 </head>
 <body>
 	<div id="wrapper" style="height: 1200px;">
 		
-		<div id="main" class="wrapper" >
-			<div class="inner">
-			<br/><br/>
+		<div id="main" >
+			<br/><br/>				
+			<div class="inner" style="height: 50%;">			
 			
+				<!-- Header -->	
 				<div class="align-center">
-					<h2>문의 메일</h2> 
-				</div>
-				<br/>
+		        	<label style="margin-bottom: 50px;">
+		        		<a href="${pageContext.request.contextPath}/main/mainPage">
+		        			<img src="${pageContext.request.contextPath}/resources/img/chparklandImg.png" alt="Logo">
+		        		</a>
+		        	</label>
+		        	<label style="font-size:24px;">문의 메일</label>
+		        </div>
 				
 				<div class="">
 					<div class="col-6 col-12-small">						

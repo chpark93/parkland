@@ -125,7 +125,7 @@
 			<p>문의 사항이 있으실 경우 아래의 연락처로 연락 주시길 바랍니다.</p>
 			<ul class="contact">
 				<li class="icon solid fa-envelope"><a href="#" onclick="enquireModal()" style="border-bottom: dotted 1px;">문의 쪽지 보내기</a></li>
-				<li class="icon solid fa-phone">(010) 1234-5678</li>
+				<li class="icon solid fa-phone">(010) 5852-6952</li>
 			</ul>
 		</section>
 

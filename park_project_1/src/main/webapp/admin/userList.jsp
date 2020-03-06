@@ -7,7 +7,7 @@
 <head>
 <!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/userList.css?ver=1.2" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/userList.css?ver=1.3" />
 
 <meta charset="UTF-8">
 <title>Admin Page</title>

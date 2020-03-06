@@ -141,7 +141,7 @@ Img {
 												<c:out value="${list.getShortTitle(20)}"/>
 												<c:out value="]" />
 												&nbsp;
-												<span><c:out value="${list.reg_dt}" /></span>
+												<span style="float: right;"><c:out value="${list.reg_dt}" /></span>
 											</div>
 										</li>
 									</c:forEach>

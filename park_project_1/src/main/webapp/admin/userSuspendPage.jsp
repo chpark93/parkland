@@ -19,7 +19,7 @@
 	
 		<div id="main">
 			<br/><br/><br/>
-			<div class="inner" style="width: 50%; height: 50%;">	       
+			<div class="inner" style="height: 50%;">	       
 										
 				<!-- Header -->	
 				<div class="align-center">

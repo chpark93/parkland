@@ -45,6 +45,7 @@ public class BoardServiceImpl implements BoardService {
 			filemanager.insertFile(boardVO, fileName);
 			filemanager.updateFileCnt(boardVO.getBid());
 		}
+		
 	}
 	
 	//게시글 상세

@@ -1,5 +1,7 @@
 package com.park.web.board.db;
 
+import com.park.web.board.util.StringUtil;
+
 public class ReplyVO {
 	
 	private int rid; 				//댓글 번호
@@ -18,6 +20,15 @@ public class ReplyVO {
 	
 	
 	
+	//댓글 내용 글자 수 제한
+	public String getShortRcontent(Integer len) {
+	    return StringUtil.getShortString(rcontent, len);
+	}
+	
+	//제목 글자 수 제한
+	public String getShortTitle(Integer len) {
+	    return StringUtil.getShortString(title, len);
+	}
 	
 	
 	public int getRid() {

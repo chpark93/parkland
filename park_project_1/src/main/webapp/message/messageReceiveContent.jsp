@@ -8,13 +8,15 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/messageContent.css?ver=1.1" />
+
 <meta charset="UTF-8">
 <title>Message</title>
 </head>
 <body class="is-preload">
 	
 	<!-- Wrapper -->
-	<div id="wrapper" style="height: 1000px;">
+	<div id="wrapper" style="height: 1200px;">
 	
 		<!-- Main -->
 		<div id="main">
@@ -49,7 +51,7 @@
 					</div>	
 					
 					<!-- Button -->
-					<div class="col-12">					
+					<div class="col-12" style="float: right;">					
 						<ul class="actions">
 							<li>
 								<c:if test="${messageReceiveContent.message_sender ne messageReceiveContent.message_receiver}">

@@ -13,7 +13,7 @@
 		</div>
 		<div class="" style="padding-top: 40px;">
 			<div>
-				<form id="form" action="${pageContext.request.contextPath}/message/insertMessage" method="post">
+				<form id="messageAdminForm" action="${pageContext.request.contextPath}/message/insertMessage" method="post">
 					<div class="row gtr-uniform col-12">
 						<div class="col-6">
 							<input type="text" name="message_sender" id="message_sender" value="${loginUser.nickname}" readonly />
@@ -57,7 +57,7 @@ $(document).on('click', '#sendMessageAdmin', function(e){
 			return false
 		}			
 		else {
-			$("#form").submit();
+			$("#messageAdminForm").submit();
 			
 		}
 	});

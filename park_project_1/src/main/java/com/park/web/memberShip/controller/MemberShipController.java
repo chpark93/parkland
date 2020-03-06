@@ -192,7 +192,6 @@ public class MemberShipController {
 			if(msservice.findByEmail(memberShipVO).getPassword() == null) {
 				
 				errors.rejectValue("email","SnsLogin", "SNS로 가입한 회원 입니다.");
-				
 				return "memberShip/findPwForm";
 			}
 			else {

@@ -6,6 +6,8 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/memberShip.css" />
+
 <title>Find Password Form</title>
 </head>
 <body>
@@ -15,7 +17,7 @@
 	
 	<div id="main">
 		
-		<div class="inner" style="width: 50%; height: 50%;">
+		<div class="inner" style="height: 50%;">
 			<br/><br/><br/>
 			<!-- Header -->
 			<div class="align-center">

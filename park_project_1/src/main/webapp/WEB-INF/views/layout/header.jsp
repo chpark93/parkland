@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <header id="header">
-	<a href="${pageContext.request.contextPath}/main/mainPage" class="logo" style="margin-top: 14px;">The
+	<a href="${pageContext.request.contextPath}/main/mainPage" class="logo" >The
 		Flow Of<strong>&nbsp; ChParkLand</strong>
 	</a>
 

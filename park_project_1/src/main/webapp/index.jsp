@@ -5,7 +5,7 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/layout/init_head.jsp"%>
-<title>ChPark.com</title>
+<title>ChParkLand</title>
 
 </head>
 <body class="is-preload">

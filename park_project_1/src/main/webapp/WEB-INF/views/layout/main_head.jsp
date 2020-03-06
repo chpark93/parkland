@@ -8,10 +8,13 @@
 
 
 <!-- main CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/main/css/main.css?ver=1.5" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/main/css/main.css?ver=1.3" />
+
+<!-- sidebar -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/sidebar.css" />
 
 <!-- modal -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/modal.css?ver=1.3" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/modal.css?ver=1.4" />
 
 <!-- lightbox CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lightbox/css/lightbox.css" />

@@ -8,7 +8,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/messageList.css?ver=1.1" />
+
 <title>Send Message</title>
 <style type="text/css">
 	#table a {font: Normal 14px sans-serif; color:#333; text-decoration:none;}
@@ -18,7 +21,7 @@
 <body class="is-preload">
 	
 	<!-- Wrapper -->
-	<div id="wrapper" style="height: 1200px;">
+	<div id="wrapper">
 	
 		<!-- Main -->
 		<div id="main">
@@ -54,7 +57,7 @@
 				</table>
 				
 				<!-- checkBox -->
-				<div style="text-align: right;">
+				<div id="userPageCheckbox" style="text-align: right;">
 					<input type="checkbox" name="allCheck" id="allCheck" />
 					<label for="allCheck">모두 선택</label>					
 					<button type="button" id="deleteBtnChecked">선택 삭제</button>
@@ -64,24 +67,66 @@
 					
 				<!-- User Message Info -->	
 				<div id="user_message_info">
-					<div class="box">
+					
+					
+					<!-- Mobile -->
+					<div class="box" id="mobileTable">
+						<!-- 작성글,댓글  -->
+						<c:choose>		
+							<c:when test="${empty messageList}">
+								<tr>
+									<td align="center">데이터가 없습니다</td>
+								</tr>
+							</c:when>
+							<c:when test="${not empty messageList}">
+								<ul class="alt">
+								<c:forEach var="list" items="${messageList}">
+									<li class="liClick" onclick="location.href='${pageContext.request.contextPath}/message/getMessageSendContent${pagination.makeAllQuery(pagination.criteria.page)}&mid=${list.mid}'">
+										<a href="${pageContext.request.contextPath}/message/getMessageSendContent${pagination.makeAllQuery(pagination.criteria.page)}&mid=${list.mid}" style="color: black;">
+											<c:out value="${list.getShortMessageContent(20)}" /> 
+										</a>
+						
+										<div style="font-size:10px; margin-top: 2px;">
+											<span>받는 사람 : <c:out value="${list.message_receiver}" /></span>
+											&nbsp;
+											<span style="float: right;">
+												<c:if test="${list.message_open == 0}">
+													<span>읽지 않음</span>
+												</c:if>
+												<c:if test="${list.message_open == 1}">
+													<span>읽음</span>
+												</c:if>												
+												&nbsp;
+												<span><c:out value="${list.send_dt}" /></span>
+											</span>
+										</div>
+										
+									</li>
+								</c:forEach>
+								</ul>
+							</c:when>
+						</c:choose>
+					</div>
+				
+					<!-- Web -->
+					<div class="box" id="webTable">
 						<!-- 작성글,댓글  -->
 						<div>
 							<table class="table table-striped table-sm" id="table">
 								<colgroup>
-									<col style="width: 5%;" />
-									<col style="width: 20%;" />
+									<col id="col1" style="width: 5%;" />
 									<col style="width: auto;" />
-									<col style="width: 20%;" />
+									<col style="width: auto;" />
+									<col id="col4" style="width: 20%;" />
 									<col style="width: 20%;" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th></th>
+										<th id="th1"></th>
 										<th>받는 사람</th>
 										<th>쪽지 내용</th>
-										<th>발송일</th>
-										<th>상대 쪽지 확인</th>
+										<th id="th4">발신일</th>
+										<th>쪽지 확인</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -95,7 +140,7 @@
 											<form id="deleteCheckedBoxForm" method="post" action="${pageContext.request.contextPath}/message/deleteCheckedMessageSend">
 											<c:forEach var="list" items="${messageList}">
 												<tr>
-													<td>
+													<td id="td1">
 														<input type="checkbox" name="deleteCheckBox" class="deleteCheckBox" id="deleteCheckBox${list.mid}" value="${list.mid}" data-checkbox="${list.mid}"/>
 														<label for="deleteCheckBox${list.mid}"></label>
 													</td>
@@ -106,7 +151,7 @@
 															<c:out value="${list.getShortMessageContent(30)}" /> 
 														</a>
 													</td>
-													<td><c:out value="${list.send_dt}" /></td>
+													<td id="td4"><c:out value="${list.send_dt}" /></td>
 													<td>
 														<c:if test="${list.message_open == 0}">
 															<span>읽지 않음</span>

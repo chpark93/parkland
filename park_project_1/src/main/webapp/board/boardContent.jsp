@@ -8,7 +8,7 @@
 <head>
 <!-- custom css -->
 <%@ include file="/WEB-INF/views/layout/main_head.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/boardContent.css?ver=1.2" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/common/css/boardContent.css?ver=1.3" />
 
 <script
 	src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js?ver=1.5">
@@ -96,12 +96,10 @@
 								
 								<!-- 댓글 갯수 -->
 			                    <div class="box-header with-border">
-			                      
-			                        	<span><i class="fa fa-comments-o" style="color: gray; font-size: 18px;" ></i></span>
-			                        	<span>댓글</span>
-			                        	&nbsp;
-			                        	<span style="color: gray;">[${boardContent.reply_view_cnt}]</span>
-			                      								
+		                        	<span><i class="fa fa-comments-o" style="color: gray; font-size: 18px;" ></i></span>
+		                        	<span>댓글</span>
+		                        	&nbsp;
+		                        	<span style="color: gray;">[${boardContent.reply_view_cnt}]</span>
 			                    </div>
 								
 								<div id="replyList"></div>
@@ -121,6 +119,12 @@
 										<div>
 											<form:textarea path="rcontent" id="rcontent" style="resize : vertical;"
 												class="form-control" rows="3" placeholder="댓글을 입력해주세요"></form:textarea>
+											
+											<script>
+											    
+											      $('#rcontent').val($('#rcontent').val().replace(/\r?\n/g, '<br />'));
+				
+											</script>
 										</div>
 										<br/>
 										
@@ -145,7 +149,7 @@
 					
 							
 							<!-- pagination(start) -->
-							<div class="paginationBox align-center" >
+							<div class="paginationBox" >
 								<div style="text-align: center;">
 									<ul class="pagination" id="pagination" style="margin-top: 10px">
 									</ul>
@@ -388,7 +392,7 @@
 							htmls += '<strong style="color: gray;">' + this.reg_nickname + '</strong>';															
 						}
 						else {				
-							htmls += '<strong style="color: gray;"><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=' + this.reg_nickname + '">' + this.reg_nickname + '</a></strong>';									
+							htmls += '<strong><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=' + this.reg_nickname + '" style="color: gray;">' + this.reg_nickname + '</a></strong>';									
 							
 						}
 						
@@ -414,7 +418,7 @@
 						
 						htmls += '</div>';
 						htmls += '<br>';
-						htmls += '<div style="color: black;">';
+						htmls += '<div style="color: black; white-space:pre; margin-top: -15px;">';
 						htmls += this.rcontent;
 						htmls += '</div>';
 						htmls += '</div>';
@@ -441,7 +445,7 @@
 							htmls += '<strong style="color: gray;">' + this.reg_nickname + '</strong>';															
 						}
 						else {
-							htmls += '<strong><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=' + this.reg_nickname + '">' + this.reg_nickname + '</a></strong>';									
+							htmls += '<strong><a href="${pageContext.request.contextPath}/userpage/getBoardListPagingUser?nickname=' + this.reg_nickname + '" style="color: gray;">' + this.reg_nickname + '</a></strong>';									
 						}
 						
 						htmls += '&nbsp; <span>' + this.reg_dt + '</span>';
@@ -464,7 +468,7 @@
 						
 						htmls += '</div>';
 						htmls += '<br>';
-						htmls += '<div style="color: black; margin-left: 25px;">';
+						htmls += '<div style="color: black; margin-left: 25px; white-space:pre; margin-top: -15px;">';
 						
 						if(this.rdepth >= 2) {
 							if(this.replytarget_id == '${loginUser.nickname}') {
