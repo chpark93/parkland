@@ -6,6 +6,8 @@
 
 * 프로젝트 명 : ChParkLand
 
+* [ChParkLand 이동](https://chparkland.com/park_project_1)
+
 * 일정 : 19.10 ~ 20.02
 
 * 프로젝트 소개 : 회원 중심으로 소통할 수 있는 커뮤니티 웹 사이트를 구현
@@ -27,6 +29,7 @@
 
 * [PPT](https://www.slideshare.net/secret/JGKnJYTfjDZ9LA)
 
+* [자기 소개](https://chparkland.com/park_project_1/me/me.jsp)
 
 * 구현 기능 
 
