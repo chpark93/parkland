@@ -25,9 +25,9 @@
 			<div class="row">
 			<br/>
 				<div class="col-4 col-5-large col-12-medium">
-					<span class="image fit"><img src="${pageContext.request.contextPath}/resources/img/pic00.jpg" alt=""></span>
+					<span class="image fit"><img src="${pageContext.request.contextPath}/resources/img/me_img.png" alt=""></span>
 				</div>
-				<br/>
+				<br/>			
 				<div class="col-8 col-7-large col-12-medium">
 					<header>
 						<h1>창희적인 개발자 <strong>박창희</strong> 입니다.</h1>
