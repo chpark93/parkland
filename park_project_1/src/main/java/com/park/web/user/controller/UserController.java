@@ -108,7 +108,7 @@ public class UserController {
 			//파싱
 			Gson gson = new Gson();
 			UserVO userVO = gson.fromJson(userInfo.toString(), UserVO.class);
-	
+				
 			//get 유저정보
 			JsonNode id = userInfo.path("id"); 
 			JsonNode properties = userInfo.path("properties");
@@ -153,10 +153,6 @@ public class UserController {
 				else {
 					
 					//유저 정보 존재 시 로그인
-					//Remember Me
-					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
-					userservice.loginSession(userVO.getId(), session.getId(), expired);
-					
 					session.setAttribute(SessionName.LOGIN, user);
 				
 				}
@@ -169,12 +165,13 @@ public class UserController {
 			 
 	    	MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
 	    	param.add("grant_type", "authorization_code");
-	    	param.add("client_id", "*************************");
-	    	param.add("client_secret", "*************************");
+	    	param.add("client_id", "**************************************");
+	    	param.add("client_secret", "*********************************");
 	    	param.add("redirect_uri", "http://chparkland.com/park_project_1/login/auth/google/callback");
 	    	param.add("code", code);
 	    	
-	    	//RestTemplate 이용 Access Token , profile 요청
+	    	//RestTemplate 이용 
+	    	//Access Token , profile 요청
 	    	RestTemplate restTemplate = new RestTemplate();
 	    	
 	    	HttpHeaders headers = new HttpHeaders();
@@ -239,10 +236,6 @@ public class UserController {
 					
 				}else {					
 					//유저 정보 존재 시 로그인
-					//Remember Me
-					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
-					userservice.loginSession(userVO.getId(), session.getId(), expired);
-					
 					session.setAttribute(SessionName.LOGIN, user);
 				}
 			}
@@ -289,10 +282,6 @@ public class UserController {
 				else {
 					
 					//유저 정보 존재 시 로그인
-					//Remember Me
-					Date expired = new Date(System.currentTimeMillis() + SessionName.EXPIRE * 1000);
-					userservice.loginSession(user.getId(), session.getId(), expired);
-					
 					session.setAttribute(SessionName.LOGIN, user);
 				}
 			}
@@ -311,7 +300,6 @@ public class UserController {
 		
 		//구글
 		String url = googleOAuth2Template.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOauth2Parameters);
-		
 		model.addAttribute("googleUrl", url);
 		
 		//카카오
